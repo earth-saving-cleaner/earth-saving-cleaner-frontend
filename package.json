@@ -53,7 +53,7 @@
     "prettier": "^2.5.1"
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx}": [
+    "src/**/*.{js}": [
       "eslint --ext ./src --fix"
     ],
     "./src/**": [
@@ -63,7 +63,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "./.husky/pre-push"
+      "pre-push": "echo \"[Husky] pre-push\""
     }
   }
 }
