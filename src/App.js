@@ -3,11 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 
 import useSocket from "./hooks/useSocket";
 import { getCatsFetch } from "./state";
+import useTheme from "./hooks/useTheme";
 
 function App() {
-  // const [socket, disconnect] = useSocket("test");
-  const cats = useSelector((state) => state.cats.cats);
+  const { colors } = useTheme();
+
   const dispatch = useDispatch();
+  const cats = useSelector((state) => state.cats.cats);
+
+  // const [socket, disconnect] = useSocket("test");
 
   // useEffect(() => {
   //   socket.emit("test", "socket test");
@@ -24,8 +28,6 @@ function App() {
   useEffect(() => {
     dispatch(getCatsFetch());
   }, [dispatch]);
-
-  console.log(cats);
 
   return (
     <div className="App">

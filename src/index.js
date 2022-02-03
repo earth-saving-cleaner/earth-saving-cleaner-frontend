@@ -3,6 +3,9 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import createSagaMiddleware from "redux-saga";
 import { configureStore } from "@reduxjs/toolkit";
+import { ThemeProvider } from "styled-components";
+import theme from "./globalstyle/theme";
+import GlobalStyle from "./globalstyle/globalStyle";
 
 import "./index.css";
 import App from "./App";
@@ -17,9 +20,14 @@ const store = configureStore({
 
 saga.run(catSaga);
 
+console.log("theme ====>", theme);
+
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <App />
+    </ThemeProvider>
   </Provider>,
   document.getElementById("root"),
 );
