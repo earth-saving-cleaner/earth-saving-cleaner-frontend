@@ -53,7 +53,7 @@
     "prettier": "^2.5.1"
   },
   "lint-staged": {
-    "src/**/*.{js}": [
+    "src/**/*.{js, jsx}": [
       "eslint --ext ./src --fix"
     ],
     "./src/**": [
