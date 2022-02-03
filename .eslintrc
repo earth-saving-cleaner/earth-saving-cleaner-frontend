@@ -1,5 +1,6 @@
 {
-  "extends": ["airbnb", "plugin:prettier/recommended"],
+  "root": true,
+  "extends": ["react-app", "airbnb", "plugin:prettier/recommended"],
   "plugins": ["simple-import-sort"],
   "rules": {
     "prettier/prettier": ["error"]
