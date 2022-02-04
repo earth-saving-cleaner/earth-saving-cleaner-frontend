@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import themes from "../../../globalstyle/theme";
 
 const { colors, fontSizes } = themes;
-const WRITE_HERE = "write here...";
 
 const StyledInput = styled.input`
   background: ${(props) => props.background};
@@ -32,7 +31,7 @@ Input.propTypes = {
 };
 
 Input.defaultProps = {
-  placeholder: WRITE_HERE,
+  placeholder: "write here...",
   background: colors.white,
   color: colors.black,
   width: "20rem",
