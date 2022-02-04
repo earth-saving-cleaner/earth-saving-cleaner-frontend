@@ -4,10 +4,11 @@
   "plugins": ["simple-import-sort"],
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-props-no-spreading": "off",
     "no-param-reassign": 0,
-    "prettier/prettier": ["error"],
+    "prettier/prettier": ["warn", { "endOfLine": "auto" }],
     "no-unused-vars": "warn",
-    "no-var": "error",
+    "no-var": "warn",
     "no-console": "warn",
     "no-debugger": "warn"
   }

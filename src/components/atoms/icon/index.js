@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import {
@@ -39,8 +40,8 @@ import {
 const Wrapper = styled.span`
   display: flex;
   align-items: center;
-  width: 1.2em;
-  height: 1.2em;
+  width: 1.2rem;
+  height: 1.2rem;
   box-sizing: border-box;
 
   & > svg {
@@ -51,12 +52,12 @@ const Wrapper = styled.span`
   }
 `;
 
-const Icon = ({ icon, ...props }) => {
+function Icon({ icon, ...props }) {
   let svg;
 
   switch (icon) {
     case "feed":
-      svg = <IoHomeOutline />; //<IoHome />; or <IoHomeSharp />;
+      svg = <IoHomeOutline />; // <IoHome />; or <IoHomeSharp />;
       break;
     case "map":
       svg = <IoMapOutline />; // <IoMap />; or <IoMapSharp />;
@@ -83,7 +84,7 @@ const Icon = ({ icon, ...props }) => {
       svg = <IoPaperPlaneOutline />; // <IoPaperPlane />; or <IoPaperPlaneSharp />;
       break;
     case "location":
-      svg = <IoLocationOutline />; //<IoLocation />; or <IoLocationSharp />;
+      svg = <IoLocationOutline />; // <IoLocation />; or <IoLocationSharp />;
       break;
     case "trashCanLine":
       svg = <IoTrashOutline />;
@@ -94,18 +95,26 @@ const Icon = ({ icon, ...props }) => {
     case "movingPerson":
       svg = <IoWalkOutline />;
       break;
+    default:
+      console.log("Check icon type!!!");
+      svg = <IoHomeOutline />; // <IoHome />; or <IoHomeSharp />;
   }
+
   return <Wrapper {...props}>{svg}</Wrapper>;
-};
+}
 
-export default Icon;
-
-Icon.PropTypes = {
-  icon: PropTypes.string,
-  isRequired,
+Icon.propTypes = {
+  icon: PropTypes.string.isRequired,
   width: PropTypes.number,
   height: PropTypes.number,
 };
+
+Icon.defaultProps = {
+  width: 1.2,
+  height: 1.2,
+};
+
+export default Icon;
 
 // Use Ex:
 // const StyledIcon = styled(Icon)`
