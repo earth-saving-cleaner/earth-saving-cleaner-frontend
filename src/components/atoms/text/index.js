@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import themes from "../../../globalstyle/theme";
 
 const StyledText = styled.div`
   font-size: ${({ theme, size }) => theme.fontSizes[size]};
-  font-weight: ${(props) => props.weight || "normal"};
+  font-weight: ${(props) => props.weight};
 `;
 
 function Text({ text, size, ...props }) {
@@ -17,7 +18,13 @@ function Text({ text, size, ...props }) {
 
 Text.propTypes = {
   text: PropTypes.string.isRequired,
-  size: PropTypes.string.isRequired,
+  size: PropTypes.string,
+  weight: PropTypes.string,
+};
+
+Text.defaultProps = {
+  size: themes.fontSizes.base,
+  weight: "normal",
 };
 
 export default Text;
