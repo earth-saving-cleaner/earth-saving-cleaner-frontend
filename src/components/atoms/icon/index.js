@@ -37,22 +37,53 @@ import {
   IoWalkSharp,
 } from "react-icons/io5";
 
+function getSize(size) {
+  let width = "5rem";
+  let heigth = "5rem";
+
+  switch (size) {
+    case "xs":
+      width = "2.5rem";
+      heigth = "2.5rem";
+      break;
+    case "sm":
+      width = "5rem";
+      heigth = "5rem";
+      break;
+    case "md":
+      width = "10rem";
+      heigth = "10rem";
+      break;
+    case "lg":
+      width = "15rem";
+      heigth = "15rem";
+      break;
+    default:
+      width = `${size}rem`;
+      heigth = `${size}rem`;
+  }
+
+  return { width, heigth };
+}
+
 const Wrapper = styled.span`
   display: flex;
   align-items: center;
-  width: 1.2rem;
-  height: 1.2rem;
+  width: ${(props) => getSize(props.size).width};
+  heigth: ${(props) => getSize(props.size).heigth};
   box-sizing: border-box;
 
   & > svg {
     width: 100%;
     height: 100%;
-    fill: currentcolor;
-    stroke: currentcolor;
+    fill: ${(props) => props.fill || "currentcolor"};
+    stroke: ${(props) => props.stroke || "currentcolor"};
   }
 `;
 
-function Icon({ icon, ...props }) {
+// stroke: 도형 선의 색상을 지정하는 속성입니다.
+
+function Icon({ icon, size, ...props }) {
   let svg;
 
   switch (icon) {
@@ -100,28 +131,23 @@ function Icon({ icon, ...props }) {
       svg = <IoHomeOutline />; // <IoHome />; or <IoHomeSharp />;
   }
 
-  return <Wrapper {...props}>{svg}</Wrapper>;
+  return (
+    <Wrapper size={size} {...props}>
+      {svg}
+    </Wrapper>
+  );
 }
 
 Icon.propTypes = {
   icon: PropTypes.string.isRequired,
-  width: PropTypes.number,
-  height: PropTypes.number,
-};
-
-Icon.defaultProps = {
-  width: 1.2,
-  height: 1.2,
+  size: PropTypes.string.isRequired,
 };
 
 export default Icon;
 
 // Use Ex:
 // const StyledIcon = styled(Icon)`
-//   flex: none;
-//   margin-right: 50px;
-//   border: 1px solid ${palette("grayscale", 0)};
-//   border-radius: 50%;
+//   margin: 15px;
 // `;
 
-// <StyledIcon icon="feed" width={48} />
+// <StyledIcon icon="likeFill" size="sm" fill="red" />
