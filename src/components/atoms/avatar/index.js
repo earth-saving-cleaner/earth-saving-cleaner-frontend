@@ -3,32 +3,29 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 function getSize(size) {
-  let width = "5rem";
-  let heigth = "5rem";
+  if (typeof size === "number") {
+    return { width: size, height: size };
+  }
+
+  let rem = "5rem";
 
   switch (size) {
     case "xs":
-      width = "2.5rem";
-      heigth = "2.5rem";
+      rem = "2.5rem";
       break;
     case "sm":
-      width = "5rem";
-      heigth = "5rem";
+      rem = "5rem";
       break;
     case "md":
-      width = "10rem";
-      heigth = "10rem";
+      rem = "10rem";
       break;
     case "lg":
-      width = "15rem";
-      heigth = "15rem";
+      rem = "15rem";
       break;
-    default:
-      width = `${size}rem`;
-      heigth = `${size}rem`;
+    // no default
   }
 
-  return { width, heigth };
+  return { width: rem, heigth: rem };
 }
 
 const StyledImg = styled.img`
@@ -43,7 +40,7 @@ function Avatar({ url, size, ...props }) {
 
 Avatar.propTypes = {
   url: PropTypes.string.isRequired,
-  size: PropTypes.string.isRequired,
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 export default Avatar;
