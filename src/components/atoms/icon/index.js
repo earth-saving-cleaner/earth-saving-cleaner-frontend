@@ -67,14 +67,14 @@ const Wrapper = styled.span`
   display: flex;
   align-items: center;
   width: ${(props) => getSize(props.size).width};
-  heigth: ${(props) => getSize(props.size).heigth};
+  height: ${(props) => getSize(props.size).heigth};
   box-sizing: border-box;
 
   & > svg {
     width: 100%;
     height: 100%;
-    fill: ${(props) => props.fill || "currentcolor"};
-    stroke: ${(props) => props.stroke || "currentcolor"};
+    fill: ${(props) => props.fill};
+    stroke: ${(props) => props.stroke};
   }
 `;
 
@@ -137,7 +137,19 @@ function Icon({ icon, size, ...props }) {
 
 Icon.propTypes = {
   icon: PropTypes.string.isRequired,
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  fill: PropTypes.string,
+  stroke: PropTypes.string,
+};
+
+Icon.defaultProps = {
+  size: "5rem",
+  width: "5rem",
+  height: "5rem",
+  fill: "currentcolor",
+  stroke: "currentcolor",
 };
 
 export default Icon;

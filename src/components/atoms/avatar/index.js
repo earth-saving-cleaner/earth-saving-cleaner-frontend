@@ -39,8 +39,17 @@ function Avatar({ url, size, ...props }) {
 }
 
 Avatar.propTypes = {
-  url: PropTypes.string.isRequired,
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  url: PropTypes.string,
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.string,
+  height: PropTypes.string,
+};
+
+Avatar.defaultProps = {
+  url: "https://lh3.googleusercontent.com/a/AATXAJzdJ5gTfflTC1--vXDDRH1n-wX7NQ9mJRViLtgc=s96-c",
+  size: "5rem",
+  width: "5rem",
+  height: "5rem",
 };
 
 export default Avatar;
