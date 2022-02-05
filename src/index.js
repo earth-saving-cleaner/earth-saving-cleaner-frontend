@@ -1,33 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import createSagaMiddleware from "redux-saga";
-import { configureStore } from "@reduxjs/toolkit";
 import { ThemeProvider } from "styled-components";
-import theme from "./globalstyle/theme";
-import GlobalStyle from "./globalstyle/globalStyle";
+import { BrowserRouter } from "react-router-dom";
 
-import "./index.css";
-import App from "./App";
-import catsReducer from "./state";
-import catSaga from "./catSaga";
+import theme from "./theme/theme";
+import GlobalStyle from "./theme/globalStyle";
+import App from "./components/App";
+import createStore from "./configureStore";
 
-const saga = createSagaMiddleware();
-const store = configureStore({
-  reducer: { cats: catsReducer },
-  middleware: [saga],
-});
-
-saga.run(catSaga);
-
-console.log("theme ====>", theme);
+// const store = createStore();
 
 ReactDOM.render(
-  <Provider store={store}>
+  <BrowserRouter>
+    {/* <Provider store={store}> */}
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <App />
     </ThemeProvider>
-  </Provider>,
+    {/* </Provider> */}
+  </BrowserRouter>,
   document.getElementById("root"),
 );

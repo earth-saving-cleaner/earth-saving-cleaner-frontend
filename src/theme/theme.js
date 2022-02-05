@@ -19,6 +19,12 @@ const paddings = {
   xxxl: calcRem(1.8),
 };
 
+const fontWeight = {
+  light: 200,
+  normal: 400,
+  bold: 700,
+};
+
 const margins = {
   small: calcRem(0.4),
   base: calcRem(0.8),
