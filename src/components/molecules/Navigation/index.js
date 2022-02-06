@@ -8,12 +8,15 @@ import themes from "../../../theme/theme";
 const StyledNavigation = styled.div`
   width: 5rem;
   text-align: center;
+  border: 0.5rem solid rgba(255, 255, 255, 0);
 
   ${({ isSelected, stroke }) =>
     isSelected &&
     `
+    border: 0;
     border-bottom: 0.5rem solid;
     border-color: ${stroke};
+    border-top: 0.5rem solid rgba(255, 255, 255, 0);
   `}
 
   span {
@@ -24,7 +27,7 @@ const StyledNavigation = styled.div`
 function Navigation({ ...props }) {
   return (
     <StyledNavigation {...props}>
-      <Icon icon="feed" {...props} />
+      <Icon icon={props.iconType} {...props} />
     </StyledNavigation>
   );
 }
@@ -38,7 +41,7 @@ Navigation.propTypes = {
 
 Navigation.defaultProps = {
   isSelected: false,
-  size: "md",
+  size: "sm",
   stroke: themes.colors.white,
 };
 
