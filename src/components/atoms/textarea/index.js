@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import themes from "../../../globalstyle/theme";
+import themes from "../../../theme/theme";
 
 const { fontSizes, paddings } = themes;
 
