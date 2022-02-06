@@ -46,16 +46,16 @@ function getSize(size) {
 
   switch (size) {
     case "xs":
-      rem = "2.5rem";
+      rem = "2rem";
       break;
     case "sm":
-      rem = "5rem";
+      rem = "3rem";
       break;
     case "md":
-      rem = "10rem";
+      rem = "3.5rem";
       break;
     case "lg":
-      rem = "15rem";
+      rem = "5rem";
       break;
     // no default
   }
