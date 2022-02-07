@@ -8,21 +8,23 @@ import { Navigation } from "../../molecules";
 
 const StyledHeader = styled.div`
   display: flex;
+  position: fixed;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 5.5rem;
+  height: 5rem;
   padding: 0rem 1rem;
+  z-index: 9;
   background: ${({ theme }) => theme.gradientColor.purple};
 `;
 
-const Container = styled.div`
+const Wrapper = styled.div`
   display: inline-flex;
   justify-content: space-between;
   min-width: 10rem;
 `;
 
-const MiddleContainer = styled.div`
+const MiddleWrapper = styled.div`
   display: inline-flex;
   justify-content: space-between;
   min-width: 15rem;
@@ -41,17 +43,17 @@ function Header({ ...props }) {
 
   return (
     <StyledHeader>
-      <Container>
-        <Logo onClikc={props.onClickLogo} />
-      </Container>
-      <MiddleContainer>
+      <Wrapper>
+        <Logo onClick={props.onClickLogo} />
+      </Wrapper>
+      <MiddleWrapper>
         <Navigation iconType="feed" isSelected={test} />
         <Navigation iconType="map" />
-      </MiddleContainer>
-      <Container>
+      </MiddleWrapper>
+      <Wrapper>
         <Navigation iconType="createFeed" />
         <Navigation iconType="myPage" />
-      </Container>
+      </Wrapper>
     </StyledHeader>
   );
 }
