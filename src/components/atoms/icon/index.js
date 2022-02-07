@@ -49,7 +49,7 @@ function getSize(size) {
       rem = "2rem";
       break;
     case "sm":
-      rem = "3rem";
+      rem = "2.5rem";
       break;
     case "md":
       rem = "3.5rem";
@@ -64,11 +64,9 @@ function getSize(size) {
 }
 
 const Wrapper = styled.span`
-  display: flex;
-  align-items: center;
+  display: inline-block;
   width: ${(props) => getSize(props.size).width};
   height: ${(props) => getSize(props.size).heigth};
-  box-sizing: border-box;
 
   & > svg {
     width: 100%;
