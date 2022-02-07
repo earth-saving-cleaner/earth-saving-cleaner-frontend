@@ -14,13 +14,13 @@ function getSize(size) {
       rem = "2.5rem";
       break;
     case "sm":
-      rem = "5rem";
+      rem = "3.5rem";
       break;
     case "md":
-      rem = "10rem";
+      rem = "5rem";
       break;
     case "lg":
-      rem = "15rem";
+      rem = "10rem";
       break;
     // no default
   }
