@@ -7,21 +7,15 @@ import themes from "../../../theme/theme";
 
 const StyledNavigation = styled.div`
   width: 5rem;
+  height: 5rem;
   text-align: center;
-  border: 0.5rem solid rgba(255, 255, 255, 0);
+  line-height: 7rem;
 
   ${({ isSelected, stroke }) =>
     isSelected &&
     `
-    border: 0;
-    border-bottom: 0.5rem solid;
-    border-color: ${stroke};
-    border-top: 0.5rem solid rgba(255, 255, 255, 0);
+    border-bottom: 0.5rem solid ${stroke};
   `}
-
-  span {
-    display: inline-block;
-  }
 `;
 
 function Navigation({ ...props }) {
