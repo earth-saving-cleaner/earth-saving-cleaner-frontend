@@ -81,6 +81,7 @@ const theme = {
   device,
   paddings,
   margins,
+  fontWeight,
 };
 
 export default theme;
