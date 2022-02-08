@@ -1,5 +1,6 @@
 import { all, fork } from "redux-saga/effects";
+import { watchGetFeed, watchAddLikeUser } from "./sagas/feed";
 
 export default function* rootSaga() {
-  yield all();
+  yield all([fork(watchGetFeed), fork(watchAddLikeUser)]);
 }
