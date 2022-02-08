@@ -1,12 +1,14 @@
 import React from "react";
+
 import styled from "styled-components";
 import PropTypes from "prop-types";
+
 import { Text } from "../../atoms";
 
 const Wrapper = styled.div`
+  display: flex;
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
-  display: flex;
   justify-content: center;
 `;
 

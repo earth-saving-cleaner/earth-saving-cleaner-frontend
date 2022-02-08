@@ -1,9 +1,10 @@
 import React from "react";
+
 import styled from "styled-components";
+
 import { Text } from "../../atoms";
 import { RankingList, UserInfo } from "../../organisms";
 import { MyPageGrid } from "../../templates";
-import theme from "../../../theme/theme";
 
 const user = {
   nickname: "user1",

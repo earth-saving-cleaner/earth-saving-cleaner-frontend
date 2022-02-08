@@ -1,9 +1,12 @@
 import React from "react";
+
 import styled from "styled-components";
 import PropTypes from "prop-types";
+
+import theme from "../../../theme/theme";
+
 import { Avatar, Button } from "../../atoms";
 import { UserLevel, UserPerformance } from "../../molecules";
-import theme from "../../../theme/theme";
 
 const Wrapper = styled.div`
   display: flex;

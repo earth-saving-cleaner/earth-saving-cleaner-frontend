@@ -10,14 +10,14 @@ const Wrapper = styled.div`
 
 const Right = styled.div`
   width: 60%;
-  text-align: center;
   margin: 3rem;
+  text-align: center;
 `;
 
 const Left = styled.div`
+  display: flex;
   width: 40%;
   text-align: center;
-  display: flex;
   justify-content: center;
   align-items: center;
 `;

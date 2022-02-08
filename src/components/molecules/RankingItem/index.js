@@ -1,23 +1,25 @@
 import React from "react";
+
 import styled from "styled-components";
 import PropTypes from "prop-types";
+
 import { Avatar, Text } from "../../atoms";
 
 const Wrapper = styled.div`
+  display: flex;
   width: 100%;
   margin: 2rem;
   background: white;
-  display: flex;
-  justify-content: space-between;
   border-radius: 1rem;
+  justify-content: space-between;
 `;
 
 const UserProfile = styled.div`
-  min-width: 150px;
   display: flex;
+  min-width: 150px;
+  margin: 1rem;
   align-items: center;
   justify-content: space-between;
-  margin: 1rem;
 `;
 
 const StyledText = styled(Text)`
@@ -30,8 +32,8 @@ const Performance = styled.div`
 
 const Score = styled.div`
   display: flex;
-  align-items: center;
   margin-right: 2rem;
+  align-items: center;
 `;
 
 function RankingItem({ profileImage, nickname, level, score, index, ...props }) {
