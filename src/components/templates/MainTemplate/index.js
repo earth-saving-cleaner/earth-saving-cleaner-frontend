@@ -14,7 +14,7 @@ const ContentWrapper = styled.div`
   position: absolute;
   top: 5rem;
   z-index: 2;
-  overflow: scroll;
+  overflow: auto;
 `;
 
 function MainTemplate({ children, ...props }) {

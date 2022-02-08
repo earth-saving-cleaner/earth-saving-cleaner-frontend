@@ -36,6 +36,7 @@ import {
   IoWalk,
   IoWalkSharp,
 } from "react-icons/io5";
+import { noop } from "lodash";
 
 function getSize(size) {
   if (typeof size === "number") {
@@ -162,7 +163,7 @@ Icon.defaultProps = {
   height: "5rem",
   fill: "currentcolor",
   stroke: "currentcolor",
-  onClickIcon: () => {},
+  onClickIcon: noop,
   param: null,
 };
 
