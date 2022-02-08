@@ -1,15 +1,15 @@
 import axios from "axios";
 
 import { all, fork, takeLatest, put, call } from "redux-saga/effects";
-import { LOG_IN_SUCCESS, LOG_IN_FAILURE } from "../slices/loginSlice";
+import { LoginSuccess, LoginFailure } from "../slices/loginSlice";
 
-function* logIn(action) {
+function* logIn({ type, userInfo }) {
   const loginApi = async () => {
     const response = await axios({
       url: process.env.REACT_APP_LOGIN_URL,
       method: "post",
       data: {
-        token: action.userInfo,
+        token: userInfo.tokenId,
       },
     });
     return response.data;
@@ -18,19 +18,19 @@ function* logIn(action) {
   try {
     const res = yield call(loginApi);
     yield put({
-      type: LOG_IN_SUCCESS,
+      type: LoginSuccess,
       data: res,
     });
-  } catch (error) {
+  } catch (err) {
     yield put({
-      type: LOG_IN_FAILURE,
-      data: error.response.data,
+      type: LoginFailure,
+      data: err.response.data,
     });
   }
 }
 
 function* watchLogin() {
-  yield takeLatest("LOG_IN_REQUEST", logIn);
+  yield takeLatest("LoginRequest", logIn);
 }
 
 export function* loginSaga() {
