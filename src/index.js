@@ -9,16 +9,16 @@ import GlobalStyle from "./theme/globalStyle";
 import App from "./components/App";
 import createStore from "./configureStore";
 
-// const store = createStore();
+const store = createStore();
 
 ReactDOM.render(
   <BrowserRouter>
-    {/* <Provider store={store}> */}
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <App />
-    </ThemeProvider>
-    {/* </Provider> */}
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <App />
+      </ThemeProvider>
+    </Provider>
   </BrowserRouter>,
   document.getElementById("root"),
 );
