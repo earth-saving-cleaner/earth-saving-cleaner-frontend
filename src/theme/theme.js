@@ -46,7 +46,7 @@ const colors = {
   white: "#FFFFFF",
   black: "#000000",
   gray_1: "#F0EDED",
-  gray_2: "#C4C4C4",
+  gray_2: "#e5e4e4",
   gray_3: "#8C8A8A",
   green_1: "#5CC793",
   green_2: "#3cb46e",
@@ -81,6 +81,7 @@ const theme = {
   device,
   paddings,
   margins,
+  fontWeight,
 };
 
 export default theme;
