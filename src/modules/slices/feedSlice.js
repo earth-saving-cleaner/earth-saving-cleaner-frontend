@@ -39,6 +39,24 @@ export const feedSlice = createSlice({
       state.isLoading = true;
       state.error = null;
     },
+    addFeeds: (state) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    addFeedsSuccess: (state, action) => {
+      state.isLoading = false;
+
+      action.payload.data.forEach((feed) => {
+        state.feeds.data.push(feed);
+      });
+
+      state.feeds.lastId = action.payload.lastId;
+      state.error = null;
+    },
+    addFeedsFailure: (state) => {
+      state.isLoading = true;
+      state.error = null;
+    },
   },
 });
 

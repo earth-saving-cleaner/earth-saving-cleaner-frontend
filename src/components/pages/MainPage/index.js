@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { MainTemplate } from "../../templates";
+import useInfiniteScroll from "../../../hooks/useInfinitescroll";
 import { feedSliceActions } from "../../../modules/slices/feedSlice";
+import { MainTemplate } from "../../templates";
 
 import { FeedCard } from "../../organisms";
 
@@ -12,6 +13,18 @@ function MainPage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { isLoading, feeds, error } = useSelector((state) => state.feed);
+
+  const fetchDataOnScroll = useCallback(async () => {
+    try {
+      dispatch(feedSliceActions.addFeeds({ limit: 3, id: feeds?.lastId }));
+    } catch (err) {
+      console.log(err.message);
+    } finally {
+      setIsFetching(false);
+    }
+  }, [feeds]);
+
+  const [isFetching, setIsFetching] = useInfiniteScroll(fetchDataOnScroll);
 
   const handleLikeIconClick = (feedId) => {
     dispatch(feedSliceActions.addLikeUser({ feedId, userId }));

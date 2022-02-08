@@ -34,10 +34,29 @@ function* addLikeUserSaga(action) {
   }
 }
 
+function* addFeedsSaga(action) {
+  const { addFeedsSuccess, addFeedsFailure } = feedSliceActions;
+  try {
+    const { data, result, lastId } = yield call(getFeeds, action.payload);
+
+    if (result === "ok") {
+      yield put(addFeedsSuccess({ data, lastId }));
+    } else {
+      throw new Error();
+    }
+  } catch (err) {
+    yield put(addFeedsFailure(err));
+  }
+}
+
 export function* watchGetFeed() {
   yield takeEvery(feedSliceActions.getFeeds, getFeedSaga);
 }
 
 export function* watchAddLikeUser() {
   yield takeEvery(feedSliceActions.addLikeUser, addLikeUserSaga);
+}
+
+export function* watchAddFeedsSaga() {
+  yield takeEvery(feedSliceActions.addFeeds, addFeedsSaga);
 }
