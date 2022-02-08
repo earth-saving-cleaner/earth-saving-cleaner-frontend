@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { all, fork, takeLatest, put, call } from "redux-saga/effects";
-import { LoginSuccess, LoginFailure } from "../slices/loginSlice";
+import { loginSuccess, loginFailure } from "../slices/loginSlice";
 
 function* logIn({ type, userInfo }) {
   const loginApi = async () => {
@@ -18,19 +18,19 @@ function* logIn({ type, userInfo }) {
   try {
     const res = yield call(loginApi);
     yield put({
-      type: LoginSuccess,
+      type: loginSuccess,
       data: res,
     });
   } catch (err) {
     yield put({
-      type: LoginFailure,
+      type: loginFailure,
       data: err.response.data,
     });
   }
 }
 
 function* watchLogin() {
-  yield takeLatest("LoginRequest", logIn);
+  yield takeLatest("loginRequest", logIn);
 }
 
 export function* loginSaga() {

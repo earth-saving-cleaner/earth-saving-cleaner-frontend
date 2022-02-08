@@ -8,7 +8,7 @@ const initialState = {
 
 export const loginRequestAction = (userInfo) => {
   return {
-    type: "LoginRequest",
+    type: "loginRequest",
     userInfo,
   };
 };
@@ -17,15 +17,15 @@ export const loginSlice = createSlice({
   name: "login",
   initialState,
   reducers: {
-    LoginSuccess: (state, data) => {
+    loginSuccess: (state, data) => {
       state.loginData = data;
       state.loginSuccess = true;
     },
-    LoginFailure: (state, data) => {
+    loginFailure: (state, data) => {
       state.loginData = data;
       state.loginFailure = true;
     },
-    Logout: (state) => {
+    logout: (state) => {
       state.loginData = null;
       state.loginSuccess = false;
       state.loginFailure = false;
@@ -33,5 +33,5 @@ export const loginSlice = createSlice({
   },
 });
 
-export const { LoginSuccess, LoginFailure, Logout } = loginSlice.actions;
+export const { loginSuccess, loginFailure, logout } = loginSlice.actions;
 export default loginSlice.reducer;
