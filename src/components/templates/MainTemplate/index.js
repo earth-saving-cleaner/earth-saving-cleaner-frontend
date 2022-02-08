@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
 
 import { Header } from "../../organisms";
 
@@ -18,9 +19,14 @@ const ContentWrapper = styled.div`
 `;
 
 function MainTemplate({ children, ...props }) {
+  const history = useHistory();
+
+  const handleLogoClick = () => {
+    history.push("/");
+  };
   return (
     <StyledContainer>
-      <Header />
+      <Header onClickLogo={handleLogoClick} />
       <ContentWrapper>{children}</ContentWrapper>
     </StyledContainer>
   );
