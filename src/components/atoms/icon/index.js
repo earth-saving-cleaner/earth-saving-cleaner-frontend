@@ -35,6 +35,7 @@ import {
   IoWalkOutline,
   IoWalk,
   IoWalkSharp,
+  IoLeafSharp,
 } from "react-icons/io5";
 
 function getSize(size) {
@@ -120,6 +121,9 @@ function Icon({ icon, size, ...props }) {
       break;
     case "movingPerson":
       svg = <IoWalkOutline />;
+      break;
+    case "leaf":
+      svg = <IoLeafSharp />;
       break;
     default:
       console.log("Check icon type!!!");
