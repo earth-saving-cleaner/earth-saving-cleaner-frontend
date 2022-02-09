@@ -69,7 +69,7 @@ function Signup() {
     }
   }, [loginData, signupData]);
 
-  const handleChange = (e) => {
+  const handleNicknameChange = (e) => {
     setResultNotice(false);
     setUserNickname(e.target.value);
   };
@@ -79,7 +79,7 @@ function Signup() {
     userNickname,
   };
 
-  const handleSignup = () => {
+  const handleSingupSubmit = () => {
     dispatch(signupRequestAction(userInfoDetail));
   };
 
@@ -88,8 +88,8 @@ function Signup() {
       <div id="innerWrapper">
         <StyledText text={userEmail} size="lg" weight="500" />
         {resultNotice && <StyledText text="사용중인 닉네임입니다." size="lg" weight="800" />}
-        <StyledInput placeholder="Nickname" value={userNickname} onChange={handleChange} />
-        <StyledButton title="Next" onClick={handleSignup} />
+        <StyledInput placeholder="Nickname" value={userNickname} onChange={handleNicknameChange} />
+        <StyledButton title="Next" onClick={handleSingupSubmit} />
       </div>
     </Wrapper>
   );

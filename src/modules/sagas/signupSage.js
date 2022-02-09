@@ -15,15 +15,16 @@ function* signup(userInfo) {
 
   try {
     const res = yield call(signupApi);
-    if (res.result === "fail") {
-      yield put({
-        type: signupFailure,
-        data: res.message,
-      });
-    } else {
+
+    if (res.result === "ok") {
       yield put({
         type: signupSuccess,
         data: res,
+      });
+    } else {
+      yield put({
+        type: signupFailure,
+        data: res.message,
       });
     }
   } catch (err) {
