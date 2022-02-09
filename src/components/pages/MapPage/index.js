@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-import styled from "styled-components";
-import GoogleMapReact from "google-map-react";
 import axios from "axios";
+import GoogleMapReact from "google-map-react";
+import styled from "styled-components";
 
+import theme from "../../../theme/theme";
 import { Icon } from "../../atoms";
 import { MapTemplate } from "../../templates";
-import theme from "../../../theme/theme";
 
 const StyledIcon = styled(Icon)`
   color: ${(props) => props.color};
