@@ -1,8 +1,18 @@
 import { combineReducers } from "redux";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
+import loginReducer from "./slices/loginSlice";
 import feedSliceReducer from "./slices/feedSlice";
 
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
 const rootReducer = combineReducers({
+  login: loginReducer,
   feed: feedSliceReducer,
 });
 
-export default rootReducer;
+export default persistReducer(persistConfig, rootReducer);
