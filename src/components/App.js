@@ -1,12 +1,14 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 
+import { MainPage } from "./pages";
+
 function App() {
   return (
     <div>
       <Switch>
         <Route path="/" exact>
-          <div>Main page</div>
+          <MainPage />
         </Route>
         <Route path="/mypage" exact>
           <div>My page</div>

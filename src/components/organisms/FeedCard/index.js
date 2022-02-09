@@ -1,6 +1,8 @@
 import React from "react";
-import styled from "styled-components";
 import PropTypes from "prop-types";
+
+import styled from "styled-components";
+import { noop } from "lodash";
 
 import { Icon, Text, Img } from "../../atoms";
 import { FeedHeader } from "../../molecules";
@@ -35,30 +37,61 @@ const DescriptionWrapper = styled.div`
 `;
 
 function FeedCard({ ...props }) {
-  const mockDescription =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer faucibus aliquam ex, ac vulputate purus placerat eget. Integer consectetur...";
-  const mockText1 = "10 likes";
-  const mockText2 = "10 comments";
+  const { feedId, isIconFilled } = props;
 
   return (
     <Container>
-      <FeedHeader />
-      <Img width="100%" />
+      <FeedHeader
+        url={props.avatarUrl}
+        nickname={props.nickname}
+        address="Ardyaloon, Western Australia 6725, Australia"
+      />
+      <Img src={props.imageUrl} alt="feed image" width="100%" />
       <StatusWrapper>
         <IconWrapper>
-          <Icon icon="likeLine" size="sm" />
-          <Icon icon="comment" size="xs" />
+          <Icon
+            icon={isIconFilled ? "likeFill" : "likeLine"}
+            size="sm"
+            onClickIcon={isIconFilled ? noop : props.onClickLikeIcon}
+            param={feedId}
+          />
+          <Icon icon="comment" size="xs" onClickIcon={props.onClickCommentIcon} />
         </IconWrapper>
         <TextWrapper>
-          <Text text={mockText1} size="base" />
-          <Text text={mockText2} size="base" />
+          <Text text={`${props.like} likes`} size="base" />
+          <Text text={`${props.comment} comments`} size="base" />
         </TextWrapper>
       </StatusWrapper>
       <DescriptionWrapper>
-        <Text text={mockDescription} size="base" />
+        <Text text={props.content} size="base" />
       </DescriptionWrapper>
     </Container>
   );
 }
+
+FeedCard.propTypes = {
+  feedId: PropTypes.string.isRequired,
+  nickname: PropTypes.string,
+  avatarUrl: PropTypes.string,
+  imageUrl: PropTypes.string,
+  comment: PropTypes.number,
+  like: PropTypes.number,
+  content: PropTypes.string,
+  onClickLikeIcon: PropTypes.func,
+  onClickCommentIcon: PropTypes.func,
+  isIconFilled: PropTypes.bool,
+};
+
+FeedCard.defaultProps = {
+  nickname: "no name",
+  avatarUrl: "https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-mediumSquareAt3X-v2.jpg",
+  imageUrl: "https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-mediumSquareAt3X-v2.jpg",
+  comment: "",
+  like: 0,
+  content: 0,
+  onClickLikeIcon: noop,
+  onClickCommentIcon: noop,
+  isIconFilled: false,
+};
 
 export default FeedCard;

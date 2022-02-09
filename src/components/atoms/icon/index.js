@@ -37,6 +37,7 @@ import {
   IoWalkSharp,
   IoLeafSharp,
 } from "react-icons/io5";
+import { noop } from "lodash";
 
 function getSize(size) {
   if (typeof size === "number") {
@@ -68,6 +69,7 @@ const Wrapper = styled.span`
   display: inline-block;
   width: ${(props) => getSize(props.size).width};
   height: ${(props) => getSize(props.size).heigth};
+  cursor: pointer;
 
   & > svg {
     width: 100%;
@@ -79,7 +81,7 @@ const Wrapper = styled.span`
 
 // stroke: 도형 선의 색상을 지정하는 속성입니다.
 
-function Icon({ icon, size, ...props }) {
+function Icon({ icon, size, onClickIcon, ...props }) {
   let svg;
 
   switch (icon) {
@@ -130,8 +132,19 @@ function Icon({ icon, size, ...props }) {
       svg = <IoHomeOutline />; // <IoHome />; or <IoHomeSharp />;
   }
 
+  const onClickHandler = () => {
+    const { param } = props;
+
+    if (param) {
+      onClickIcon(param);
+      return;
+    }
+
+    onClickIcon();
+  };
+
   return (
-    <Wrapper size={size} {...props}>
+    <Wrapper size={size} onClick={onClickHandler} {...props}>
       {svg}
     </Wrapper>
   );
@@ -144,6 +157,8 @@ Icon.propTypes = {
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   fill: PropTypes.string,
   stroke: PropTypes.string,
+  onClickIcon: PropTypes.func,
+  param: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object]),
 };
 
 Icon.defaultProps = {
@@ -152,6 +167,8 @@ Icon.defaultProps = {
   height: "5rem",
   fill: "currentcolor",
   stroke: "currentcolor",
+  onClickIcon: noop,
+  param: null,
 };
 
 export default Icon;
