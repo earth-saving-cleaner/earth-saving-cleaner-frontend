@@ -46,9 +46,9 @@ const StyledButton = styled(Button)`
 `;
 
 function Signup() {
-  const [userEmail, setUserEmail] = useState("");
-  const [userNickname, setUserNickname] = useState("");
-  const [userGoogleInfo, setGoogleUserInfo] = useState("");
+  const [email, setEmail] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [googleInfo, setGoogleInfo] = useState("");
   const [resultNotice, setResultNotice] = useState(false);
   const dispatch = useDispatch();
   const loginData = useSelector((state) => state.login.loginData);
@@ -56,8 +56,8 @@ function Signup() {
 
   useEffect(() => {
     if (loginData) {
-      setGoogleUserInfo(loginData.data.googleToken);
-      setUserEmail(loginData.data.email);
+      setGoogleInfo(loginData.data.googleToken);
+      setEmail(loginData.data.email);
     }
 
     if (signupData) {
@@ -71,24 +71,19 @@ function Signup() {
 
   const handleNicknameChange = (e) => {
     setResultNotice(false);
-    setUserNickname(e.target.value);
-  };
-
-  const userInfoDetail = {
-    userGoogleInfo,
-    userNickname,
+    setNickname(e.target.value);
   };
 
   const handleSingupSubmit = () => {
-    dispatch(signupRequestAction(userInfoDetail));
+    dispatch(signupRequestAction({ googleInfo, nickname }));
   };
 
   return (
     <Wrapper>
       <div id="innerWrapper">
-        <StyledText text={userEmail} size="lg" weight="500" />
+        <StyledText text={email} size="lg" weight="500" />
         {resultNotice && <StyledText text="사용중인 닉네임입니다." size="lg" weight="800" />}
-        <StyledInput placeholder="Nickname" value={userNickname} onChange={handleNicknameChange} />
+        <StyledInput placeholder="Nickname" value={nickname} onChange={handleNicknameChange} />
         <StyledButton title="Next" onClick={handleSingupSubmit} />
       </div>
     </Wrapper>
