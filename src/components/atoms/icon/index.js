@@ -23,6 +23,9 @@ import {
   IoChatbubbleOutline,
   IoChatbubble,
   IoChatbubbleSharp,
+  IoClose,
+  IoCloseOutline,
+  IoCloseSharp,
   IoPaperPlaneOutline,
   IoPaperPlane,
   IoPaperPlaneSharp,
@@ -36,6 +39,8 @@ import {
   IoWalk,
   IoWalkSharp,
 } from "react-icons/io5";
+import { MdSaveAlt } from "react-icons/md";
+
 import { noop } from "lodash";
 
 function getSize(size) {
@@ -96,8 +101,8 @@ function Icon({ icon, size, onClickIcon, ...props }) {
     case "myPage":
       svg = <IoPersonOutline />; // <IoPerson />; or <IoPersonSharp />;
       break;
-    case "saveFeed":
-      svg = <IoCloudUploadOutline />; // <IoCloudUpload />; or <IoCloudUploadSharp />;
+    case "save":
+      svg = <MdSaveAlt />; // <IoCloudUpload />; or <IoCloudUploadSharp />;
       break;
     case "likeLine":
       svg = <IoHeartOutline />;
@@ -108,11 +113,11 @@ function Icon({ icon, size, onClickIcon, ...props }) {
     case "comment":
       svg = <IoChatbubbleOutline />; // <IoChatbubble />; or <IoChatbubbleSharp />;
       break;
-    case "saveComment":
+    case "send":
       svg = <IoPaperPlaneOutline />; // <IoPaperPlane />; or <IoPaperPlaneSharp />;
       break;
     case "location":
-      svg = <IoLocationOutline />; // <IoLocation />; or <IoLocationSharp />;
+      svg = <IoLocationSharp />; // <IoLocation />; or <IoLocationSharp />;
       break;
     case "trashCanLine":
       svg = <IoTrashOutline />;
@@ -122,6 +127,9 @@ function Icon({ icon, size, onClickIcon, ...props }) {
       break;
     case "movingPerson":
       svg = <IoWalkOutline />;
+      break;
+    case "close":
+      svg = <IoCloseOutline />;
       break;
     default:
       console.log("Check icon type!!!");
