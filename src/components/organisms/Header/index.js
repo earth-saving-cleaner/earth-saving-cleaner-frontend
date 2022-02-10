@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import logo from "../../../assets/logo.png";
 import { Navigation } from "../../molecules";
@@ -40,7 +40,23 @@ const Logo = styled.img.attrs({
 `;
 
 function Header({ ...props }) {
-  const test = true;
+  const history = useHistory();
+  const location = useLocation();
+  const [toggleNav, setToggleNav] = useState(true);
+
+  const goMainPage = () => {
+    setToggleNav(true);
+    history.push("/");
+  };
+
+  const goMapPage = () => {
+    setToggleNav(false);
+    history.push("/map");
+  };
+
+  useEffect(() => {
+    location.pathname === "/" ? setToggleNav(true) : setToggleNav(false);
+  }, [toggleNav]);
 
   return (
     <StyledHeader>
@@ -48,8 +64,8 @@ function Header({ ...props }) {
         <Logo onClick={props.onClickLogo} />
       </Wrapper>
       <MiddleWrapper>
-        <Navigation iconType="feed" isSelected={test} />
-        <Navigation iconType="map" />
+        <Navigation iconType="feed" isSelected={toggleNav} onNavClick={goMainPage} />
+        <Navigation iconType="map" isSelected={!toggleNav} onNavClick={goMapPage} />
       </MiddleWrapper>
       <Wrapper>
         <Navigation iconType="createFeed" />
