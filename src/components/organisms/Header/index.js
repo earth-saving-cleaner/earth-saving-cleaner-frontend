@@ -36,6 +36,7 @@ const Logo = styled.img.attrs({
   width: 35px;
   height: 35px;
   transform: rotate(-10deg);
+  cursor: pointer;
 `;
 
 function Header({ ...props }) {

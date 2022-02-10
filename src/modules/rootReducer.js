@@ -3,6 +3,7 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 import loginReducer from "./slices/loginSlice";
+import feedSliceReducer from "./slices/feedSlice";
 import signupReducer from "./slices/signupSlice";
 
 const persistConfig = {
@@ -12,6 +13,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   login: loginReducer,
+  feed: feedSliceReducer,
   signup: signupReducer,
 });
 

@@ -23,6 +23,9 @@ import {
   IoChatbubbleOutline,
   IoChatbubble,
   IoChatbubbleSharp,
+  IoClose,
+  IoCloseOutline,
+  IoCloseSharp,
   IoPaperPlaneOutline,
   IoPaperPlane,
   IoPaperPlaneSharp,
@@ -36,6 +39,9 @@ import {
   IoWalk,
   IoWalkSharp,
 } from "react-icons/io5";
+import { MdSaveAlt } from "react-icons/md";
+
+import { noop } from "lodash";
 
 function getSize(size) {
   if (typeof size === "number") {
@@ -67,6 +73,7 @@ const Wrapper = styled.span`
   display: inline-block;
   width: ${(props) => getSize(props.size).width};
   height: ${(props) => getSize(props.size).heigth};
+  cursor: pointer;
 
   & > svg {
     width: 100%;
@@ -78,7 +85,7 @@ const Wrapper = styled.span`
 
 // stroke: 도형 선의 색상을 지정하는 속성입니다.
 
-function Icon({ icon, size, ...props }) {
+function Icon({ icon, size, onClickIcon, ...props }) {
   let svg;
 
   switch (icon) {
@@ -94,8 +101,8 @@ function Icon({ icon, size, ...props }) {
     case "myPage":
       svg = <IoPersonOutline />; // <IoPerson />; or <IoPersonSharp />;
       break;
-    case "saveFeed":
-      svg = <IoCloudUploadOutline />; // <IoCloudUpload />; or <IoCloudUploadSharp />;
+    case "save":
+      svg = <MdSaveAlt />; // <IoCloudUpload />; or <IoCloudUploadSharp />;
       break;
     case "likeLine":
       svg = <IoHeartOutline />;
@@ -106,11 +113,11 @@ function Icon({ icon, size, ...props }) {
     case "comment":
       svg = <IoChatbubbleOutline />; // <IoChatbubble />; or <IoChatbubbleSharp />;
       break;
-    case "saveComment":
+    case "send":
       svg = <IoPaperPlaneOutline />; // <IoPaperPlane />; or <IoPaperPlaneSharp />;
       break;
     case "location":
-      svg = <IoLocationOutline />; // <IoLocation />; or <IoLocationSharp />;
+      svg = <IoLocationSharp />; // <IoLocation />; or <IoLocationSharp />;
       break;
     case "trashCanLine":
       svg = <IoTrashOutline />;
@@ -121,13 +128,27 @@ function Icon({ icon, size, ...props }) {
     case "movingPerson":
       svg = <IoWalkOutline />;
       break;
+    case "close":
+      svg = <IoCloseOutline />;
+      break;
     default:
       console.log("Check icon type!!!");
       svg = <IoHomeOutline />; // <IoHome />; or <IoHomeSharp />;
   }
 
+  const onClickHandler = () => {
+    const { param } = props;
+
+    if (param) {
+      onClickIcon(param);
+      return;
+    }
+
+    onClickIcon();
+  };
+
   return (
-    <Wrapper size={size} {...props}>
+    <Wrapper size={size} onClick={onClickHandler} {...props}>
       {svg}
     </Wrapper>
   );
@@ -140,6 +161,8 @@ Icon.propTypes = {
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   fill: PropTypes.string,
   stroke: PropTypes.string,
+  onClickIcon: PropTypes.func,
+  param: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.object]),
 };
 
 Icon.defaultProps = {
@@ -148,6 +171,8 @@ Icon.defaultProps = {
   height: "5rem",
   fill: "currentcolor",
   stroke: "currentcolor",
+  onClickIcon: noop,
+  param: null,
 };
 
 export default Icon;
