@@ -17,8 +17,8 @@ Img.propTypes = {
 Img.defaultProps = {
   alt: "picture",
   src: "https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-mediumSquareAt3X-v2.jpg",
-  width: "10%",
-  height: "10%",
+  width: "100%",
+  height: "100%",
 };
 
 export default Img;
