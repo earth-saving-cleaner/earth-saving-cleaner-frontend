@@ -9,24 +9,24 @@ const StyledIcon = styled(Icon)`
 `;
 
 const StyledInput = styled(Textarea)`
-  width: 80%;
+  width: 90%;
   border-width: 0.1rem;
   border-radius: 1rem;
 `;
 
-function CommentFooter({ handleOnSubmit }) {
+function CommentFooter({ onSubmit }) {
   return (
     <>
       <StyledInput placeholder="comments" />
-      <button type="button" onClick={handleOnSubmit}>
-        <StyledIcon icon="saveComment" size="sm" />
+      <button type="button" onClick={onSubmit}>
+        <StyledIcon icon="send" size="sm" />
       </button>
     </>
   );
 }
 
 CommentFooter.propTypes = {
-  handleOnSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default CommentFooter;
