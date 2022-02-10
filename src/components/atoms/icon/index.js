@@ -131,6 +131,7 @@ function Icon({ icon, size, onClickIcon, ...props }) {
       break;
     case "leaf":
       svg = <IoLeafSharp />;
+      break;
     case "close":
       svg = <IoCloseOutline />;
       break;
