@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-import axios from "axios";
 import GoogleMapReact from "google-map-react";
 import styled from "styled-components";
 
+import { getFeedInfo } from "../../../api";
 import theme from "../../../theme/theme";
 import { Icon } from "../../atoms";
 import { MapTemplate } from "../../templates";
@@ -22,21 +22,21 @@ function MapPage() {
     return feedLocation.map((feed) => {
       const { _id, image, cleaned, coordinates } = feed;
       const [longitude, latitude] = coordinates;
+      const iconType = cleaned ? "leaf" : "trashCanFill";
+      const color = cleaned ? theme.colors.green_1 : theme.colors.red;
 
-      if (cleaned) {
-        return <StyledIcon key={_id} lat={latitude} lng={longitude} icon="leaf" color={theme.colors.green_1} />;
-      }
-
-      return <StyledIcon key={_id} lat={latitude} lng={longitude} icon="trashCanFill" color={theme.colors.red} />;
+      return <StyledIcon key={_id} lat={latitude} lng={longitude} icon={iconType} color={color} />;
     });
   }
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+
       setDefaultProps({
         center: {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
+          lat: latitude,
+          lng: longitude,
         },
         zoom: 14,
       });
@@ -44,22 +44,13 @@ function MapPage() {
   }, []);
 
   useEffect(() => {
-    async function getFeedInfo() {
-      try {
-        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/feeds/locations`, {
-          params: { coordinates: boundary },
-        });
-
-        setFeedLocation(response.data.feedInfo);
-        return response.data.result;
-      } catch (err) {
-        console.error(err);
-        return err.message;
-      }
+    async function getFeedLocation() {
+      const result = await getFeedInfo(boundary);
+      setFeedLocation(result);
     }
 
     if (Object.keys(boundary).length) {
-      getFeedInfo();
+      getFeedLocation();
     }
   }, [zoomLevel, boundary]);
 
