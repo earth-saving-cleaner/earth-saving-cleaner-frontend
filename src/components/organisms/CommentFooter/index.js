@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { Textarea, Icon } from "../../atoms";
 
 const StyledIcon = styled(Icon)`
-  margin-left: 1rem;
+  margin-left: 0.5rem;
 `;
 
 const StyledInput = styled(Textarea)`
@@ -14,19 +14,19 @@ const StyledInput = styled(Textarea)`
   border-radius: 1rem;
 `;
 
-function CommentFooter({ handleCommentSubmit }) {
+function CommentFooter({ handleOnSubmit }) {
   return (
     <>
       <StyledInput placeholder="comments" />
-      <button type="button" onClick={handleCommentSubmit}>
-        <StyledIcon icon="saveComment" size="md" />
+      <button type="button" onClick={handleOnSubmit}>
+        <StyledIcon icon="saveComment" size="sm" />
       </button>
     </>
   );
 }
 
 CommentFooter.propTypes = {
-  handleCommentSubmit: PropTypes.func.isRequired,
+  handleOnSubmit: PropTypes.func.isRequired,
 };
 
 export default CommentFooter;

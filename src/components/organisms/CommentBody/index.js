@@ -14,19 +14,50 @@ const TextWrapper = styled.div`
   margin-left: 1rem;
 `;
 
-function CommentBody({ commets }) {
-  return commets.map((comment) => {
-    const { nickname, profileImage } = comment.author;
-    return (
-      <StyledContainer key={nickname}>
-        <Avatar url={profileImage} size="sm" />
-        <TextWrapper>
-          <Text text={nickname} size="lg" weight="700" />
-          <Text text={comment.comments} size="base" weight="400" />
-        </TextWrapper>
-      </StyledContainer>
-    );
-  });
+const commentList = [
+  {
+    author: {
+      nickname: "Ken",
+      profileImage: "https://www.vanillacoding.co/images/team/ken.jpg",
+    },
+    comments: "what?!",
+  },
+  {
+    author: {
+      nickname: "JK",
+      profileImage: "https://www.vanillacoding.co/images/team/ken.jpg",
+    },
+    comments: "nononononononno?!",
+  },
+  {
+    author: {
+      nickname: "Woo",
+      profileImage: "https://www.vanillacoding.co/images/team/ken.jpg",
+    },
+    comments: "okokokoko good",
+  },
+];
+
+function CommentBody() {
+  return (
+    commentList &&
+    commentList.map((comment) => {
+      const {
+        comments,
+        author: { nickname, profileImage },
+      } = comment;
+
+      return (
+        <StyledContainer key={nickname}>
+          <Avatar url={profileImage} size="sm" />
+          <TextWrapper>
+            <Text text={nickname} size="lg" weight="700" />
+            <Text text={comments} size="base" weight="400" />
+          </TextWrapper>
+        </StyledContainer>
+      );
+    })
+  );
 }
 
 CommentBody.propTypes = {

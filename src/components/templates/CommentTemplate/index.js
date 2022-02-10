@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 import Img from "../../atoms/Img";
@@ -9,35 +9,29 @@ import CommentFooter from "../../organisms/CommentFooter";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
 `;
 
 const Right = styled.div`
   width: 50%;
   height: 100%;
-  margin: 3rem;
-  padding: 1rem;
-  text-align: center;
 `;
 
 const Left = styled.div`
   display: flex;
   width: 50%;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
+  height: auto;
 `;
 
 const CommentHeaderWrapper = styled.div`
-  margin-bottom: 2rem;
+  margin-left: 1rem;
 `;
 
 const CommentBodyWrapper = styled.div`
-  margin-bottom: 2rem;
+  margin: 2rem 0 21rem 1rem;
 `;
 
 const CommentFooterWrapper = styled.div`
-  margin-top: 15rem;
+  margin-left: 1rem;
 `;
 
 function CommentTemplate() {

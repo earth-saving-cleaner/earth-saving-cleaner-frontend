@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import Button from "../../atoms/button";
 import theme from "../../../theme/theme";
-import Portal from "../Poral";
+import Portal from "../Portal";
 
 const ModalWrapper = styled.div`
   display: flex;
@@ -31,8 +31,8 @@ const ContentWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   z-index: 10;
-  width: 80%;
-  height: 80%;
+  /* width: 80%;
+  height: 80%; */
   background: ${theme.colors.white};
 `;
 
@@ -40,28 +40,32 @@ const ButtonWrapper = styled.div`
   display: inline-flex;
   justify-content: flex-end;
   width: 100%;
+  margin-top: 5rem;
 `;
 
 const StyledButton = styled(Button)`
   width: 6%;
-  height: 80%;
+
   border: none;
+  color: ${theme.colors.white};
+  font-size: 3rem;
+  background: none;
 `;
 
 const Content = styled.div`
   display: flex;
-  padding: 1rem;
 `;
 
 function Modal({ children, handleClose }) {
   return (
     <Portal wrapperId="modal-container">
       <ModalWrapper>
-        <Background />
-        <ContentWrapper>
+        <Background>
           <ButtonWrapper>
             <StyledButton onClick={handleClose} title="X" />
           </ButtonWrapper>
+        </Background>
+        <ContentWrapper>
           <Content>{children}</Content>
         </ContentWrapper>
       </ModalWrapper>
