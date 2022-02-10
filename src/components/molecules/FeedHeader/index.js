@@ -16,19 +16,21 @@ const TextWrapper = styled.div`
 `;
 
 function FeedHeader({ ...props }) {
-  const mockUrl = "https://www.vanillacoding.co/images/team/ken.jpg";
-  const mockNickname = "ken";
-  const mockAddress = "Ardyaloon, Western Australia 6725, Australia";
-
   return (
     <StyledContainer>
-      <Avatar url={mockUrl} size="sm" />
+      <Avatar url={props.url} size="sm" />
       <TextWrapper>
-        <Text text={mockNickname} size="lg" weight="700" />
-        <Text text={mockAddress} size="base" />
+        <Text text={props.nickname} size="lg" weight="700" />
+        <Text text={props.address} size="base" />
       </TextWrapper>
     </StyledContainer>
   );
 }
+
+FeedHeader.propTypes = {
+  nickname: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  address: PropTypes.string.isRequired,
+};
 
 export default FeedHeader;
