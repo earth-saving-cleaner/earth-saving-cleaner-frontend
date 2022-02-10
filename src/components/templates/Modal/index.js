@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-import Button from "../../atoms/button";
+import { Button } from "../../atoms";
 import theme from "../../../theme/theme";
 import Portal from "../Portal";
 
@@ -31,8 +31,8 @@ const ContentWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   z-index: 10;
-  /* width: 80%;
-  height: 80%; */
+  width: 85%;
+  height: 80%;
   background: ${theme.colors.white};
 `;
 

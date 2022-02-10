@@ -23,11 +23,11 @@ const Left = styled.div`
 `;
 
 const CommentHeaderWrapper = styled.div`
-  margin-left: 1rem;
+  margin: 1rem 0 0 1rem;
 `;
 
 const CommentBodyWrapper = styled.div`
-  margin: 2rem 0 21rem 1rem;
+  margin: 2rem 0 22rem 1rem;
 `;
 
 const CommentFooterWrapper = styled.div`
