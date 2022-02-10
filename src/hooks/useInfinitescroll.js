@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import { throttle } from "lodash";
 
-export default function useInfiniteScroll(callback, seconds = 500) {
+export default function useInfiniteScroll(callback, seconds = 200) {
   const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
