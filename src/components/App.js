@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 
-import { MainPage } from "./pages";
+import { MainPage, MapPage, MyPage } from "./pages";
 
 function App() {
   return (
@@ -11,10 +11,10 @@ function App() {
           <MainPage />
         </Route>
         <Route path="/mypage" exact>
-          <div>My page</div>
+          <MyPage />
         </Route>
         <Route path="/map" exact>
-          <div>Map</div>
+          <MapPage />
         </Route>
         <Route path="/login" exact>
           <div>login</div>
