@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = {
+  isLoading: false,
+  feeds: null,
+  error: null,
+};
+
 export const feedSlice = createSlice({
   name: "feed",
-  initialState: {
-    isLoading: false,
-    feeds: null,
-    error: null,
-  },
+  initialState,
   reducers: {
     getFeeds: (state) => {
       state.isLoading = true;
