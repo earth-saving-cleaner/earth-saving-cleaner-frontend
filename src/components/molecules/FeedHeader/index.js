@@ -7,6 +7,7 @@ import { Avatar, Text } from "../../atoms";
 const StyledContainer = styled.div`
   display: inline-flex;
   padding: 0.8rem;
+  padding-right: 0;
   width: 100%;
 `;
 
