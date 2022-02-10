@@ -30,17 +30,30 @@ function MapPage() {
   }
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const { latitude, longitude } = position.coords;
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
 
-      setDefaultProps({
-        center: {
-          lat: latitude,
-          lng: longitude,
-        },
-        zoom: 14,
-      });
-    });
+        setDefaultProps({
+          // user accept current location.
+          center: {
+            lat: latitude,
+            lng: longitude,
+          },
+          zoom: 14,
+        });
+      },
+      () => {
+        setDefaultProps({
+          // user denied user current location.
+          center: {
+            lat: 37.50805,
+            lng: 127.06135,
+          },
+          zoom: 14,
+        });
+      },
+    );
   }, []);
 
   useEffect(() => {
