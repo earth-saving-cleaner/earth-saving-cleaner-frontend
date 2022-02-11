@@ -1,37 +1,57 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  loginData: null,
-  lginSuccess: false,
-  loginFailure: false,
-};
-
-export const loginRequestAction = (userInfo) => {
-  return {
-    type: "loginRequest",
-    userInfo,
-  };
+  isLoading: false,
+  data: null,
+  error: null,
 };
 
 export const loginSlice = createSlice({
   name: "login",
   initialState,
   reducers: {
-    loginSuccess: (state, data) => {
-      state.loginData = data;
-      state.loginSuccess = true;
+    login: (state) => {
+      state.isLoading = true;
+      state.data = null;
+      state.error = null;
     },
-    loginFailure: (state, data) => {
-      state.loginData = data;
-      state.loginFailure = true;
+    loginSuccess: (state, action) => {
+      state.isLoading = false;
+      state.data = action.payload;
+      state.error = null;
+    },
+    loginFailure: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    unregistered: (state, action) => {
+      state.data = action.payload;
     },
     logout: (state) => {
-      state.loginData = null;
-      state.loginSuccess = false;
-      state.loginFailure = false;
+      state.isLoading = false;
+      state.data = null;
+      state.error = null;
+    },
+    signup: (state) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    signupSuccess: (state, action) => {
+      state.isLoading = false;
+      state.data = action.payload;
+      state.error = false;
+    },
+    signupFailure: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    signout: (state) => {
+      state.data = null;
+      state.isLoading = false;
+      state.error = null;
     },
   },
 });
 
-export const { loginSuccess, loginFailure, logout } = loginSlice.actions;
+export const loginSliceActions = loginSlice.actions;
 export default loginSlice.reducer;
