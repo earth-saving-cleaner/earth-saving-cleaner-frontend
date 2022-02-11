@@ -2,9 +2,8 @@ import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-import loginReducer from "./slices/loginSlice";
 import feedSliceReducer from "./slices/feedSlice";
-import signupReducer from "./slices/signupSlice";
+import loginReducer from "./slices/loginSlice";
 
 const persistConfig = {
   key: "root",
@@ -12,9 +11,8 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  login: loginReducer,
+  user: loginReducer,
   feed: feedSliceReducer,
-  signup: signupReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);
