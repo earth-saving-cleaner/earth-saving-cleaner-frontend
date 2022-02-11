@@ -1,7 +1,8 @@
 import React from "react";
-import styled from "styled-components";
+
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
+import styled from "styled-components";
 
 import { Header } from "../../organisms";
 
@@ -9,6 +10,8 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  height: 100%;
 `;
 
 const ContentWrapper = styled.div`
@@ -18,7 +21,7 @@ const ContentWrapper = styled.div`
   overflow: auto;
 `;
 
-function MainTemplate({ children, ...props }) {
+function MainTemplate({ children }) {
   const history = useHistory();
 
   const handleLogoClick = () => {

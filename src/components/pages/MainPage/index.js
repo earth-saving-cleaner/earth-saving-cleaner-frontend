@@ -1,12 +1,20 @@
 import React, { useEffect, useCallback } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import styled from "styled-components";
 
 import useInfiniteScroll from "../../../hooks/useInfinitescroll";
 import { feedSliceActions } from "../../../modules/slices/feedSlice";
+import { Text } from "../../atoms";
+import { FeedCard } from "../../organisms";
 import { MainTemplate } from "../../templates";
 
-import { FeedCard } from "../../organisms";
+const StyledContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 function MainPage() {
   const userId = "61fe408ca5010f7ed7e75f4f";
@@ -44,8 +52,8 @@ function MainPage() {
 
   return (
     <MainTemplate>
-      <>
-        test
+      <StyledContainer>
+        {isLoading && <Text>Loding...</Text>}
         {feeds &&
           feeds?.data.map((feed) => {
             const { _id, author, content, comment, image, like, location } = feed;
@@ -66,7 +74,8 @@ function MainPage() {
               />
             );
           })}
-      </>
+        {error && <Text>Failed to load feed. Please contact the administrator.</Text>}
+      </StyledContainer>
     </MainTemplate>
   );
 }
