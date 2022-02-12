@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { loginRequestAction } from "../../modules/slices/loginSlice";
 
-import Text from "../atoms/text";
+import { Text } from "../atoms";
 
 const Wrapper = styled.div`
   display: flex;

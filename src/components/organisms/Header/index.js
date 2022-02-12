@@ -43,6 +43,7 @@ function Header({ ...props }) {
   const history = useHistory();
   const location = useLocation();
   const [toggleNav, setToggleNav] = useState(true);
+  const [toggleRightSide, setToggleRightSide] = useState(false);
 
   const goMainPage = () => {
     setToggleNav(true);
@@ -52,6 +53,12 @@ function Header({ ...props }) {
   const goMapPage = () => {
     setToggleNav(false);
     history.push("/map");
+  };
+
+  const goNewFeedPageModal = () => {
+    setToggleRightSide(true);
+    setToggleNav(false);
+    history.push("/feed");
   };
 
   useEffect(() => {
@@ -68,7 +75,7 @@ function Header({ ...props }) {
         <Navigation iconType="map" isSelected={!toggleNav} onNavClick={goMapPage} />
       </MiddleWrapper>
       <Wrapper>
-        <Navigation iconType="createFeed" />
+        <Navigation iconType="createFeed" isSelected={toggleRightSide} onNavClick={goNewFeedPageModal} />
         <Navigation iconType="myPage" />
       </Wrapper>
     </StyledHeader>
