@@ -51,7 +51,7 @@ function MainPage() {
 
   const handleCommentIconClick = (feedId) => {
     setId(feedId);
-    setModal((prev) => !prev);
+    setModal(true);
   };
 
   const handleCommentButtonClick = async () => {
@@ -64,7 +64,6 @@ function MainPage() {
     };
 
     const { comment } = await addComment(commentInfo);
-
     const { _id } = comment[comment.length - 1];
 
     dispatch(feedSliceActions.addComment({ commentId: _id, feedId: id }));
@@ -80,7 +79,7 @@ function MainPage() {
   const handleCloseButton = () => {
     setFeedInfo(null);
     setCommentList(null);
-    setModal((prev) => !prev);
+    setModal(false);
   };
 
   useEffect(() => {

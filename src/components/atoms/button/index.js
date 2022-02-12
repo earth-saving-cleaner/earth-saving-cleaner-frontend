@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import themes from "../../../theme/theme";
 
 const { colors, fontSizes, margins, paddings } = themes;
-const CLICK = "click";
 
 const StyledButton = styled.button`
   width: ${(props) => props.width};
@@ -22,7 +21,11 @@ const StyledButton = styled.button`
 `;
 
 function Button({ title, ...props }) {
-  return <StyledButton {...props}>{title}</StyledButton>;
+  return (
+    <StyledButton {...props} onClick={props.onClick}>
+      {title}
+    </StyledButton>
+  );
 }
 
 Button.propTypes = {
@@ -36,13 +39,14 @@ Button.propTypes = {
   margin: PropTypes.string,
   padding: PropTypes.string,
   radius: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
 };
 
 Button.defaultProps = {
   width: "100px",
   heigth: "20px",
   background: colors.white,
-  title: CLICK,
+  title: "click",
   color: colors.black,
   fontSize: fontSizes.base,
   border: `0.2rem solid ${colors.purple}`,
