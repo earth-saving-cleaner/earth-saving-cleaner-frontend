@@ -9,7 +9,7 @@ import { feedSliceActions } from "../../../modules/slices/feedSlice";
 import { getFeed, addComment } from "../../../api";
 
 import { MainTemplate, Modal, CommentTemplate } from "../../templates";
-import { FeedCard, FeedCard } from "../../organisms";
+import { FeedCard } from "../../organisms";
 import { Text } from "../../atoms";
 
 const StyledContainer = styled.div`
