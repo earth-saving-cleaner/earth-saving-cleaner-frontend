@@ -8,7 +8,7 @@ function* loginSaga({ payload: { tokenId } }) {
   const { loginSuccess, loginFailure, unregistered } = userSliceActions;
 
   try {
-    const { result, message, email, googleToken } = yield call(loginAPI, tokenId);
+    const { result, message, email, googleToken, token, id, nickname, profileImage } = yield call(loginAPI, tokenId);
 
     if (message === "nickname Request") {
       yield put(unregistered({ googleToken, email }));
@@ -18,7 +18,7 @@ function* loginSaga({ payload: { tokenId } }) {
     }
 
     if (result === "ok") {
-      yield put(loginSuccess({ email, googleToken }));
+      yield put(loginSuccess({ email, token, id, nickname, profileImage }));
       history.push("/");
     }
 
