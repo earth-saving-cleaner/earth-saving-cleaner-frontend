@@ -38,6 +38,7 @@ import {
   IoWalkOutline,
   IoWalk,
   IoWalkSharp,
+  IoLeafSharp,
 } from "react-icons/io5";
 import { MdSaveAlt } from "react-icons/md";
 
@@ -127,6 +128,9 @@ function Icon({ icon, size, onClickIcon, ...props }) {
       break;
     case "movingPerson":
       svg = <IoWalkOutline />;
+      break;
+    case "leaf":
+      svg = <IoLeafSharp />;
       break;
     case "close":
       svg = <IoCloseOutline />;

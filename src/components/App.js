@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 import { userSliceActions } from "../modules/slices/userSlice";
 
-import { MainPage, LoginPage, SignupPage } from "./pages";
+import { MainPage, MapPage, MyPage, LoginPage, SignupPage } from "./pages";
 
 const Container = styled.div`
   width: 100%;
@@ -27,13 +27,13 @@ function App() {
           <MainPage />
         </Route>
         <Route path="/mypage" exact>
-          {user?.token ? <div>My page</div> : <Redirect to="/login" />}
+          {user?.token ? <MyPage /> : <Redirect to="/login" />}
           <button type="button" onClick={handleLoout}>
             logout
           </button>
         </Route>
         <Route path="/map" exact>
-          <div>Map</div>
+          <MapPage />
         </Route>
         <Route path="/login" exact>
           <LoginPage />
