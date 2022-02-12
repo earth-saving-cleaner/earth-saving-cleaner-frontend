@@ -4,7 +4,7 @@ import { GoogleLogin } from "react-google-login";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
-import { loginSliceActions } from "../../../modules/slices/loginSlice";
+import { userSliceActions } from "../../../modules/slices/userSlice";
 import { Text } from "../../atoms";
 import { MainTemplate } from "../../templates";
 
@@ -29,7 +29,7 @@ function LoginPage() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = (googleResponse) => {
-    dispatch(loginSliceActions.login(googleResponse));
+    dispatch(userSliceActions.login(googleResponse));
   };
 
   const handleLoginError = () => {

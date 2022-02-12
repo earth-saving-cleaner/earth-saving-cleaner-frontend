@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch, Redirect } from "react-router-dom";
 import styled from "styled-components";
 
-import { loginSliceActions } from "../modules/slices/loginSlice";
+import { userSliceActions } from "../modules/slices/userSlice";
 
 import { MainPage, LoginPage, SignupPage } from "./pages";
 
@@ -17,7 +17,7 @@ function App() {
   const user = useSelector((state) => state.user.data);
 
   const handleLoout = () => {
-    dispatch(loginSliceActions.logout());
+    dispatch(userSliceActions.logout());
   };
 
   return (

@@ -2,10 +2,10 @@ import { put, call, takeEvery, takeLatest } from "redux-saga/effects";
 
 import { login as loginAPI, signup as signupAPI } from "../../api";
 import history from "../../utils/history";
-import { loginSliceActions } from "../slices/loginSlice";
+import { userSliceActions } from "../slices/userSlice";
 
 function* loginSaga({ payload: { tokenId } }) {
-  const { loginSuccess, loginFailure, unregistered } = loginSliceActions;
+  const { loginSuccess, loginFailure, unregistered } = userSliceActions;
 
   try {
     const { result, message, email, googleToken } = yield call(loginAPI, tokenId);
@@ -29,7 +29,7 @@ function* loginSaga({ payload: { tokenId } }) {
 }
 
 function* signupSaga(action) {
-  const { signupSuccess, signupFailure } = loginSliceActions;
+  const { signupSuccess, signupFailure } = userSliceActions;
 
   try {
     const { result, message, ...rest } = yield call(signupAPI, action.payload);
@@ -50,9 +50,9 @@ function* signupSaga(action) {
 }
 
 export function* watchLogin() {
-  yield takeEvery(loginSliceActions.login, loginSaga);
+  yield takeEvery(userSliceActions.login, loginSaga);
 }
 
 export function* watchSignup() {
-  yield takeLatest(loginSliceActions.signup, signupSaga);
+  yield takeLatest(userSliceActions.signup, signupSaga);
 }

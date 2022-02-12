@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { loginSliceActions } from "../../../modules/slices/loginSlice";
+import { userSliceActions } from "../../../modules/slices/userSlice";
 import theme from "../../../theme/theme";
 import { Text, Input, Button } from "../../atoms";
 import { MainTemplate } from "../../templates";
@@ -54,7 +54,7 @@ function SignupPage() {
   };
 
   const handleSingupSubmit = () => {
-    dispatch(loginSliceActions.signup({ googleToken, nickname }));
+    dispatch(userSliceActions.signup({ googleToken, nickname }));
   };
 
   return (
