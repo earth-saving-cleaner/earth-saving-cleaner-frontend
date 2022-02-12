@@ -15,10 +15,7 @@ const StyledContainer = styled.div`
 `;
 
 const ContentWrapper = styled.div`
-  position: absolute;
-  top: 5rem;
-  z-index: 2;
-  overflow: auto;
+  margin-top: 5rem;
 `;
 
 function MainTemplate({ children }) {
