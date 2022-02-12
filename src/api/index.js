@@ -68,12 +68,20 @@ export const getFeed = async (id) => {
   }
 };
 
-export const addComment = async ({ id, userId, commentText }) => {
+export const addComment = async ({ id, userId, commentText, token }) => {
   try {
-    const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/feed/${id}/comment`, {
-      userId,
-      content: commentText,
-    });
+    const response = await axios.post(
+      `${process.env.REACT_APP_SERVER_URL}/feed/${id}/comment`,
+      {
+        userId,
+        content: commentText,
+      },
+      {
+        header: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
 
     return response.data.data;
   } catch (err) {

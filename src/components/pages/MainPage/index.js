@@ -24,10 +24,12 @@ function MainPage() {
   const [commentText, setCommentText] = useState("");
   const [commentList, setCommentList] = useState(null);
   const [id, setId] = useState(null); // feed id
-  const userId = "61fe408ca5010f7ed7e75f4f";
   const dispatch = useDispatch();
   const history = useHistory();
   const { isLoading, feeds, error } = useSelector((state) => state.feed);
+  const { data } = useSelector((state) => state.user);
+  const userId = data?.id;
+  const token = data?.token;
 
   const fetchDataOnScroll = useCallback(async () => {
     try {
@@ -71,6 +73,7 @@ function MainPage() {
       userId,
       commentText,
       id,
+      token,
     };
 
     const { comment } = await addComment(commentInfo);
