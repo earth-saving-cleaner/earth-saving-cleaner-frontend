@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+
 import PropTypes from "prop-types";
 import { useHistory, useLocation } from "react-router-dom";
+import styled from "styled-components";
 
 import logo from "../../../assets/logo.png";
 import { Navigation } from "../../molecules";
@@ -54,9 +55,17 @@ function Header({ ...props }) {
     history.push("/map");
   };
 
+  const createNewFeed = () => {
+    alert("need logics for new feed modal");
+  };
+
+  const goMyPage = () => {
+    history.push("/mypage");
+  };
+
   useEffect(() => {
     location.pathname === "/" ? setToggleNav(true) : setToggleNav(false);
-  }, [toggleNav]);
+  }, [location.pathname]);
 
   return (
     <StyledHeader>
@@ -68,8 +77,8 @@ function Header({ ...props }) {
         <Navigation iconType="map" isSelected={!toggleNav} onNavClick={goMapPage} />
       </MiddleWrapper>
       <Wrapper>
-        <Navigation iconType="createFeed" />
-        <Navigation iconType="myPage" />
+        <Navigation iconType="createFeed" onNavClick={createNewFeed} />
+        <Navigation iconType="myPage" onNavClick={goMyPage} />
       </Wrapper>
     </StyledHeader>
   );

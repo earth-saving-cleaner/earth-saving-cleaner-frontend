@@ -1,32 +1,51 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
 
-import { MainPage, MapPage, MyPage } from "./pages";
+import { useDispatch, useSelector } from "react-redux";
+import { Route, Switch, Redirect } from "react-router-dom";
+import styled from "styled-components";
+
+import { userSliceActions } from "../modules/slices/userSlice";
+
+import { MainPage, MapPage, MyPage, LoginPage, SignupPage } from "./pages";
+
+const Container = styled.div`
+  width: 100%;
+`;
 
 function App() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.data);
+
+  const handleLoout = () => {
+    dispatch(userSliceActions.logout());
+  };
+
   return (
-    <div>
+    <Container>
       <Switch>
         <Route path="/" exact>
           <MainPage />
         </Route>
         <Route path="/mypage" exact>
-          <MyPage />
+          {user?.token ? <MyPage /> : <Redirect to="/login" />}
+          <button type="button" onClick={handleLoout}>
+            logout
+          </button>
         </Route>
         <Route path="/map" exact>
           <MapPage />
         </Route>
         <Route path="/login" exact>
-          <div>login</div>
+          <LoginPage />
         </Route>
         <Route path="/signup" exact>
-          <div>Sign up</div>
+          <SignupPage />
         </Route>
         <Route path="/*" exact>
           <div>Not found</div>
         </Route>
       </Switch>
-    </div>
+    </Container>
   );
 }
 
