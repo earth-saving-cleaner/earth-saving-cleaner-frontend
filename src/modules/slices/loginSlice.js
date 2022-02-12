@@ -45,11 +45,6 @@ export const loginSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    signout: (state) => {
-      state.data = null;
-      state.isLoading = false;
-      state.error = null;
-    },
   },
 });
 
