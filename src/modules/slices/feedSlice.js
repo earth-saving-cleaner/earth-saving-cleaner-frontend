@@ -19,9 +19,9 @@ export const feedSlice = createSlice({
       state.feeds = action.payload;
       state.error = null;
     },
-    getFeedsFailure: (state) => {
-      state.isLoading = true;
-      state.error = null;
+    getFeedsFailure: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
     },
     addLikeUser: (state) => {
       state.isLoading = true;
@@ -38,7 +38,7 @@ export const feedSlice = createSlice({
       state.error = null;
     },
     addLikeUserFailure: (state) => {
-      state.isLoading = true;
+      state.isLoading = false;
       state.error = null;
     },
     addFeeds: (state) => {
@@ -55,9 +55,9 @@ export const feedSlice = createSlice({
       state.feeds.lastId = action.payload.lastId;
       state.error = null;
     },
-    addFeedsFailure: (state) => {
-      state.isLoading = true;
-      state.error = null;
+    addFeedsFailure: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
     },
     addComment: (state, action) => {
       const feedData = state.feeds.data;
@@ -73,5 +73,4 @@ export const feedSlice = createSlice({
 });
 
 export const feedSliceActions = feedSlice.actions;
-
 export default feedSlice.reducer;

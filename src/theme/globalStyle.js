@@ -10,22 +10,6 @@ const GlobalStyle = createGlobalStyle`
     color: #555;
   }
 
-  body {
-    margin: 0;
-    padding: 0;
-    background: #eee;
-    -webkit-font-smoothing: antialiased;
-    @media (max-width: 575.98px) {
-      font-size: 1.2rem;
-    }
-    @media (min-width: 576px) and (max-width: 1199.98px) {
-      font-size: 1.4px;
-    }
-    @media (min-width: 1200px){
-      font-size: 1.6rem;
-    }
-  }
-
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
   a, abbr, acronym, address, big, cite, code,
@@ -42,6 +26,21 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     border: 0;
+  }
+
+  body {
+    background: #eee;
+    -webkit-font-smoothing: antialiased;
+    @media (max-width: 575.98px) {
+      font-size: 1.2rem;
+    }
+    @media (min-width: 576px) and (max-width: 1199.98px) {
+      font-size: 1.4px;
+    }
+    @media (min-width: 1200px){
+      font-size: 1.6rem;
+    }
+    height: 100%;
   }
 
   article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
