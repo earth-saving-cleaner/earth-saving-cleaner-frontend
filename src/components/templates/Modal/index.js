@@ -45,7 +45,6 @@ const ButtonWrapper = styled.div`
 
 const StyledButton = styled(Button)`
   width: 6%;
-
   border: none;
   color: ${theme.colors.white};
   font-size: 3rem;

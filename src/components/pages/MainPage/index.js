@@ -1,14 +1,19 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import useInfiniteScroll from "../../../hooks/useInfinitescroll";
 import { feedSliceActions } from "../../../modules/slices/feedSlice";
-import { MainTemplate } from "../../templates";
-
+import { MainTemplate, Modal, CommentTemplate } from "../../templates";
 import { FeedCard } from "../../organisms";
+import { getFeed, addComment } from "../../../api";
 
 function MainPage() {
+  const [modal, setModal] = useState(false);
+  const [feedInfo, setFeedInfo] = useState(null);
+  const [commentText, setCommentText] = useState("");
+  const [commentList, setCommentList] = useState(null);
+  const [id, setId] = useState("");
   const userId = "61fe408ca5010f7ed7e75f4f";
   const dispatch = useDispatch();
   const history = useHistory();
@@ -26,6 +31,16 @@ function MainPage() {
 
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchDataOnScroll);
 
+  const findUserLike = () => {
+    for (let i = 0; i < feeds.length; i += 1) {
+      if (feeds[i]._id === id) {
+        return feeds[i].like.includes(userId);
+      }
+    }
+
+    return false;
+  };
+
   const handleLikeIconClick = (feedId) => {
     dispatch(feedSliceActions.addLikeUser({ feedId, userId }));
   };
@@ -35,8 +50,56 @@ function MainPage() {
   };
 
   const handleCommentIconClick = (feedId) => {
-    alert("피드 상세 모달 open 준비중");
+    setId(feedId);
+    setModal((prev) => !prev);
   };
+
+  const handleCommentButtonClick = async () => {
+    if (!commentText) return;
+
+    const commentInfo = {
+      userId,
+      commentText,
+      id,
+    };
+
+    const { comment } = await addComment(commentInfo);
+
+    const { _id } = comment[comment.length - 1];
+
+    dispatch(feedSliceActions.addComment({ commentId: _id, feedId: id }));
+
+    setCommentText("");
+    setCommentList(comment);
+  };
+
+  const handleCommentText = (e) => {
+    setCommentText(e.target.value);
+  };
+
+  const handleCloseButton = () => {
+    setFeedInfo(null);
+    setCommentList(null);
+    setModal((prev) => !prev);
+  };
+
+  useEffect(() => {
+    const fetchFeed = async () => {
+      const { author, comment, content, image, like, location } = await getFeed(id);
+
+      setFeedInfo({
+        author,
+        content,
+        like,
+        image: image[0],
+      });
+      setCommentList(comment);
+    };
+
+    if (modal) {
+      fetchFeed();
+    }
+  }, [modal, id]);
 
   useEffect(() => {
     dispatch(feedSliceActions.getFeeds({ limit: 3 }));
@@ -61,11 +124,27 @@ function MainPage() {
                 content={content}
                 location={location}
                 onClickLikeIcon={userId ? handleLikeIconClick : sendToLogin}
-                onClickCommentIcon={handleCommentIconClick}
+                onClickCommentIcon={() => handleCommentIconClick(_id)}
                 isIconFilled={[...feed.like].includes(userId)}
               />
             );
           })}
+        {modal && feedInfo && (
+          <Modal handleClose={handleCloseButton}>
+            <CommentTemplate
+              comments={commentList}
+              author={feedInfo.author}
+              content={feedInfo.content}
+              image={feedInfo.image}
+              onClickCommentButton={userId ? handleCommentButtonClick : sendToLogin}
+              onChangeText={handleCommentText}
+              onClickLikeIcon={userId ? handleLikeIconClick : sendToLogin}
+              isIconFilled={findUserLike}
+              text={commentText}
+              like={feedInfo.like.length}
+            />
+          </Modal>
+        )}
       </>
     </MainTemplate>
   );
