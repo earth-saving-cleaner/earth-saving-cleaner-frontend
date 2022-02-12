@@ -10,18 +10,19 @@ import CommentFooter from "../../organisms/CommentFooter";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   height: 100%;
 `;
 
 const Right = styled.div`
   width: 50%;
-  height: 100%;
+  height: 80%;
 `;
 
 const Left = styled.div`
-  display: flex;
   width: 50%;
-  height: 100%;
+  height: 80%;
+  text-align: center;
 `;
 
 const CommentHeaderWrapper = styled.div`
@@ -42,7 +43,7 @@ function CommentTemplate({ ...props }) {
   return (
     <Wrapper>
       <Left>
-        <Img width="100%" height="100%" src={image} />
+        <Img width="85%" height="80%" src={image} />
       </Left>
       <Right>
         <CommentHeaderWrapper>
@@ -54,7 +55,7 @@ function CommentTemplate({ ...props }) {
         <CommentFooterWrapper>
           <CommentFooter
             onSubmit={props.onClickCommentButton}
-            onChange={props.onChangeText}
+            onChangeText={props.onChangeText}
             text={text}
             onClickLikeIcon={props.onClickLikeIcon}
             isIconFilled={props.isIconFilled}

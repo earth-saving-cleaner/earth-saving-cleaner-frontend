@@ -13,7 +13,7 @@ function MainPage() {
   const [feedInfo, setFeedInfo] = useState(null);
   const [commentText, setCommentText] = useState("");
   const [commentList, setCommentList] = useState(null);
-  const [id, setId] = useState("");
+  const [id, setId] = useState(null); // feed id
   const userId = "61fe408ca5010f7ed7e75f4f";
   const dispatch = useDispatch();
   const history = useHistory();

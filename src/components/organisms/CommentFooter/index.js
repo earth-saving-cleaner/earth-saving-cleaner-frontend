@@ -45,7 +45,7 @@ function CommentFooter({ ...props }) {
         <StyledText text={`${like} likes`} />
       </StatusWrapper>
       <CommentWrapper>
-        <StyledInput placeholder="comments" onChange={props.onChange} value={props.text} />
+        <StyledInput placeholder="comments" onChange={props.onChangeText} value={props.text} />
         <Icon icon="send" size="sm" onClickIcon={props.onSubmit} />
       </CommentWrapper>
     </Wrapper>
@@ -54,7 +54,7 @@ function CommentFooter({ ...props }) {
 
 CommentFooter.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChangeText: PropTypes.func.isRequired,
   onClickLikeIcon: PropTypes.func.isRequired,
   text: PropTypes.string,
   isIconFilled: PropTypes.bool,
