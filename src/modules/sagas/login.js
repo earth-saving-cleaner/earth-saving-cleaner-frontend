@@ -50,7 +50,7 @@ function* signupSaga(action) {
 }
 
 export function* watchLogin() {
-  yield takeEvery(userSliceActions.login, loginSaga);
+  yield takeLatest(userSliceActions.login, loginSaga);
 }
 
 export function* watchSignup() {
