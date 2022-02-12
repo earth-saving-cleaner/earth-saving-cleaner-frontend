@@ -4,8 +4,13 @@ import logger from "redux-logger";
 
 import rootSaga from "./modules/rootSaga";
 import rootReducer from "./modules/rootReducer";
+import history from "./utils/history";
 
-const sagaMiddleware = createSagaMiddleware();
+const sagaMiddleware = createSagaMiddleware({
+  context: {
+    history,
+  },
+});
 
 export default function createStore() {
   const store = configureStore({
