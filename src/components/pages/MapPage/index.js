@@ -22,6 +22,7 @@ function MapPage() {
   const [feedLocation, setFeedLocation] = useState([]);
   const [modalClick, setModalClick] = useState(false);
   const [modalInfo, setModalInfo] = useState(null);
+  const [ploggingResult, setPloggingResult] = useState("");
 
   function handleFloggingButton({ image, coordinates, feedId }) {
     setModalClick(true);
@@ -62,13 +63,42 @@ function MapPage() {
     });
   }
 
-  function handleCleanButtonClick() {}
+  function calCuateDistance({ coords }) {
+    const { latitude, longitude } = coords;
+    const trashLati = modalInfo.coordinates[1];
+    const trashLong = modalInfo.coordinates[0];
+
+    const x = ((Math.cos(trashLati) * 6400 * 2 * Math.PI) / 360) * Math.abs(trashLong - longitude);
+    const y = 111 * Math.abs(trashLati - latitude);
+    const distance = Math.sqrt(x ** 2 + y ** 2) * 1000;
+
+    setModalClick(false);
+
+    if (distance < 100) {
+      setPloggingResult("success");
+    } else {
+      setPloggingResult("failure");
+    }
+  }
+
+  function handleCleanButtonClick() {
+    const option = {
+      enableHighAccuracy: true,
+    };
+
+    navigator.geolocation.getCurrentPosition(
+      calCuateDistance,
+      () => {
+        alert("please accept your location.");
+      },
+      option,
+    );
+  }
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
-
         setDefaultProps({
           // user accept current location.
           center: {
@@ -87,6 +117,7 @@ function MapPage() {
           },
           zoom: 14,
         });
+        alert("please accept your location.");
       },
     );
   }, []);
