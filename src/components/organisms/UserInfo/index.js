@@ -1,30 +1,49 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import styled from "styled-components";
-import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
 import theme from "../../../theme/theme";
 
-import { Avatar, Button } from "../../atoms";
-import { UserLevel, UserPerformance } from "../../molecules";
+import { Button, Text } from "../../atoms";
+import { UserHeader } from "../../molecules";
 
 const Wrapper = styled.div`
   display: flex;
   width: 100vw;
-  height: 60vh;
+  height: 100vh;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 `;
 
+const UserPerformanceWrapper = styled.div`
+  margin: 210px 0 160px 0;
+`;
+
+const TodayWrapper = styled.div`
+  margin-bottom: 3rem;
+`;
+
+const TotalWrapper = styled.div``;
+
 function UserInfo({ profileImage, nickname, level, score }) {
   const { colors } = theme;
+  const userInfo = useSelector((state) => state.user.data);
+  const mockLevel = 10;
 
   return (
     <Wrapper>
-      <Avatar src={profileImage} size="lg" />
-      <UserLevel size="xl" margin="3rem" nickname={nickname} level={String(level)} />
-      <UserPerformance size="xl" margin="3rem" target="Total" count={String(score)} />
+      <UserHeader nickname={userInfo.nickname} url={userInfo.profileImage} level={`Lv ${String(mockLevel)}`} />
+      <UserPerformanceWrapper>
+        <TodayWrapper>
+          <Text text={`Today ${String(score)}`} size="xxl" />
+        </TodayWrapper>
+        <TotalWrapper>
+          <Text text={`Total ${String(score)}`} size="xxl" />
+        </TotalWrapper>
+      </UserPerformanceWrapper>
       <Button
         title="Logout"
         background={colors.purple}
