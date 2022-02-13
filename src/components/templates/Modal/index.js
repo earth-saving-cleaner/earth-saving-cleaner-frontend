@@ -29,6 +29,7 @@ const Background = styled.div`
 const ContentWrapper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   z-index: 10;
   width: 85%;
   height: 80%;

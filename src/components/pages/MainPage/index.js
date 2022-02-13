@@ -127,48 +127,50 @@ function MainPage() {
   }, []);
 
   return (
-    <MainTemplate>
-      <StyledContainer>
-        {isLoading && <Text>Loding...</Text>}
-        {feeds &&
-          feeds?.data.map((feed) => {
-            const { _id, author, content, comment, image, like, location } = feed;
-            return (
-              <FeedCard
-                key={_id}
-                feedId={_id}
-                nickname={author?.nickname}
-                avatarUrl={author?.profileImage}
-                imageUrl={image[0]}
-                comment={comment.length}
-                like={like.length}
-                content={content}
-                location={location}
-                onClickLikeIcon={userId ? handleLikeIconClick : sendToLogin}
-                onClickCommentIcon={() => handleCommentIconClick(_id)}
-                isIconFilled={[...feed.like].includes(userId)}
-              />
-            );
-          })}
-        {modal && feedInfo && (
-          <Modal handleClose={handleCloseButton}>
-            <CommentTemplate
-              comments={commentList}
-              author={feedInfo.author}
-              content={feedInfo.content}
-              image={feedInfo.image}
-              onClickCommentButton={userId ? handleCommentButtonClick : sendToLogin}
-              onChangeText={handleCommentText}
-              onClickLikeIcon={userId ? handleLikeIconClick : sendToLogin}
-              isIconFilled={findUserLike}
-              text={commentText}
-              like={feedInfo.like.length}
-            />
-          </Modal>
-        )}
-        {error && <Text>Failed to load feed. Please contact the administrator.</Text>}
-      </StyledContainer>
-    </MainTemplate>
+    <>
+      <MainTemplate>
+        <StyledContainer>
+          {isLoading && <Text>Loding...</Text>}
+          {feeds &&
+            feeds?.data.map((feed) => {
+              const { _id, author, content, comment, image, like, location } = feed;
+              return (
+                <FeedCard
+                  key={_id}
+                  feedId={_id}
+                  nickname={author?.nickname}
+                  avatarUrl={author?.profileImage}
+                  imageUrl={image[0]}
+                  comment={comment.length}
+                  like={like.length}
+                  content={content}
+                  location={location}
+                  onClickLikeIcon={userId ? handleLikeIconClick : sendToLogin}
+                  onClickCommentIcon={() => handleCommentIconClick(_id)}
+                  isIconFilled={[...feed.like].includes(userId)}
+                />
+              );
+            })}
+          {error && <Text>Failed to load feed. Please contact the administrator.</Text>}
+        </StyledContainer>
+      </MainTemplate>
+      {modal && feedInfo && (
+        <Modal handleClose={handleCloseButton}>
+          <CommentTemplate
+            comments={commentList}
+            author={feedInfo.author}
+            content={feedInfo.content}
+            image={feedInfo.image}
+            onClickCommentButton={userId ? handleCommentButtonClick : sendToLogin}
+            onChangeText={handleCommentText}
+            onClickLikeIcon={userId ? handleLikeIconClick : sendToLogin}
+            isIconFilled={findUserLike}
+            text={commentText}
+            like={feedInfo.like.length}
+          />
+        </Modal>
+      )}
+    </>
   );
 }
 

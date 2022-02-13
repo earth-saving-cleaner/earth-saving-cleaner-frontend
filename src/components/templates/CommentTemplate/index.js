@@ -15,14 +15,13 @@ const Wrapper = styled.div`
 `;
 
 const Right = styled.div`
-  width: 50%;
+  width: 100%;
   height: 80%;
 `;
 
 const Left = styled.div`
-  width: 50%;
+  width: 80%;
   height: 80%;
-  text-align: center;
 `;
 
 const CommentHeaderWrapper = styled.div`
@@ -43,7 +42,7 @@ function CommentTemplate({ ...props }) {
   return (
     <Wrapper>
       <Left>
-        <Img width="85%" height="80%" src={image} />
+        <Img width="100%" src={image} alt="feed" />
       </Left>
       <Right>
         <CommentHeaderWrapper>
