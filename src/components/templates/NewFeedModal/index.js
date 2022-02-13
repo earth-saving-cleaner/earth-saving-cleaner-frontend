@@ -43,7 +43,7 @@ const Content = styled.div`
 
 function NewFeedModal({ children }) {
   return (
-    <Portal wrapperId="NewFeed-modal-container">
+    <Portal>
       <ModalWrapper>
         <Background>
           <MainTemplate />

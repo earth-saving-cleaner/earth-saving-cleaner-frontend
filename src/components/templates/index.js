@@ -4,5 +4,6 @@ import MapTemplate from "./MapTemplate";
 import NewFeedModal from "./NewFeedModal";
 import Modal from "./Modal";
 import CommentTemplate from "./CommentTemplate";
+import Portal from "./Portal";
 
-export { MainTemplate, MyPageGrid, MapTemplate, Modal, CommentTemplate, NewFeedModal };
+export { MainTemplate, MyPageGrid, MapTemplate, Modal, CommentTemplate, NewFeedModal, Portal };

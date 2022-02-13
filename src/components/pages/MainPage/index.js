@@ -9,8 +9,8 @@ import { feedSliceActions } from "../../../modules/slices/feedSlice";
 import { getFeed, addComment } from "../../../api";
 import { isTokenExpired } from "../../../utils";
 
-import { MainTemplate, Modal, CommentTemplate } from "../../templates";
-import { FeedCard } from "../../organisms";
+import { MainTemplate, Modal, CommentTemplate, NewFeedModal } from "../../templates";
+import { FeedCard, NewFeed } from "../../organisms";
 import { Text } from "../../atoms";
 
 const StyledContainer = styled.div`
@@ -20,6 +20,7 @@ const StyledContainer = styled.div`
 `;
 
 function MainPage() {
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [modal, setModal] = useState(false);
   const [feedInfo, setFeedInfo] = useState(null);
   const [commentText, setCommentText] = useState("");
@@ -104,6 +105,19 @@ function MainPage() {
     setModal(false);
   };
 
+  const handleModalOpen = () => {
+    if (token) {
+      setIsCreateModalOpen(true);
+      return;
+    }
+
+    history.push("/login");
+  };
+
+  const handleModalClose = () => {
+    setIsCreateModalOpen(false);
+  };
+
   useEffect(() => {
     const fetchFeed = async () => {
       const { author, comment, content, image, like, location } = await getFeed(id);
@@ -128,7 +142,7 @@ function MainPage() {
 
   return (
     <>
-      <MainTemplate>
+      <MainTemplate onClickCreate={handleModalOpen} onClickModalClose={handleModalClose}>
         <StyledContainer>
           {isLoading && <Text>Loding...</Text>}
           {feeds &&
@@ -169,6 +183,11 @@ function MainPage() {
             like={feedInfo.like.length}
           />
         </Modal>
+      )}
+      {isCreateModalOpen && token && (
+        <NewFeedModal>
+          <NewFeed handleModalOpen={handleModalOpen} handleModalClose={handleModalClose} />
+        </NewFeedModal>
       )}
     </>
   );

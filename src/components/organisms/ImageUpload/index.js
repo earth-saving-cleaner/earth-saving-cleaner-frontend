@@ -16,13 +16,13 @@ const ButtonWrapper = styled(Button)`
 
 function ImageUpload(props) {
   const [preViewImage, setPreViewImage] = useState("");
-  const [sendToServerImage, setSendToServerImage] = useState("");
+  const [resizedImageUrl, setResizedImageUrl] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
 
   const deleteFileImage = () => {
     setPreViewImage("");
-    setSendToServerImage("");
+    setResizedImageUrl("");
     // S3 통신 없이 화면 노출 테스트 할 경우 사용!
     // URL.revokeObjectURL(preViewImage);
   };
@@ -41,7 +41,7 @@ function ImageUpload(props) {
 
       if (res) {
         setPreViewImage(res.originalUrl);
-        setSendToServerImage(res.url);
+        setResizedImageUrl(res.url);
         // S3 통신 없이 화면 노출 테스트 할 경우 사용!
         // setPreViewImage(URL.createObjectURL(e.target.files[0]));
       }
@@ -82,20 +82,24 @@ function ImageUpload(props) {
     const { getImage } = props;
 
     const imageDetail = {
-      imageUrl: sendToServerImage,
+      imageUrl: resizedImageUrl,
       locationFromMeta: [latitude, longitude],
     };
 
-    if (sendToServerImage && latitude && longitude) {
+    if (resizedImageUrl && latitude && longitude) {
       getImage(imageDetail);
     }
-  }, [sendToServerImage, latitude, longitude]);
+  }, [resizedImageUrl, latitude, longitude]);
 
   return (
     <form>
       <div>
         {preViewImage && (
-          <Img alt="" src={preViewImage} style={{ display: "block", width: "60%", marginLeft: "2rem" }} />
+          <Img
+            alt="enrolledPicture"
+            src={preViewImage}
+            style={{ display: "block", width: "60%", marginLeft: "2rem" }}
+          />
         )}
         <div
           style={{

@@ -5,6 +5,8 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
+import { noop } from "lodash";
+
 import logo from "../../../assets/logo.png";
 import { Navigation } from "../../molecules";
 
@@ -45,6 +47,7 @@ function Header({ ...props }) {
   const history = useHistory();
   const location = useLocation();
   const [toggleNav, setToggleNav] = useState(true);
+  const [isCreateOpen, setIsCreateOpen] = useState(true);
   const userInfo = useSelector((state) => state.user.data);
 
   const goMainPage = () => {
@@ -58,11 +61,7 @@ function Header({ ...props }) {
   };
 
   const createNewFeed = () => {
-    if (!userInfo) {
-      history.push("/login");
-    } else {
-      history.push("/feed");
-    }
+    setIsCreateOpen(true);
   };
 
   const goMyPage = () => {
@@ -83,7 +82,7 @@ function Header({ ...props }) {
         <Navigation iconType="map" isSelected={!toggleNav} onNavClick={goMapPage} />
       </MiddleWrapper>
       <Wrapper>
-        <Navigation iconType="createFeed" onNavClick={createNewFeed} />
+        <Navigation iconType="createFeed" onNavClick={createNewFeed} onClickIcon={props.onClickCreate} />
         <Navigation iconType="myPage" onNavClick={goMyPage} />
       </Wrapper>
     </StyledHeader>
@@ -92,6 +91,11 @@ function Header({ ...props }) {
 
 Header.propTypes = {
   onClickLogo: PropTypes.func.isRequired,
+  onClickCreate: PropTypes.func,
+};
+
+Header.defaultProps = {
+  onClickCreate: noop,
 };
 
 export default Header;
