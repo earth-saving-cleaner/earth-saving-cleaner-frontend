@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import GoogleMapReact from "google-map-react";
 import styled from "styled-components";
 
-import { Icon, Img } from "../../atoms";
+import { Icon } from "../../atoms";
 import { Result } from "../../organisms";
 import { MapTemplate, QuestTemplate, QuestResultTemplate } from "../../templates";
 import Portal from "../../templates/Portal";
 
 import { getFeedInfo } from "../../../api";
 import theme from "../../../theme/theme";
+import { userSliceActions } from "../../../modules/slices/userSlice";
 
 const StyledIcon = styled(Icon)`
   color: ${(props) => props.color};
@@ -23,6 +25,8 @@ function MapPage() {
   const [modalClick, setModalClick] = useState(false);
   const [modalInfo, setModalInfo] = useState(null);
   const [ploggingResult, setPloggingResult] = useState("");
+  const dispatch = useDispatch();
+  const { isLoading, data, error } = useSelector((state) => state.user);
 
   function handleFloggingButton({ image, coordinates, feedId }) {
     setModalClick(true);
@@ -38,7 +42,6 @@ function MapPage() {
   }
 
   function handleQuestCloseButton() {
-    console.log("clicked");
     setPloggingResult(null);
   }
 
@@ -48,7 +51,6 @@ function MapPage() {
       const [longitude, latitude] = coordinates;
       const iconType = cleaned ? "leaf" : "trashCanFill";
       const color = cleaned ? theme.colors.green_1 : theme.colors.red;
-
       const params = {
         image,
         coordinates,
@@ -70,17 +72,22 @@ function MapPage() {
 
   function calCuateDistance({ coords }) {
     const { latitude, longitude } = coords;
-    const trashLati = modalInfo.coordinates[1];
-    const trashLong = modalInfo.coordinates[0];
+    const targetLatitude = modalInfo.coordinates[1];
+    const targetLongitude = modalInfo.coordinates[0];
 
-    const x = ((Math.cos(trashLati) * 6400 * 2 * Math.PI) / 360) * Math.abs(trashLong - longitude);
-    const y = 111 * Math.abs(trashLati - latitude);
+    const x = ((Math.cos(targetLatitude) * 6400 * 2 * Math.PI) / 360) * Math.abs(targetLongitude - longitude);
+    const y = 111 * Math.abs(targetLatitude - latitude);
     const distance = Math.sqrt(x ** 2 + y ** 2) * 1000;
 
     setModalClick(false);
 
-    if (distance < 200) {
+    if (distance < 1000) {
       setPloggingResult("success");
+
+      const id = modalInfo.feedId;
+      const userId = data?.id;
+
+      dispatch(userSliceActions.addScore({ id, userId }));
     } else {
       setPloggingResult("failure");
     }
@@ -136,7 +143,7 @@ function MapPage() {
     if (Object.keys(boundary).length) {
       getFeedLocation();
     }
-  }, [zoomLevel, boundary]);
+  }, [zoomLevel, boundary, ploggingResult]);
 
   return (
     <>
@@ -170,7 +177,7 @@ function MapPage() {
         </Portal>
       )}
       {ploggingResult && (
-        <Portal>
+        <Portal wrapperId="modal-container">
           <QuestResultTemplate onCloseClick={() => handleQuestCloseButton()}>
             <Result result={ploggingResult} />
           </QuestResultTemplate>

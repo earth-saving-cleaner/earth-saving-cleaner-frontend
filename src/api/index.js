@@ -49,7 +49,7 @@ export const getFeedInfo = async (boundary) => {
     const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/feeds/locations`, {
       params: { coordinates: boundary },
     });
-
+    console.log(response.data.feedInfo);
     return response.data.feedInfo;
   } catch (err) {
     console.error(err);
@@ -83,6 +83,23 @@ export const addComment = async ({ id, userId, commentText, token }) => {
     });
 
     return response.data.data;
+  } catch (err) {
+    console.error(err);
+    return err.message;
+  }
+};
+
+export const addScore = async (payload) => {
+  const { userId, id } = payload;
+
+  try {
+    const response = axios({
+      method: "post",
+      url: `${process.env.REACT_APP_SERVER_URL}/feed/${id}/plogging`,
+      data: { userId },
+    });
+
+    return response;
   } catch (err) {
     console.error(err);
     return err.message;
