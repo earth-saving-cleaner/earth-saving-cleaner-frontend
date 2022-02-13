@@ -53,6 +53,7 @@ const StyledImage = styled(Img)`
 
 function QuestTemplate({ ...props }) {
   const { image } = props;
+
   return (
     <QuestContainer>
       <Background />

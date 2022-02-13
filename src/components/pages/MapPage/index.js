@@ -23,32 +23,24 @@ function MapPage() {
   const [zoomLevel, setZoomLevel] = useState(17);
   const [boundary, setBoundary] = useState({});
   const [feedLocation, setFeedLocation] = useState([]);
-  const [modalClick, setModalClick] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalInfo, setModalInfo] = useState(null);
   const [ploggingResult, setPloggingResult] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
   const { isLoading, data, error } = useSelector((state) => state.user);
 
-  function handleFloggingButton({ image, coordinates, feedId }) {
+  function handleFloggingButtonClick({ image, coordinates, feedId }) {
     if (!data?.token) {
       history.push("/login");
     }
 
-    setModalClick(true);
+    setIsModalOpen(true);
     setModalInfo({
       image,
       coordinates,
       feedId,
     });
-  }
-
-  function closeModalButton() {
-    setModalClick(false);
-  }
-
-  function handleQuestCloseButton() {
-    setPloggingResult(null);
   }
 
   function spreadFeeds() {
@@ -70,7 +62,7 @@ function MapPage() {
           lng={longitude}
           icon={iconType}
           color={color}
-          onClickIcon={() => (cleaned ? null : handleFloggingButton(params))}
+          onClickIcon={() => (cleaned ? null : handleFloggingButtonClick(params))}
         />
       );
     });
@@ -85,7 +77,7 @@ function MapPage() {
     const y = 111 * Math.abs(targetLatitude - latitude);
     const distance = Math.sqrt(x ** 2 + y ** 2) * 1000;
 
-    setModalClick(false);
+    setIsModalOpen(false);
 
     if (distance < 30) {
       setPloggingResult("success");
@@ -173,10 +165,10 @@ function MapPage() {
           </GoogleMapReact>
         )}
       </MapTemplate>
-      {modalClick && modalInfo && (
+      {isModalOpen && modalInfo && (
         <Portal wrapperId="modal-container">
           <QuestTemplate
-            onCloseClick={() => closeModalButton()}
+            onCloseClick={() => setIsModalOpen(false)}
             onClickCleanButton={() => handleCleanButtonClick()}
             image={modalInfo.image}
           />
@@ -184,7 +176,7 @@ function MapPage() {
       )}
       {ploggingResult && (
         <Portal wrapperId="modal-container">
-          <QuestResultTemplate onCloseClick={() => handleQuestCloseButton()}>
+          <QuestResultTemplate onCloseClick={() => setPloggingResult(null)}>
             <Result result={ploggingResult} level={data?.level} />
           </QuestResultTemplate>
         </Portal>
