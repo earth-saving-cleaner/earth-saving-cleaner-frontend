@@ -77,7 +77,6 @@ function MainPage() {
     };
 
     const { comment } = await addComment(commentInfo);
-
     const { _id } = comment[comment.length - 1];
 
     dispatch(feedSliceActions.addComment({ commentId: _id, feedId: id }));
