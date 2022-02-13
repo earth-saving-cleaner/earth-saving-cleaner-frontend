@@ -4,8 +4,8 @@ import GoogleMapReact from "google-map-react";
 import styled from "styled-components";
 
 import { Icon, Img } from "../../atoms";
-import { MapTemplate } from "../../templates";
-import QuestTemplate from "../../templates/QuestTemplate";
+import { Result } from "../../organisms";
+import { MapTemplate, QuestTemplate, QuestResultTemplate } from "../../templates";
 import Portal from "../../templates/Portal";
 
 import { getFeedInfo } from "../../../api";
@@ -35,6 +35,11 @@ function MapPage() {
 
   function closeModalButton() {
     setModalClick(false);
+  }
+
+  function handleQuestCloseButton() {
+    console.log("clicked");
+    setPloggingResult(null);
   }
 
   function spreadFeeds() {
@@ -74,7 +79,7 @@ function MapPage() {
 
     setModalClick(false);
 
-    if (distance < 100) {
+    if (distance < 200) {
       setPloggingResult("success");
     } else {
       setPloggingResult("failure");
@@ -162,6 +167,13 @@ function MapPage() {
             onClickCleanButton={() => handleCleanButtonClick()}
             image={modalInfo.image}
           />
+        </Portal>
+      )}
+      {ploggingResult && (
+        <Portal>
+          <QuestResultTemplate onCloseClick={() => handleQuestCloseButton()}>
+            <Result result={ploggingResult} />
+          </QuestResultTemplate>
         </Portal>
       )}
     </>

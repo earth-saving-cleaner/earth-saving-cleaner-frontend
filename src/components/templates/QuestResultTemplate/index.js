@@ -3,6 +3,8 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
+import { Button } from "../../atoms";
+
 const QuestContainer = styled.div`
   display: flex;
   align-items: center;
@@ -19,19 +21,41 @@ const ResultWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  z-index: 10;
-  width: 20rem;
-  height: 17rem;
+  width: 40%;
+  height: 60%;
   background: ${({ theme }) => theme.colors.white};
   border-radius: 1rem;
 `;
 
-function QuestResultTemplate({ children }) {
+const StyledButton = styled(Button)`
+  display: flex;
+  float: right;
+  width: 3rem;
+  height: 3rem;
+  border: 0rem;
+`;
+
+const ButtonWrapper = styled.div`
+  width: 100%;
+  float: right;
+`;
+
+function QuestResultTemplate({ ...props }) {
   return (
     <QuestContainer>
-      <ResultWrapper>{children}</ResultWrapper>
+      <ResultWrapper>
+        <ButtonWrapper>
+          <StyledButton title="X" onClick={props.onCloseClick} />
+        </ButtonWrapper>
+        {props.children}
+      </ResultWrapper>
     </QuestContainer>
   );
 }
+
+QuestResultTemplate.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+  onCloseClick: PropTypes.func.isRequired,
+};
 
 export default QuestResultTemplate;
