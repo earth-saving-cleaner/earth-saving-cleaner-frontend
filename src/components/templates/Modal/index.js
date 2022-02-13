@@ -29,7 +29,7 @@ const Background = styled.div`
 const ContentWrapper = styled.div`
   display: flex;
   align-items: center;
-  flex-direction: column;
+  justify-content: center;
   z-index: 10;
   width: 85%;
   height: 80%;
@@ -45,7 +45,6 @@ const ButtonWrapper = styled.div`
 
 const StyledButton = styled(Button)`
   width: 6%;
-
   border: none;
   color: ${theme.colors.white};
   font-size: 3rem;

@@ -54,6 +54,7 @@ function SignupPage() {
   };
 
   const handleSingupSubmit = () => {
+    console.log("=============>", googleToken, nickname);
     dispatch(userSliceActions.signup({ googleToken, nickname }));
   };
 
