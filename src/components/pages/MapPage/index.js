@@ -179,7 +179,7 @@ function MapPage() {
       {ploggingResult && (
         <Portal wrapperId="modal-container">
           <QuestResultTemplate onCloseClick={() => handleQuestCloseButton()}>
-            <Result result={ploggingResult} />
+            <Result result={ploggingResult} level={data.level} />
           </QuestResultTemplate>
         </Portal>
       )}
