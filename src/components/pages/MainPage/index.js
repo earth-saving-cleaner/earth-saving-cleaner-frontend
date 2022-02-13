@@ -7,6 +7,7 @@ import styled from "styled-components";
 import useInfiniteScroll from "../../../hooks/useInfinitescroll";
 import { feedSliceActions } from "../../../modules/slices/feedSlice";
 import { getFeed, addComment } from "../../../api";
+import { isTokenExpired } from "../../../utils";
 
 import { MainTemplate, Modal, CommentTemplate } from "../../templates";
 import { FeedCard } from "../../organisms";
@@ -76,7 +77,15 @@ function MainPage() {
       token,
     };
 
-    const { comment } = await addComment(commentInfo);
+    const result = await addComment(commentInfo);
+    const tokenVerifedResult = await isTokenExpired(result);
+
+    if (tokenVerifedResult) {
+      sendToLogin();
+      return;
+    }
+
+    const { comment } = result;
     const { _id } = comment[comment.length - 1];
 
     dispatch(feedSliceActions.addComment({ commentId: _id, feedId: id }));
