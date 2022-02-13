@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
+
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import GooglePlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
@@ -11,6 +12,8 @@ import { Icon, Textarea } from "../../atoms";
 import { NewFeedHeader } from "../../molecules";
 import themes from "../../../theme/theme";
 import ImageUpload from "../ImageUpload";
+import { isTokenExpired } from "../../../utils";
+import { userSliceActions } from "../../../modules/slices/userSlice";
 
 const { colors } = themes;
 
@@ -62,17 +65,15 @@ const AddressWrapper = styled.div`
 `;
 
 function NewFeed({ handleClose }) {
-  const [pictureUrl, setPictureUrl] = useState("");
+  const [pictureUrl, setPictureUrl] = useState([]);
   const [content, setContent] = useState("");
   const [location, setLocation] = useState([]);
   const [inputAddress, setInputAddress] = useState("");
   const [photoAddress, setPhotoAddress] = useState("");
   const [address, setAddress] = useState("Please enter your address");
-  const [isSaved, setIsSaved] = useState(false);
-  const userInfo = useSelector((state) => state.data.token);
+  const dispatch = useDispatch();
   const history = useHistory();
-  const imgSrc = "https://www.vanillacoding.co/images/team/ken.jpg";
-  const nickname = "ken";
+  const userInfo = useSelector((state) => state.user.data);
 
   const getImage = (data) => {
     const { imageUrl, locationFromMeta } = data;
@@ -84,14 +85,10 @@ function NewFeed({ handleClose }) {
     setContent(e.target.value);
   };
 
-  const handleSave = () => {
-    setIsSaved(true);
-  };
-
   useEffect(() => {
     const getAddress = async () => {
       try {
-        const addressFromPhoto = await getAddressFromLatLng(pictureUrl);
+        const addressFromPhoto = await getAddressFromLatLng(location);
         setPhotoAddress(addressFromPhoto.slice(5));
       } catch (err) {
         console.error(err);
@@ -108,7 +105,6 @@ function NewFeed({ handleClose }) {
       try {
         const response = await geocodeByAddress(String(inputAddress));
         const result = await getLatLng(response[0]);
-        console.log("result>>>>>", result);
         setLocation(result);
         return result;
       } catch (err) {
@@ -136,28 +132,30 @@ function NewFeed({ handleClose }) {
     }
   }, [address, photoAddress, inputAddress]);
 
-  useEffect(async () => {
+  const handleNewFeedSave = async () => {
     const feedDetail = {
-      pictureUrl,
+      pictureUrl: [pictureUrl],
       content,
-      location,
+      location: [location[1], location[0]],
       userInfo,
     };
 
+    if (!feedDetail) return;
+
     try {
       const response = await addNewFeed(feedDetail);
-      console.log(response);
+      const isvalid = await isTokenExpired(response);
 
-      if (response) {
-        // loginsliceAction.logout();
+      if (isvalid) {
         history.push("/login");
+        dispatch(userSliceActions.logout());
+      } else {
+        history.push("/");
       }
-
-      history.push("/");
     } catch (err) {
       console.error(err);
     }
-  }, [isSaved]);
+  };
 
   return (
     <Container>
@@ -169,8 +167,8 @@ function NewFeed({ handleClose }) {
           <Icon icon="close" size="md" onClickIcon={handleClose} />
         </CloseWrapper>
         <HeaderWrapper>
-          <NewFeedHeader nickname={nickname} url={imgSrc} />
-          <Icon icon="save" size="sm" onClickIcon={handleSave} />
+          <NewFeedHeader nickname={userInfo.nickname} url={userInfo.profileImage} />
+          <Icon icon="save" size="sm" onClickIcon={handleNewFeedSave} />
         </HeaderWrapper>
         <Textarea
           background="gray_4"

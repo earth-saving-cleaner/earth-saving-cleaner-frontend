@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import PropTypes from "prop-types";
 import { useHistory, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 import logo from "../../../assets/logo.png";
@@ -44,6 +45,7 @@ function Header({ ...props }) {
   const history = useHistory();
   const location = useLocation();
   const [toggleNav, setToggleNav] = useState(true);
+  const userInfo = useSelector((state) => state.user.data);
 
   const goMainPage = () => {
     setToggleNav(true);
@@ -56,8 +58,11 @@ function Header({ ...props }) {
   };
 
   const createNewFeed = () => {
-    setToggleNav(false);
-    history.push("/feed");
+    if (!userInfo) {
+      history.push("/login");
+    } else {
+      history.push("/feed");
+    }
   };
 
   const goMyPage = () => {

@@ -82,12 +82,11 @@ export const addPhotoToAWS = async (formData) => {
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
 Geocode.setLanguage("ko");
 Geocode.enableDebug();
-// imageUrl :
-// {image: "blob:http://localhost:3000/ff4a4ec0-e321-4c5f-9fa9-ad091153ff0a",
+
 // location: [37.488033333333334, 126.85566666666666]}
-export const getAddressFromLatLng = async (imageUrl) => {
+export const getAddressFromLatLng = async (location) => {
   try {
-    const response = await Geocode.fromLatLng(imageUrl.location[0], imageUrl.location[1]);
+    const response = await Geocode.fromLatLng(location[0], location[1]);
     const address = response.results[0].formatted_address;
     return address;
   } catch (err) {
@@ -98,10 +97,13 @@ export const getAddressFromLatLng = async (imageUrl) => {
 
 export const addNewFeed = async (feedDetail) => {
   const { pictureUrl, content, location, userInfo } = feedDetail;
+
   try {
-    const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/feed`, {
+    const response = await axios({
+      method: "post",
+      url: `${process.env.REACT_APP_SERVER_URL}/feed`,
       headers: {
-        Authorization: `Bearer ${userInfo}`,
+        authorization: `Bearer ${userInfo.token}`,
       },
       data: { pictureUrl, content, location },
     });

@@ -1,8 +1,8 @@
 import React from "react";
-import styled from "styled-components";
 import PropTypes from "prop-types";
 
-import { Button } from "../../atoms";
+import styled from "styled-components";
+
 import theme from "../../../theme/theme";
 import Portal from "../Portal";
 import MainTemplate from "../MainTemplate";
@@ -37,29 +37,13 @@ const ContentWrapper = styled.div`
   background: ${theme.colors.white};
 `;
 
-const ButtonWrapper = styled.div`
-  display: inline-flex;
-  justify-content: flex-end;
-  width: 100%;
-  margin-top: 5rem;
-`;
-
-const StyledButton = styled(Button)`
-  width: 6%;
-
-  border: none;
-  color: ${theme.colors.white};
-  font-size: 3rem;
-  background: none;
-`;
-
 const Content = styled.div`
   display: flex;
 `;
 
-function Modal({ children }) {
+function NewFeedModal({ children }) {
   return (
-    <Portal wrapperId="Feed-modal-container">
+    <Portal wrapperId="NewFeed-modal-container">
       <ModalWrapper>
         <Background>
           <MainTemplate />
@@ -72,8 +56,8 @@ function Modal({ children }) {
   );
 }
 
-Modal.propTypes = {
+NewFeedModal.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };
 
-export default Modal;
+export default NewFeedModal;

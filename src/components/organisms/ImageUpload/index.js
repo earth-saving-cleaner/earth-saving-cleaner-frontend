@@ -1,13 +1,10 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import styled from "styled-components";
-import ExifOrientationImg from "react-exif-orientation-img";
 import EXIF from "exif-js";
 
-import { Button } from "../../atoms";
+import { Button, Img } from "../../atoms";
 import { addPhotoToAWS } from "../../../api";
 import theme from "../../../theme/theme";
 
@@ -18,17 +15,16 @@ const ButtonWrapper = styled(Button)`
 `;
 
 function ImageUpload(props) {
-  const [isUpload, setIsUpload] = useState(false);
   const [preViewImage, setPreViewImage] = useState("");
   const [sendToServerImage, setSendToServerImage] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-  const history = useHistory();
-  const loginData = useSelector((state) => state.login.loginData.data.token);
 
   const deleteFileImage = () => {
-    URL.revokeObjectURL(preViewImage);
     setPreViewImage("");
+    setSendToServerImage("");
+    // S3 통신 없이 화면 노출 테스트 할 경우 사용!
+    // URL.revokeObjectURL(preViewImage);
   };
 
   const handleImageChange = useCallback(async (e) => {
@@ -36,6 +32,7 @@ function ImageUpload(props) {
 
     const imageFormData = new FormData();
     imageFormData.append("img", e.target.files[0]);
+
     try {
       const res = await addPhotoToAWS(imageFormData);
       // 실제 S3 response
@@ -45,9 +42,8 @@ function ImageUpload(props) {
       if (res) {
         setPreViewImage(res.originalUrl);
         setSendToServerImage(res.url);
-        setIsUpload(true);
         // S3 통신 없이 화면 노출 테스트 할 경우 사용!
-        // setFileImage(URL.createObjectURL(e.target.files[0]));
+        // setPreViewImage(URL.createObjectURL(e.target.files[0]));
       }
     } catch (err) {
       console.error(err);
@@ -98,10 +94,8 @@ function ImageUpload(props) {
   return (
     <form>
       <div>
-        {!isUpload ? (
-          <ExifOrientationImg alt="" src={preViewImage} style={{ display: "block", width: "75%", margin: "auto" }} />
-        ) : (
-          <div>Image Loading...</div>
+        {preViewImage && (
+          <Img alt="" src={preViewImage} style={{ display: "block", width: "60%", marginLeft: "2rem" }} />
         )}
         <div
           style={{
@@ -114,7 +108,7 @@ function ImageUpload(props) {
             type="file"
             accept="image/*"
             style={{ display: "block" }}
-            onChange={loginData ? handleImageChange : history.push("/login")}
+            onChange={handleImageChange}
           />
           {preViewImage && <ButtonWrapper type="button" title="Delete" onClick={() => deleteFileImage()} />}
         </div>

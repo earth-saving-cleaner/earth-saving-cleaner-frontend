@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+
 import { useHistory } from "react-router-dom";
 
-import { FeedModal } from "../../templates";
+import { NewFeedModal } from "../../templates";
 import { NewFeed } from "../../organisms";
 
 function NewFeedPage() {
@@ -16,9 +17,9 @@ function NewFeedPage() {
   if (!isOpen) return null;
 
   return (
-    <FeedModal>
+    <NewFeedModal>
       <NewFeed handleClose={handleModalClose} />
-    </FeedModal>
+    </NewFeedModal>
   );
 }
 

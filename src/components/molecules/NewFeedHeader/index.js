@@ -15,7 +15,7 @@ const TextWrapper = styled.div`
   margin: 1rem 0 0 1rem;
 `;
 
-function FeedHeader({ ...props }) {
+function NewFeedHeader({ ...props }) {
   return (
     <StyledContainer>
       <Avatar url={props.url} size="sm" />
@@ -26,10 +26,9 @@ function FeedHeader({ ...props }) {
   );
 }
 
-FeedHeader.propTypes = {
+NewFeedHeader.propTypes = {
   nickname: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
-  address: PropTypes.string.isRequired,
 };
 
-export default FeedHeader;
+export default NewFeedHeader;
