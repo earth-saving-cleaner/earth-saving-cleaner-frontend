@@ -56,3 +56,35 @@ export const getFeedInfo = async (boundary) => {
     return err.message;
   }
 };
+
+export const getFeed = async (id) => {
+  try {
+    const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/feed/${id}`);
+
+    return response.data.data;
+  } catch (err) {
+    console.error(err);
+    return err.message;
+  }
+};
+
+export const addComment = async ({ id, userId, commentText, token }) => {
+  try {
+    const response = await axios({
+      method: "post",
+      url: `${process.env.REACT_APP_SERVER_URL}/feed/${id}/comment`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      data: {
+        userId,
+        content: commentText,
+      },
+    });
+
+    return response.data.data;
+  } catch (err) {
+    console.error(err);
+    return err.message;
+  }
+};

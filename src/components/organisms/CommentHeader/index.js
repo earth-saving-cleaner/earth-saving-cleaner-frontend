@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 import { Avatar, Text } from "../../atoms";
 
@@ -23,23 +24,30 @@ const DeacriptionWrapper = styled.div`
 `;
 
 function CommentHeader({ ...props }) {
-  const mockUrl = "https://www.vanillacoding.co/images/team/ken.jpg";
-  const mockNickname = "ken";
-  const description = `It is a long established fact that a reader will be distracted`;
-
+  const { nickname, image, content } = props;
   return (
     <HeaderContainer>
       <StyledWrapper>
-        <Avatar url={mockUrl} size="sm" />
+        <Avatar url={image} size="sm" />
         <TextWrapper>
-          <Text text={mockNickname} size="lg" weight="700" />
+          <Text text={nickname} size="lg" weight="700" />
         </TextWrapper>
       </StyledWrapper>
       <DeacriptionWrapper>
-        <Text text={description} size="lg" weight="500" />
+        <Text text={content} size="lg" weight="500" />
       </DeacriptionWrapper>
     </HeaderContainer>
   );
 }
+
+CommentHeader.propTypes = {
+  nickname: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  content: PropTypes.string,
+};
+
+CommentHeader.defaultProps = {
+  content: "",
+};
 
 export default CommentHeader;
