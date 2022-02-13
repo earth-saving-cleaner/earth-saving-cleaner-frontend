@@ -66,7 +66,7 @@ const AddressWrapper = styled.div`
   text-align: right;
 `;
 
-function NewFeed({ handleModalClose }) {
+function NewFeed({ onClickModalClose }) {
   const [pictureUrl, setPictureUrl] = useState("");
   const [content, setContent] = useState("");
   const [location, setLocation] = useState([]);
@@ -154,7 +154,7 @@ function NewFeed({ handleModalClose }) {
         history.push("/login");
         dispatch(userSliceActions.logout());
       } else {
-        handleModalClose();
+        onClickModalClose();
         dispatch(feedSliceActions.getFeeds({ limit: 3 }));
       }
     } catch (err) {
@@ -169,7 +169,7 @@ function NewFeed({ handleModalClose }) {
       </ImageWrapper>
       <ContentsWrapper>
         <CloseWrapper>
-          <Icon icon="close" size="md" onClickIcon={handleModalClose} />
+          <Icon icon="close" size="md" onClickIcon={onClickModalClose} />
         </CloseWrapper>
         <HeaderWrapper>
           <NewFeedHeader nickname={userInfo.nickname} url={userInfo.profileImage} />
@@ -212,11 +212,11 @@ function NewFeed({ handleModalClose }) {
 }
 
 NewFeed.propTypes = {
-  handleModalClose: PropTypes.func,
+  onClickModalClose: PropTypes.func,
 };
 
 NewFeed.defaultProps = {
-  handleModalClose: noop,
+  onClickModalClose: noop,
 };
 
 export default NewFeed;

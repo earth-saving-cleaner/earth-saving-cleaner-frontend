@@ -47,7 +47,7 @@ function Header({ ...props }) {
   const history = useHistory();
   const location = useLocation();
   const [toggleNav, setToggleNav] = useState(true);
-  const [isCreateOpen, setIsCreateOpen] = useState(true);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(true);
   const userInfo = useSelector((state) => state.user.data);
 
   const goMainPage = () => {
@@ -58,10 +58,6 @@ function Header({ ...props }) {
   const goMapPage = () => {
     setToggleNav(false);
     history.push("/map");
-  };
-
-  const createNewFeed = () => {
-    setIsCreateOpen(true);
   };
 
   const goMyPage = () => {
@@ -82,7 +78,7 @@ function Header({ ...props }) {
         <Navigation iconType="map" isSelected={!toggleNav} onNavClick={goMapPage} />
       </MiddleWrapper>
       <Wrapper>
-        <Navigation iconType="createFeed" onNavClick={createNewFeed} onClickIcon={props.onClickCreate} />
+        <Navigation iconType="createFeed" onNavClick={() => setIsCreateModalOpen()} onClickIcon={props.onClickCreate} />
         <Navigation iconType="myPage" onNavClick={goMyPage} />
       </Wrapper>
     </StyledHeader>

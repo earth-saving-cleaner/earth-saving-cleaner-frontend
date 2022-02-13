@@ -186,7 +186,7 @@ function MainPage() {
       )}
       {isCreateModalOpen && token && (
         <NewFeedModal>
-          <NewFeed handleModalOpen={handleModalOpen} handleModalClose={handleModalClose} />
+          <NewFeed onClickModalOpen={handleModalOpen} onClickModalClose={handleModalClose} />
         </NewFeedModal>
       )}
     </>
