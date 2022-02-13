@@ -87,7 +87,7 @@ function MapPage() {
 
     setModalClick(false);
 
-    if (distance < 40) {
+    if (distance < 30) {
       setPloggingResult("success");
 
       const id = modalInfo.feedId;

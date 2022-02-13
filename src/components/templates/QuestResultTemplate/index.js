@@ -54,7 +54,7 @@ function QuestResultTemplate({ ...props }) {
 }
 
 QuestResultTemplate.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+  children: PropTypes.oneOfType(PropTypes.node).isRequired,
   onCloseClick: PropTypes.func.isRequired,
 };
 
