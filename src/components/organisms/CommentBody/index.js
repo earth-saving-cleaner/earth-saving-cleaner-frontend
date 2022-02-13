@@ -4,64 +4,49 @@ import PropTypes from "prop-types";
 
 import { Avatar, Text } from "../../atoms";
 
-const StyledContainer = styled.div`
+const StyledWrapper = styled.div`
   display: inline-flex;
   padding: 0.8rem;
   width: 100%;
+`;
+
+const ScrollWrapper = styled.div`
+  height: 23rem;
+  overflow-y: scroll;
 `;
 
 const TextWrapper = styled.div`
   margin-left: 1rem;
 `;
 
-const commentList = [
-  {
-    author: {
-      nickname: "Ken",
-      profileImage: "https://www.vanillacoding.co/images/team/ken.jpg",
-    },
-    comments: "what?!",
-  },
-  {
-    author: {
-      nickname: "JK",
-      profileImage: "https://www.vanillacoding.co/images/team/ken.jpg",
-    },
-    comments: "nononononononno?!",
-  },
-  {
-    author: {
-      nickname: "Woo",
-      profileImage: "https://www.vanillacoding.co/images/team/ken.jpg",
-    },
-    comments: "okokokoko good",
-  },
-];
+function CommentBody({ ...props }) {
+  const { commentList } = props;
 
-function CommentBody() {
   return (
-    commentList &&
-    commentList.map((comment) => {
-      const {
-        comments,
-        author: { nickname, profileImage },
-      } = comment;
+    <ScrollWrapper>
+      {commentList &&
+        commentList.map((comment) => {
+          const {
+            content,
+            author: { nickname, profileImage },
+          } = comment;
 
-      return (
-        <StyledContainer key={nickname}>
-          <Avatar url={profileImage} size="sm" />
-          <TextWrapper>
-            <Text text={nickname} size="lg" weight="700" />
-            <Text text={comments} size="base" weight="400" />
-          </TextWrapper>
-        </StyledContainer>
-      );
-    })
+          return (
+            <StyledWrapper key={nickname + content}>
+              <Avatar url={profileImage} size="sm" />
+              <TextWrapper>
+                <Text text={nickname} size="lg" weight="700" />
+                <Text text={content} size="base" weight="400" />
+              </TextWrapper>
+            </StyledWrapper>
+          );
+        })}
+    </ScrollWrapper>
   );
 }
 
 CommentBody.propTypes = {
-  comment: PropTypes.arrayOf(PropTypes.object).isRequired,
+  commentList: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default CommentBody;
