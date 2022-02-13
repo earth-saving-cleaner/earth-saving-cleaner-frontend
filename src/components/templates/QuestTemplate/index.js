@@ -25,11 +25,15 @@ const Background = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  width: 6%;
-  border: none;
-  color: ${({ theme }) => theme.colors.white};
-  font-size: 3rem;
-  background: none;
+  display: flex;
+  float: right;
+  width: 3rem;
+  height: 3rem;
+  border: 0rem;
+`;
+
+const ButtonWrapper = styled.div`
+  width: 100%;
   float: right;
 `;
 
@@ -39,7 +43,6 @@ const PloggingWrapper = styled.div`
   flex-direction: column;
   z-index: 10;
   width: 20rem;
-  height: 17rem;
   background: ${({ theme }) => theme.colors.white};
   border-radius: 1rem;
 `;
@@ -52,11 +55,12 @@ function QuestTemplate({ ...props }) {
   const { image } = props;
   return (
     <QuestContainer>
-      <Background>
-        <StyledButton onClick={props.onCloseClick} title="X" />
-      </Background>
+      <Background />
       <PloggingWrapper>
-        <StyledImage width="100rem" padding-top="10px" src={image} />
+        <ButtonWrapper>
+          <StyledButton onClick={props.onCloseClick} title="X" />
+        </ButtonWrapper>
+        <StyledImage width="150rem" padding-top="10px" src={image} />
         <Button title="Clean" radius="1rem" onClick={props.onClickCleanButton} />
       </PloggingWrapper>
     </QuestContainer>

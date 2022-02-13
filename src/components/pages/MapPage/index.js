@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 import GoogleMapReact from "google-map-react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+
+import { getFeedInfo } from "../../../api";
+import { userSliceActions } from "../../../modules/slices/userSlice";
+import theme from "../../../theme/theme";
 
 import { Icon } from "../../atoms";
 import { Result } from "../../organisms";
 import { MapTemplate, QuestTemplate, QuestResultTemplate } from "../../templates";
 import Portal from "../../templates/Portal";
-
-import { getFeedInfo } from "../../../api";
-import theme from "../../../theme/theme";
-import { userSliceActions } from "../../../modules/slices/userSlice";
 
 const StyledIcon = styled(Icon)`
   color: ${(props) => props.color};
@@ -19,16 +20,21 @@ const StyledIcon = styled(Icon)`
 
 function MapPage() {
   const [defaultProps, setDefaultProps] = useState(null);
-  const [zoomLevel, setZoomLevel] = useState(14);
+  const [zoomLevel, setZoomLevel] = useState(17);
   const [boundary, setBoundary] = useState({});
   const [feedLocation, setFeedLocation] = useState([]);
   const [modalClick, setModalClick] = useState(false);
   const [modalInfo, setModalInfo] = useState(null);
   const [ploggingResult, setPloggingResult] = useState("");
+  const history = useHistory();
   const dispatch = useDispatch();
   const { isLoading, data, error } = useSelector((state) => state.user);
 
   function handleFloggingButton({ image, coordinates, feedId }) {
+    if (!data?.token) {
+      history.push("/login");
+    }
+
     setModalClick(true);
     setModalInfo({
       image,
@@ -81,7 +87,7 @@ function MapPage() {
 
     setModalClick(false);
 
-    if (distance < 1000) {
+    if (distance < 40) {
       setPloggingResult("success");
 
       const id = modalInfo.feedId;
@@ -117,7 +123,7 @@ function MapPage() {
             lat: latitude,
             lng: longitude,
           },
-          zoom: 14,
+          zoom: 17,
         });
       },
       () => {
@@ -179,7 +185,7 @@ function MapPage() {
       {ploggingResult && (
         <Portal wrapperId="modal-container">
           <QuestResultTemplate onCloseClick={() => handleQuestCloseButton()}>
-            <Result result={ploggingResult} level={data.level} />
+            <Result result={ploggingResult} level={data?.level} />
           </QuestResultTemplate>
         </Portal>
       )}
