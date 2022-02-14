@@ -57,7 +57,7 @@ function RankingItem({ profileImage, nickname, level, score, index, ...props }) 
       </UserProfile>
       <Score>
         <StyledText text="Total" />
-        <StyledText text={String(score)} />
+        <StyledText text={score} />
       </Score>
     </Wrapper>
   );

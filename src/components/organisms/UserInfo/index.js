@@ -36,10 +36,10 @@ function UserInfo() {
   return (
     <Wrapper>
       <HeaderWrapper>
-        <UserHeader nickname={nickname} url={profileImage} level={`Lv ${String(level)}`} />
+        <UserHeader nickname={nickname} url={profileImage} level={`Lv ${level}`} />
       </HeaderWrapper>
       <ScoreWrapper>
-        <Text text={`Total ${String(score)}`} size="xxl" />
+        <Text text={`Total ${score}`} size="xxl" />
       </ScoreWrapper>
       <Button
         title="Logout"
