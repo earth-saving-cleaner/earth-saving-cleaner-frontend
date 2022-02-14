@@ -118,7 +118,7 @@ function Icon({ icon, size, onClickIcon, ...props }) {
       svg = <IoPaperPlaneOutline />; // <IoPaperPlane />; or <IoPaperPlaneSharp />;
       break;
     case "location":
-      svg = <IoLocationSharp />; // <IoLocation />; or <IoLocationSharp />;
+      svg = <IoLocationOutline />; // <IoLocation />; or <IoLocationSharp />;
       break;
     case "trashCanLine":
       svg = <IoTrashOutline />;

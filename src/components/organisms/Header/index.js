@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import PropTypes from "prop-types";
-import { useHistory, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import styled from "styled-components";
-
 import { noop } from "lodash";
+import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
+import styled from "styled-components";
 
 import logo from "../../../assets/logo.png";
 import { Navigation } from "../../molecules";
@@ -46,18 +45,20 @@ const Logo = styled.img.attrs({
 function Header({ ...props }) {
   const history = useHistory();
   const location = useLocation();
-  const [toggleNav, setToggleNav] = useState(true);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(true);
+  const [navStatus, setNavStatus] = useState({});
   const userInfo = useSelector((state) => state.user.data);
 
   const goMainPage = () => {
-    setToggleNav(true);
     history.push("/");
   };
 
   const goMapPage = () => {
-    setToggleNav(false);
     history.push("/map");
+  };
+
+  const goPloggingPage = () => {
+    history.push("/map/plogging");
   };
 
   const goMyPage = () => {
@@ -65,7 +66,47 @@ function Header({ ...props }) {
   };
 
   useEffect(() => {
-    location.pathname === "/" ? setToggleNav(true) : setToggleNav(false);
+    switch (location.pathname) {
+      case "/":
+        setNavStatus({
+          main: true,
+          map: false,
+          plogging: false,
+          user: false,
+        });
+        break;
+      case "/map":
+        setNavStatus({
+          main: false,
+          map: true,
+          plogging: false,
+          user: false,
+        });
+        break;
+      case "/map/plogging":
+        setNavStatus({
+          main: false,
+          map: false,
+          plogging: true,
+          user: false,
+        });
+        break;
+      case "/mypage":
+        setNavStatus({
+          main: false,
+          map: false,
+          plogging: false,
+          user: true,
+        });
+        break;
+      default:
+        setNavStatus({
+          main: false,
+          map: false,
+          plogging: false,
+          user: false,
+        });
+    }
   }, [location.pathname]);
 
   return (
@@ -74,8 +115,9 @@ function Header({ ...props }) {
         <Logo onClick={props.onClickLogo} />
       </Wrapper>
       <MiddleWrapper>
-        <Navigation iconType="feed" isSelected={toggleNav} onNavClick={goMainPage} />
-        <Navigation iconType="map" isSelected={!toggleNav} onNavClick={goMapPage} />
+        <Navigation iconType="feed" isSelected={navStatus.main} onNavClick={goMainPage} />
+        <Navigation iconType="map" isSelected={navStatus.map} onNavClick={goMapPage} />
+        <Navigation iconType="location" isSelected={navStatus.plogging} onNavClick={goPloggingPage} />
       </MiddleWrapper>
       <Wrapper>
         <Navigation iconType="createFeed" onNavClick={() => setIsCreateModalOpen()} onClickIcon={props.onClickCreate} />
