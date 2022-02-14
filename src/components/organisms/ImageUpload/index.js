@@ -17,8 +17,8 @@ const ButtonWrapper = styled(Button)`
 function ImageUpload(props) {
   const [preViewImage, setPreViewImage] = useState("");
   const [resizedImageUrl, setResizedImageUrl] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
 
   const deleteFileImage = () => {
     setPreViewImage("");
