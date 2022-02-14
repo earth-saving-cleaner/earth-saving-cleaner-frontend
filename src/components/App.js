@@ -1,10 +1,8 @@
 import React from "react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Route, Switch, Redirect } from "react-router-dom";
 import styled from "styled-components";
-
-import { userSliceActions } from "../modules/slices/userSlice";
 
 import { MainPage, MapPage, MyPage, LoginPage, SignupPage } from "./pages";
 
@@ -13,12 +11,7 @@ const Container = styled.div`
 `;
 
 function App() {
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.data);
-
-  const handleLoout = () => {
-    dispatch(userSliceActions.logout());
-  };
 
   return (
     <Container>
@@ -28,9 +21,6 @@ function App() {
         </Route>
         <Route path="/mypage" exact>
           {user?.token ? <MyPage /> : <Redirect to="/login" />}
-          <button type="button" onClick={handleLoout}>
-            logout
-          </button>
         </Route>
         <Route path="/map" exact>
           <MapPage />
