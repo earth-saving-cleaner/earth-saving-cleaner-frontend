@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import GoogleMapReact from "google-map-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,9 +7,9 @@ import styled from "styled-components";
 
 import { getFeedInfo } from "../../../api";
 import { userSliceActions } from "../../../modules/slices/userSlice";
+import useSocket from "../../../hooks/useSocket";
 import theme from "../../../theme/theme";
-
-import { Icon, Loading } from "../../atoms";
+import { Icon, GpsIcon, Loading } from "../../atoms";
 import { Result } from "../../organisms";
 import { MapTemplate, QuestTemplate, QuestResultTemplate } from "../../templates";
 import Portal from "../../templates/Portal";
@@ -19,17 +19,24 @@ const StyledIcon = styled(Icon)`
 `;
 
 function MapPage() {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { isLoading, data, error } = useSelector((state) => state.user);
+
+  const [socket, disconnect] = useSocket("map");
+
   const [defaultProps, setDefaultProps] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(17);
   const [boundary, setBoundary] = useState({});
+
   const [feedLocation, setFeedLocation] = useState([]);
+  const [userGps, setUserGps] = useState();
+  const [gpsLocations, setGpsLocations] = useState({});
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalInfo, setModalInfo] = useState(null);
   const [ploggingResult, setPloggingResult] = useState("");
   const [loading, setLoading] = useState(true);
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const { isLoading, data, error } = useSelector((state) => state.user);
 
   function handleFloggingButtonClick({ image, coordinates, feedId }) {
     if (!data?.token) {
@@ -64,10 +71,42 @@ function MapPage() {
           icon={iconType}
           color={color}
           onClickIcon={() => (cleaned ? null : handleFloggingButtonClick(params))}
+          size="sm"
         />
       );
     });
   }
+
+  function paintGpsLocations() {
+    return Object.keys(gpsLocations)?.map((socketId) => {
+      const { location, sid } = gpsLocations[socketId];
+
+      if (location?.longitude) {
+        if (socket.id === sid) {
+          return <GpsIcon key={sid} color="yellow" lat={location.latitude} lng={location.longitude} />;
+        }
+
+        return <GpsIcon key={sid} color="purple" lat={location.latitude} lng={location.longitude} />;
+      }
+
+      return null;
+    });
+  }
+
+  function watchPositionSuccess(position) {
+    const { longitude, latitude } = position.coords;
+    setUserGps({ longitude, latitude });
+  }
+
+  function watchPositionError(err) {
+    console.warn(err.code, err.message);
+  }
+
+  const options = {
+    enableHighAccuracy: false,
+    timeout: 20000,
+    maximumAge: Infinity,
+  };
 
   function calCuateDistance({ coords }) {
     const { latitude, longitude } = coords;
@@ -116,6 +155,11 @@ function MapPage() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
+
+        socket.emit("join", { userId: "testId", location: { longitude, latitude } });
+
+        setUserGps({ longitude, latitude });
+
         setDefaultProps({
           // user accept current location.
           center: {
@@ -129,14 +173,21 @@ function MapPage() {
         setDefaultProps({
           // user denied user current location.
           center: {
-            lat: 37.50805,
+            lat: 37.50815,
             lng: 127.06135,
           },
           zoom: 14,
         });
         alert("please accept your location.");
       },
+      options,
     );
+
+    const watchId = navigator.geolocation.watchPosition(watchPositionSuccess, watchPositionError, options);
+
+    return () => {
+      navigator.geolocation.clearWatch(watchId);
+    };
   }, []);
 
   useEffect(() => {
@@ -149,6 +200,26 @@ function MapPage() {
       getFeedLocation();
     }
   }, [zoomLevel, boundary, ploggingResult]);
+
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log(socket.id);
+    });
+
+    socket.on("locations", (locations) => {
+      setGpsLocations(locations);
+    });
+
+    return () => {
+      disconnect();
+    };
+  }, [socket]);
+
+  useEffect(() => {
+    if (userGps?.longitude) {
+      socket.emit("gps", userGps);
+    }
+  }, [userGps]);
 
   return (
     <>
@@ -172,6 +243,7 @@ function MapPage() {
             }}
           >
             {spreadFeeds()}
+            {paintGpsLocations()}
           </GoogleMapReact>
         )}
       </MapTemplate>
