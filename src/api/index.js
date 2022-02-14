@@ -146,3 +146,20 @@ export const addNewFeed = async (feedDetail) => {
     return err.message;
   }
 };
+
+export const addScore = async (payload) => {
+  const { userId, id } = payload;
+
+  try {
+    const response = axios({
+      method: "post",
+      url: `${process.env.REACT_APP_SERVER_URL}/feed/${id}/plogging`,
+      data: { userId },
+    });
+
+    return response;
+  } catch (err) {
+    console.error(err);
+    return err.message;
+  }
+};
