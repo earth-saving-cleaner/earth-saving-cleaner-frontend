@@ -9,7 +9,7 @@ import { getFeedInfo } from "../../../api";
 import { userSliceActions } from "../../../modules/slices/userSlice";
 import useSocket from "../../../hooks/useSocket";
 import theme from "../../../theme/theme";
-import { Icon, GpsIcon } from "../../atoms";
+import { Icon, GpsIcon, Loading } from "../../atoms";
 import { Result } from "../../organisms";
 import { MapTemplate, QuestTemplate, QuestResultTemplate } from "../../templates";
 import Portal from "../../templates/Portal";
@@ -36,6 +36,7 @@ function MapPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalInfo, setModalInfo] = useState(null);
   const [ploggingResult, setPloggingResult] = useState("");
+  const [loading, setLoading] = useState(true);
 
   function handleFloggingButtonClick({ image, coordinates, feedId }) {
     if (!data?.token) {
@@ -144,6 +145,12 @@ function MapPage() {
     );
   }
 
+  function handleApiLoaded(map, maps) {
+    maps.event.addListener(map, "tilesloaded", () => {
+      setLoading(false);
+    });
+  }
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -217,11 +224,14 @@ function MapPage() {
   return (
     <>
       <MapTemplate>
+        {loading ? <Loading /> : null}
         {defaultProps && (
           <GoogleMapReact
             defaultCenter={defaultProps.center}
             defaultZoom={defaultProps.zoom}
             // bootstrapURLKeys={{ key: process.env.REACT_APP_MAP_API }}
+            yesIWantToUseGoogleMapApiInternals
+            onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
             onChange={({ zoom, bounds, ...props }) => {
               setZoomLevel(zoom);
               setBoundary({
