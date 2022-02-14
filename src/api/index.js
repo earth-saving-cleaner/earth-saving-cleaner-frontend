@@ -128,7 +128,7 @@ export const getAddressFromLatLng = async (location) => {
 };
 
 export const addNewFeed = async (feedDetail) => {
-  const { pictureUrl, content, location, userInfo } = feedDetail;
+  const { pictureUrl, content, location, address, userInfo } = feedDetail;
 
   try {
     const response = await axios({
@@ -137,7 +137,7 @@ export const addNewFeed = async (feedDetail) => {
       headers: {
         authorization: `Bearer ${userInfo.token}`,
       },
-      data: { pictureUrl, content, location },
+      data: { pictureUrl, content, location, address },
     });
 
     return response;

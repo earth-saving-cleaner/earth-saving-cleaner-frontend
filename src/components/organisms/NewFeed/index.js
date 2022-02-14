@@ -141,6 +141,7 @@ function NewFeed({ onClickModalClose }) {
       pictureUrl: [pictureUrl],
       content,
       location: [location[1], location[0]],
+      address,
       userInfo,
     };
 
