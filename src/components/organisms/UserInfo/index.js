@@ -1,49 +1,46 @@
 import React from "react";
-import PropTypes from "prop-types";
 
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
 
+import { userSliceActions } from "../../../modules/slices/userSlice";
 import theme from "../../../theme/theme";
-
 import { Button, Text } from "../../atoms";
 import { UserHeader } from "../../molecules";
 
+const { colors } = theme;
+
 const Wrapper = styled.div`
   display: flex;
-  width: 100vw;
-  height: 100vh;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 `;
 
-const UserPerformanceWrapper = styled.div`
-  margin: 210px 0 160px 0;
+const HeaderWrapper = styled.div`
+  margin-top: 2rem;
 `;
 
-const TodayWrapper = styled.div`
-  margin-bottom: 3rem;
+const ScoreWrapper = styled.div`
+  margin: 10rem 0 30rem 0;
 `;
 
-const TotalWrapper = styled.div``;
-
-function UserInfo({ profileImage, nickname, level, score }) {
-  const { colors } = theme;
+function UserInfo() {
+  const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.data);
-  const mockLevel = 10;
+  const { profileImage, nickname, level, score } = userInfo;
+
+  const handleLoout = () => {
+    dispatch(userSliceActions.logout());
+  };
 
   return (
     <Wrapper>
-      <UserHeader nickname={userInfo.nickname} url={userInfo.profileImage} level={`Lv ${String(mockLevel)}`} />
-      <UserPerformanceWrapper>
-        <TodayWrapper>
-          <Text text={`Today ${String(score)}`} size="xxl" />
-        </TodayWrapper>
-        <TotalWrapper>
-          <Text text={`Total ${String(score)}`} size="xxl" />
-        </TotalWrapper>
-      </UserPerformanceWrapper>
+      <HeaderWrapper>
+        <UserHeader nickname={nickname} url={profileImage} level={`Lv ${String(level)}`} />
+      </HeaderWrapper>
+      <ScoreWrapper>
+        <Text text={`Total ${String(score)}`} size="xxl" />
+      </ScoreWrapper>
       <Button
         title="Logout"
         background={colors.purple}
@@ -51,23 +48,10 @@ function UserInfo({ profileImage, nickname, level, score }) {
         height="2rem"
         radius="5rem"
         color={colors.white}
+        onClick={handleLoout}
       />
     </Wrapper>
   );
 }
-
-UserInfo.propTypes = {
-  profileImage: PropTypes.string,
-  nickname: PropTypes.string,
-  level: PropTypes.number,
-  score: PropTypes.number,
-};
-
-UserInfo.defaultProps = {
-  profileImage: "https://lh3.googleusercontent.com/a/AATXAJzdJ5gTfflTC1--vXDDRH1n-wX7NQ9mJRViLtgc=s96-c",
-  nickname: "anonymous",
-  level: 0,
-  score: 0,
-};
 
 export default UserInfo;

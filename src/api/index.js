@@ -1,5 +1,4 @@
 import axios from "axios";
-import Geocode from "react-geocode";
 
 export const login = async (tokenId) => {
   const url = `${process.env.REACT_APP_SERVER_URL}/login`;
@@ -84,6 +83,23 @@ export const addComment = async ({ id, userId, commentText, token }) => {
     });
 
     return response.data.data;
+  } catch (err) {
+    console.error(err);
+    return err.message;
+  }
+};
+
+export const getRankList = async (userInfo) => {
+  try {
+    const response = await axios({
+      method: "get",
+      url: `${process.env.REACT_APP_SERVER_URL}/user/rank`,
+      headers: {
+        authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+
+    return response;
   } catch (err) {
     console.error(err);
     return err.message;

@@ -1,6 +1,7 @@
 import React from "react";
-import styled from "styled-components";
 import PropTypes from "prop-types";
+
+import styled from "styled-components";
 
 import { Avatar, Text } from "../../atoms";
 
@@ -14,7 +15,18 @@ const StyledContainer = styled.div`
 `;
 
 const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 3rem;
+`;
+
+const NicknameWrapper = styled.div`
+  margin: 2rem;
+`;
+
+const LevelWrapper = styled.div`
+  float: right;
 `;
 
 function UserHeader({ ...props }) {
@@ -22,8 +34,12 @@ function UserHeader({ ...props }) {
     <StyledContainer>
       <Avatar url={props.url} size="lg" />
       <TextWrapper>
-        <Text text={props.nickname} size="xxxl" weight="700" />
-        <Text text={props.level} size="xxl" />
+        <NicknameWrapper>
+          <Text text={props.nickname} size="xxxl" weight="700" />
+        </NicknameWrapper>
+        <LevelWrapper>
+          <Text text={props.level} size="xxl" />
+        </LevelWrapper>
       </TextWrapper>
     </StyledContainer>
   );
