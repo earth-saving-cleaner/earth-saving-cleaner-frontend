@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 import { userSliceActions } from "../modules/slices/userSlice";
 
-import { MainPage, MapPage, MyPage, LoginPage, SignupPage } from "./pages";
+import { MainPage, MapPage, MyPage, LoginPage, SignupPage, MapClusteringPage } from "./pages";
 
 const Container = styled.div`
   width: 100%;
@@ -34,6 +34,9 @@ function App() {
         </Route>
         <Route path="/map" exact>
           <MapPage />
+        </Route>
+        <Route path="/map/plogging" exact>
+          <MapClusteringPage />
         </Route>
         <Route path="/login" exact>
           <LoginPage />
