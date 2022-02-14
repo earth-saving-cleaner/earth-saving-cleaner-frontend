@@ -59,6 +59,16 @@ export const feedSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    addComment: (state, action) => {
+      const feedData = state.feeds.data;
+
+      for (let i = 0; i < feedData.length; i += 1) {
+        if (feedData[i]._id === action.payload.feedId) {
+          feedData[i].comment.push(action.payload.commentId);
+          return;
+        }
+      }
+    },
   },
 });
 

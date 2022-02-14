@@ -1,10 +1,11 @@
 import React from "react";
-import styled from "styled-components";
 import PropTypes from "prop-types";
 
-import { Button } from "../../atoms";
+import styled from "styled-components";
+
 import theme from "../../../theme/theme";
 import Portal from "../Portal";
+import MainTemplate from "../MainTemplate";
 
 const ModalWrapper = styled.div`
   display: flex;
@@ -29,40 +30,23 @@ const Background = styled.div`
 const ContentWrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  flex-direction: column;
   z-index: 10;
-  width: 85%;
-  height: 80%;
+  width: 90rem;
+  height: 60rem;
   background: ${theme.colors.white};
-`;
-
-const ButtonWrapper = styled.div`
-  display: inline-flex;
-  justify-content: flex-end;
-  width: 100%;
-  margin-top: 5rem;
-`;
-
-const StyledButton = styled(Button)`
-  width: 6%;
-  border: none;
-  color: ${theme.colors.white};
-  font-size: 3rem;
-  background: none;
 `;
 
 const Content = styled.div`
   display: flex;
 `;
 
-function Modal({ children, handleClose }) {
+function NewFeedModal({ children }) {
   return (
-    <Portal wrapperId="modal-container">
+    <Portal>
       <ModalWrapper>
         <Background>
-          <ButtonWrapper>
-            <StyledButton onClick={handleClose} title="X" />
-          </ButtonWrapper>
+          <MainTemplate />
         </Background>
         <ContentWrapper>
           <Content>{children}</Content>
@@ -72,9 +56,8 @@ function Modal({ children, handleClose }) {
   );
 }
 
-Modal.propTypes = {
+NewFeedModal.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-  handleClose: PropTypes.func.isRequired,
 };
 
-export default Modal;
+export default NewFeedModal;

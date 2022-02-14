@@ -45,6 +45,22 @@ export const userSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    addScore: (state) => {
+      state.isLoading = true;
+      state.error = null;
+    },
+    addScoreSuccess: (state, action) => {
+      const { score, level } = action.payload;
+
+      state.data.score = score;
+      state.data.level = level;
+      state.isLoading = false;
+      state.error = false;
+    },
+    addScoreFailure: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
 
