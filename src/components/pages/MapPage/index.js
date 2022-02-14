@@ -15,12 +15,6 @@ const StyledIcon = styled(Icon)`
 `;
 
 function MapPage() {
-  function getRandom() {
-    const rand09 = Math.floor(Math.random() * 10);
-    return rand09;
-  }
-
-  const random = `0.000${getRandom()}`;
   const [socket, disconnect] = useSocket("map");
   const [defaultProps, setDefaultProps] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(14);
@@ -28,7 +22,7 @@ function MapPage() {
   const [feedLocation, setFeedLocation] = useState([]);
   // const userGps = useRef();
   const [userGps, setUserGps] = useState();
-  const [gpsLocations, setgpsLocations] = useState({});
+  const [gpsLocations, setGpsLocations] = useState({});
 
   function spreadFeeds() {
     return feedLocation.map((feed) => {
@@ -36,6 +30,7 @@ function MapPage() {
       const [longitude, latitude] = coordinates;
       const iconType = cleaned ? "leaf" : "trashCanFill";
       const color = cleaned ? theme.colors.green_1 : theme.colors.red;
+
       return <StyledIcon key={_id} lat={latitude} lng={longitude} icon={iconType} color={color} size="sm" />;
     });
   }
@@ -126,7 +121,7 @@ function MapPage() {
     });
 
     socket.on("locations", (locations) => {
-      setgpsLocations(locations);
+      setGpsLocations(locations);
     });
 
     return () => {
