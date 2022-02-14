@@ -34,22 +34,41 @@ function MapClusteringPage() {
         return 5000;
       case 12:
         return 10000;
+      case 11:
+        return 20000;
+      case 10:
+        return 30000;
+      case 9:
+        return 40000;
       default:
         return 1000;
     }
   }
 
-  function calcCluster(marker) {
-    const clusterInfo = { clean: [], dirt: [] };
+  function calcCleanCluster(marker) {
+    const result = [];
 
     for (let i = 0; i < marker.length - 1; i += 1) {
-      if (marker[i].cluster) continue;
+      if (marker[i].cluster || !marker[i].cleaned) continue;
 
       let distance = 1000;
       let count = 1;
 
       for (let j = i + 1; j < marker.length; j += 1) {
-        if (marker[i].cleaned !== marker[j].cleaned) continue;
+        if (marker[j].cluster || !marker[j].cleaned) {
+          if (marker.length - 1 === j) {
+            result.push({
+              id: marker[i].id,
+              cluster: false,
+              lat: marker[i].lat,
+              lng: marker[i].lng,
+              number: count,
+              cleaned: marker[i].cleaned,
+            });
+          }
+
+          continue;
+        }
 
         const x = ((Math.cos(marker[i].lat) * 6400 * 2 * Math.PI) / 360) * Math.abs(marker[i].lng - marker[j].lng);
         const y = 111 * Math.abs(marker[i].lat - marker[j].lat);
@@ -60,30 +79,70 @@ function MapClusteringPage() {
           count += 1;
 
           if (j === marker.length - 1) {
-            if (marker[j].cleaned) {
-              clusterInfo.clean.push({
-                id: marker[i].id,
-                cluster: false,
-                lat: marker[i].lat,
-                lng: marker[i].lng,
-                number: count,
-                cleaned: marker[i].cleaned,
-              });
-            } else {
-              clusterInfo.dirt.push({
-                id: marker[i].id,
-                cluster: false,
-                lat: marker[i].lat,
-                lng: marker[i].lng,
-                number: count,
-                cleaned: marker[i].cleaned,
-              });
-            }
+            result.push({
+              id: marker[i].id,
+              cluster: false,
+              lat: marker[i].lat,
+              lng: marker[i].lng,
+              number: count,
+              cleaned: marker[i].cleaned,
+            });
           }
         }
       }
     }
-    return clusterInfo;
+
+    return result;
+  }
+
+  function calcDirtCluster(marker) {
+    const result = [];
+
+    for (let i = 0; i < marker.length - 1; i += 1) {
+      if (marker[i].cluster || marker[i].cleaned) continue;
+
+      let distance = 1000;
+      let count = 1;
+
+      for (let j = i + 1; j < marker.length; j += 1) {
+        if (marker[j].cluster || marker[j].cleaned) {
+          if (marker.length - 1 === j) {
+            result.push({
+              id: marker[i].id,
+              cluster: false,
+              lat: marker[i].lat,
+              lng: marker[i].lng,
+              number: count,
+              cleaned: marker[i].cleaned,
+            });
+          }
+
+          continue;
+        }
+
+        const x = ((Math.cos(marker[i].lat) * 6400 * 2 * Math.PI) / 360) * Math.abs(marker[i].lng - marker[j].lng);
+        const y = 111 * Math.abs(marker[i].lat - marker[j].lat);
+        distance = Math.sqrt(x ** 2 + y ** 2) * 1000;
+
+        if (distance < calcDistance(zoomLevel)) {
+          marker[j].cluster = true;
+          count += 1;
+
+          if (j === marker.length - 1) {
+            result.push({
+              id: marker[i].id,
+              cluster: false,
+              lat: marker[i].lat,
+              lng: marker[i].lng,
+              number: count,
+              cleaned: marker[i].cleaned,
+            });
+          }
+        }
+      }
+    }
+
+    return result;
   }
 
   function convertToClusterFormat(feeds) {
@@ -116,7 +175,8 @@ function MapClusteringPage() {
 
     return result.map((feed) => {
       const { id, lng, lat, cleaned, number } = feed;
-      const color = cleaned ? theme.colors.green_1 : theme.colors.red;
+      const color = cleaned ? theme.opacityColor.green : theme.opacityColor.red;
+
       return <ClusterCircle key={id} lat={lat} lng={lng} size={number} color={color} />;
     });
   }
@@ -166,10 +226,11 @@ function MapClusteringPage() {
 
   useEffect(() => {
     if (zoomLevel < 17) {
-      const clusterInfo = calcCluster(originalLocations);
+      const clean = calcCleanCluster(originalLocations);
+      const dirt = calcDirtCluster(originalLocations);
 
-      setDirtClusterLocations(clusterInfo.dirt);
-      setCleanClusterLocations(clusterInfo.clean);
+      setDirtClusterLocations(dirt);
+      setCleanClusterLocations(clean);
     }
   }, [zoomLevel]);
 
