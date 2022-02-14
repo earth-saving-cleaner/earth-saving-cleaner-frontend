@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import GooglePlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
+import { noop } from "lodash";
 
 import { getAddressFromLatLng, addNewFeed } from "../../../api";
 import { Icon, Textarea } from "../../atoms";
@@ -14,6 +15,7 @@ import themes from "../../../theme/theme";
 import ImageUpload from "../ImageUpload";
 import { isTokenExpired } from "../../../utils";
 import { userSliceActions } from "../../../modules/slices/userSlice";
+import { feedSliceActions } from "../../../modules/slices/feedSlice";
 
 const { colors } = themes;
 
@@ -64,8 +66,8 @@ const AddressWrapper = styled.div`
   text-align: right;
 `;
 
-function NewFeed({ handleClose }) {
-  const [pictureUrl, setPictureUrl] = useState([]);
+function NewFeed({ onClickModalClose }) {
+  const [pictureUrl, setPictureUrl] = useState("");
   const [content, setContent] = useState("");
   const [location, setLocation] = useState([]);
   const [inputAddress, setInputAddress] = useState("");
@@ -105,7 +107,9 @@ function NewFeed({ handleClose }) {
       try {
         const response = await geocodeByAddress(String(inputAddress));
         const result = await getLatLng(response[0]);
+
         setLocation(result);
+
         return result;
       } catch (err) {
         console.error(err);
@@ -150,7 +154,8 @@ function NewFeed({ handleClose }) {
         history.push("/login");
         dispatch(userSliceActions.logout());
       } else {
-        history.push("/");
+        onClickModalClose();
+        dispatch(feedSliceActions.getFeeds({ limit: 3 }));
       }
     } catch (err) {
       console.error(err);
@@ -164,7 +169,7 @@ function NewFeed({ handleClose }) {
       </ImageWrapper>
       <ContentsWrapper>
         <CloseWrapper>
-          <Icon icon="close" size="md" onClickIcon={handleClose} />
+          <Icon icon="close" size="md" onClickIcon={onClickModalClose} />
         </CloseWrapper>
         <HeaderWrapper>
           <NewFeedHeader nickname={userInfo.nickname} url={userInfo.profileImage} />
@@ -207,7 +212,11 @@ function NewFeed({ handleClose }) {
 }
 
 NewFeed.propTypes = {
-  handleClose: PropTypes.func.isRequired,
+  onClickModalClose: PropTypes.func,
+};
+
+NewFeed.defaultProps = {
+  onClickModalClose: noop,
 };
 
 export default NewFeed;
