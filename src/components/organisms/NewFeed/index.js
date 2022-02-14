@@ -79,6 +79,7 @@ function NewFeed({ onClickModalClose }) {
 
   const getImage = (data) => {
     const { imageUrl, locationFromMeta } = data;
+
     setPictureUrl(imageUrl);
     setLocation(locationFromMeta);
   };
@@ -91,6 +92,7 @@ function NewFeed({ onClickModalClose }) {
     const getAddress = async () => {
       try {
         const addressFromPhoto = await getAddressFromLatLng(location);
+
         setPhotoAddress(addressFromPhoto.slice(5));
       } catch (err) {
         console.error(err);
@@ -108,7 +110,7 @@ function NewFeed({ onClickModalClose }) {
         const response = await geocodeByAddress(String(inputAddress));
         const result = await getLatLng(response[0]);
 
-        setLocation(result);
+        setLocation([result.lat, result.lng]);
 
         return result;
       } catch (err) {

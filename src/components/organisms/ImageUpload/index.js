@@ -77,7 +77,6 @@ function ImageUpload(props) {
       }
     });
   }, []);
-
   useEffect(() => {
     const { getImage } = props;
 
@@ -86,7 +85,7 @@ function ImageUpload(props) {
       locationFromMeta: [latitude, longitude],
     };
 
-    if (resizedImageUrl && latitude && longitude) {
+    if (resizedImageUrl) {
       getImage(imageDetail);
     }
   }, [resizedImageUrl, latitude, longitude]);

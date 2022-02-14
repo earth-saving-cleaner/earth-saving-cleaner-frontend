@@ -99,6 +99,7 @@ export const addPhotoToAWS = async (formData) => {
     //   },
     // });
     // return response.data;
+
     const response = {
       originalUrl:
         "https://earth-saving-cleaner.s3.ap-northeast-2.amazonaws.com/original/1644598340028KakaoTalk_Photo_2022-02-01-20-20-16.jpeg",
@@ -112,7 +113,7 @@ export const addPhotoToAWS = async (formData) => {
 };
 
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
-Geocode.setLanguage("ko");
+Geocode.setLocationType("ROOFTOP");
 Geocode.enableDebug();
 
 // location: [37.488033333333334, 126.85566666666666]}
