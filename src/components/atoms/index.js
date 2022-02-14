@@ -5,5 +5,6 @@ import Img from "./Img";
 import Text from "./Text";
 import Textarea from "./Textarea";
 import Input from "./Input";
+import GpsIcon from "./GpsIcon";
 
-export { Avatar, Button, Icon, Img, Text, Textarea, Input };
+export { Avatar, Button, Icon, Img, Text, Textarea, Input, GpsIcon };
