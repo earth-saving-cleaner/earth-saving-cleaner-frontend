@@ -35,6 +35,6 @@
     "no-debugger": "warn",
     "import/no-unresolved": "off",
     "no-unused-expressions": "off",
-    "import/no-extraneous-dependencies": ["warn", {"devDependencies": true}]
+    "import/no-extraneous-dependencies": ["warn", {"devDependencies": true}],
   }
 }

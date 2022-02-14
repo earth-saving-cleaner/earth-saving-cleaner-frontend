@@ -58,6 +58,21 @@ const colors = {
 const opacityColor = {
   gray: "rgba(230, 230, 233, 0.56)",
   purple: "rgba(139, 84, 255, 0.4)",
+  yellow: "rgba(255, 238, 84, 0.4)",
+};
+
+const gpsColor = {
+  yellow_background: "rgb(255 240 94 / 40%)",
+  yellow_boxshadow: "0 0 15px 0 #ddb92d",
+  yellow_border: "#ffe060",
+  yellow_inner_background: "#ffd112",
+  yellow_inner_box_shadow: "1px 1px 8px 6px rgb(255 240 94 / 40%)",
+
+  purple_background: "rgb(166 94 255 / 40%)",
+  purple_boxshadow: "0 0 15px 0 #7031e7",
+  purple_border: "#9d60ff",
+  purple_inner_background: "#5b12ff",
+  purple_inner_box_shadow: "1px 1px 8px 6px rgb(128 94 255 / 40%)",
 };
 
 const gradientColor = {
@@ -77,6 +92,7 @@ const theme = {
   fontSizes,
   colors,
   opacityColor,
+  gpsColor,
   gradientColor,
   deviceSizes,
   device,
