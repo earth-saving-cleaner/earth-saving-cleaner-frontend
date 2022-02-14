@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 
 import PropTypes from "prop-types";
 import { useHistory, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+
+import { noop } from "lodash";
 
 import logo from "../../../assets/logo.png";
 import { Navigation } from "../../molecules";
@@ -44,6 +47,8 @@ function Header({ ...props }) {
   const history = useHistory();
   const location = useLocation();
   const [toggleNav, setToggleNav] = useState(true);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(true);
+  const userInfo = useSelector((state) => state.user.data);
 
   const goMainPage = () => {
     setToggleNav(true);
@@ -53,10 +58,6 @@ function Header({ ...props }) {
   const goMapPage = () => {
     setToggleNav(false);
     history.push("/map");
-  };
-
-  const createNewFeed = () => {
-    alert("need logics for new feed modal");
   };
 
   const goMyPage = () => {
@@ -77,7 +78,7 @@ function Header({ ...props }) {
         <Navigation iconType="map" isSelected={!toggleNav} onNavClick={goMapPage} />
       </MiddleWrapper>
       <Wrapper>
-        <Navigation iconType="createFeed" onNavClick={createNewFeed} />
+        <Navigation iconType="createFeed" onNavClick={() => setIsCreateModalOpen()} onClickIcon={props.onClickCreate} />
         <Navigation iconType="myPage" onNavClick={goMyPage} />
       </Wrapper>
     </StyledHeader>
@@ -86,6 +87,11 @@ function Header({ ...props }) {
 
 Header.propTypes = {
   onClickLogo: PropTypes.func.isRequired,
+  onClickCreate: PropTypes.func,
+};
+
+Header.defaultProps = {
+  onClickCreate: noop,
 };
 
 export default Header;
