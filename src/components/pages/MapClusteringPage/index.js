@@ -17,127 +17,60 @@ function MapClusteringPage() {
   const [defaultProps, setDefaultProps] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(17);
   const [boundary, setBoundary] = useState({});
-
-  const [originalLocations, setOriginalLocations] = useState([]);
-  const [cleanClusterLocations, setCleanClusterLocations] = useState([]);
-  const [dirtClusterLocations, setDirtClusterLocations] = useState([]);
+  const [spreadFeed, setSpreadFeed] = useState([]);
 
   function calcDistance(zoom) {
     switch (zoom) {
       case 16:
-        return 1000;
+        return 300;
       case 15:
-        return 2000;
+        return 500;
       case 14:
-        return 3000;
+        return 800;
       case 13:
-        return 5000;
-      case 12:
-        return 10000;
-      case 11:
-        return 20000;
-      case 10:
-        return 30000;
-      case 9:
-        return 40000;
-      default:
         return 1000;
+      default:
+        return 0;
     }
   }
 
-  function calcCleanCluster(marker) {
-    const result = [];
+  function getDistance(originLat, originLng, targetLat, targetLng) {
+    const x = (Math.cos(originLat * 6400 * 2 * Math.PI) / 360) * Math.abs(originLng - targetLng);
+    const y = 111 * Math.abs(originLat - targetLat);
+    const distance = Math.sqrt(x ** 2 + y ** 2) * 1000;
 
-    for (let i = 0; i < marker.length - 1; i += 1) {
-      if (marker[i].cluster || !marker[i].cleaned) continue;
-
-      let distance = 1000;
-      let count = 1;
-
-      for (let j = i + 1; j < marker.length; j += 1) {
-        if (marker[j].cluster || !marker[j].cleaned) {
-          if (marker.length - 1 === j) {
-            result.push({
-              id: marker[i].id,
-              cluster: false,
-              lat: marker[i].lat,
-              lng: marker[i].lng,
-              number: count,
-              cleaned: marker[i].cleaned,
-            });
-          }
-
-          continue;
-        }
-
-        const x = ((Math.cos(marker[i].lat) * 6400 * 2 * Math.PI) / 360) * Math.abs(marker[i].lng - marker[j].lng);
-        const y = 111 * Math.abs(marker[i].lat - marker[j].lat);
-        distance = Math.sqrt(x ** 2 + y ** 2) * 1000;
-
-        if (distance < calcDistance(zoomLevel)) {
-          marker[j].cluster = true;
-          count += 1;
-
-          if (j === marker.length - 1) {
-            result.push({
-              id: marker[i].id,
-              cluster: false,
-              lat: marker[i].lat,
-              lng: marker[i].lng,
-              number: count,
-              cleaned: marker[i].cleaned,
-            });
-          }
-        }
-      }
-    }
-
-    return result;
+    return distance;
   }
 
-  function calcDirtCluster(marker) {
+  function calCluster(marker) {
     const result = [];
 
     for (let i = 0; i < marker.length - 1; i += 1) {
-      if (marker[i].cluster || marker[i].cleaned) continue;
-
-      let distance = 1000;
-      let count = 1;
+      let numberCount = 1;
 
       for (let j = i + 1; j < marker.length; j += 1) {
-        if (marker[j].cluster || marker[j].cleaned) {
-          if (marker.length - 1 === j) {
-            result.push({
-              id: marker[i].id,
-              cluster: false,
-              lat: marker[i].lat,
-              lng: marker[i].lng,
-              number: count,
-              cleaned: marker[i].cleaned,
-            });
-          }
+        let distance;
 
-          continue;
+        if (!marker[j].cluster && marker[i].cleaned === marker[j].cleaned) {
+          distance = getDistance(marker[i].lat, marker[i].lng, marker[j].lat, marker[j].lng);
+
+          if (distance < calcDistance(zoomLevel)) {
+            marker[j].cluster = true;
+            numberCount += 1;
+          }
         }
 
-        const x = ((Math.cos(marker[i].lat) * 6400 * 2 * Math.PI) / 360) * Math.abs(marker[i].lng - marker[j].lng);
-        const y = 111 * Math.abs(marker[i].lat - marker[j].lat);
-        distance = Math.sqrt(x ** 2 + y ** 2) * 1000;
+        if (j === marker.length - 1) {
+          if (marker[i].cluster) continue;
 
-        if (distance < calcDistance(zoomLevel)) {
-          marker[j].cluster = true;
-          count += 1;
-
-          if (j === marker.length - 1) {
-            result.push({
-              id: marker[i].id,
-              cluster: false,
-              lat: marker[i].lat,
-              lng: marker[i].lng,
-              number: count,
-              cleaned: marker[i].cleaned,
-            });
-          }
+          result.push({
+            id: marker[i].id,
+            cluster: false,
+            lat: marker[i].lat,
+            lng: marker[i].lng,
+            number: numberCount,
+            cleaned: marker[i].cleaned,
+          });
         }
       }
     }
@@ -157,11 +90,11 @@ function MapClusteringPage() {
       };
     });
 
-    setOriginalLocations(result);
+    return result;
   }
 
-  function paintFeedsInfo() {
-    return originalLocations.map((feed) => {
+  function paintFeedsInfo(feedInfo) {
+    return feedInfo.map((feed) => {
       const { id, lng, lat, cleaned } = feed;
       const iconType = cleaned ? "leaf" : "trashCanFill";
       const color = cleaned ? theme.colors.green_1 : theme.colors.red;
@@ -170,9 +103,7 @@ function MapClusteringPage() {
     });
   }
 
-  function paintCluster() {
-    const result = [...cleanClusterLocations, ...dirtClusterLocations];
-
+  function paintCluster(result) {
     return result.map((feed) => {
       const { id, lng, lat, cleaned, number } = feed;
       const color = cleaned ? theme.opacityColor.green : theme.opacityColor.red;
@@ -216,23 +147,24 @@ function MapClusteringPage() {
   useEffect(() => {
     async function getFeedLocation() {
       const result = await getFeedInfo(boundary);
-      convertToClusterFormat(result);
+      const convertResult = convertToClusterFormat(result);
+      console.log("convertResult======>", convertResult);
+
+      let calculation;
+
+      if (zoomLevel < 17) {
+        calculation = paintCluster(calCluster(convertResult));
+      } else {
+        calculation = paintFeedsInfo(convertResult);
+      }
+
+      setSpreadFeed(calculation);
     }
 
     if (Object.keys(boundary).length) {
       getFeedLocation();
     }
   }, [zoomLevel, boundary]);
-
-  useEffect(() => {
-    if (zoomLevel < 17) {
-      const clean = calcCleanCluster(originalLocations);
-      const dirt = calcDirtCluster(originalLocations);
-
-      setDirtClusterLocations(dirt);
-      setCleanClusterLocations(clean);
-    }
-  }, [zoomLevel]);
 
   return (
     <MapTemplate>
@@ -254,7 +186,7 @@ function MapClusteringPage() {
             });
           }}
         >
-          {zoomLevel < 17 ? paintCluster() : paintFeedsInfo()}
+          {spreadFeed}
         </GoogleMapReact>
       )}
     </MapTemplate>
