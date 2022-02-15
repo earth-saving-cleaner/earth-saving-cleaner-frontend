@@ -24,8 +24,8 @@ function MainPage() {
   const [modal, setModal] = useState(false);
   const [feedInfo, setFeedInfo] = useState(null);
   const [commentText, setCommentText] = useState("");
-  const [commentList, setCommentList] = useState(null);
-  const [id, setId] = useState(null); // feed id
+  const [commentList, setCommentList] = useState([]);
+  const [id, setId] = useState(null);
   const dispatch = useDispatch();
   const history = useHistory();
   const { isLoading, feeds, error } = useSelector((state) => state.feed);
@@ -145,10 +145,11 @@ function MainPage() {
     <>
       <MainTemplate onClickCreate={handleModalOpen} onClickModalClose={handleModalClose}>
         <StyledContainer>
-          {isLoading && <Text>Loding...</Text>}
+          {isLoading && <Text text="Loding..." />}
           {feeds &&
             feeds?.data.map((feed) => {
               const { _id, author, content, comment, image, like, address } = feed;
+
               return (
                 <FeedCard
                   key={_id}
@@ -179,7 +180,7 @@ function MainPage() {
             onClickCommentButton={userId ? handleCommentButtonClick : sendToLogin}
             onChangeText={handleCommentText}
             onClickLikeIcon={userId ? handleLikeIconClick : sendToLogin}
-            isIconFilled={findUserLike}
+            isIconFilled={findUserLike()}
             text={commentText}
             like={feedInfo.like.length}
           />
