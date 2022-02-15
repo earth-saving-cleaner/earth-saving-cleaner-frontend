@@ -59,6 +59,10 @@ function MainPage() {
     dispatch(feedSliceActions.addLikeUser({ feedId, userId }));
   };
 
+  const handleCommentLikeIconClick = () => {
+    dispatch(feedSliceActions.addLikeUser({ feedId: id, userId }));
+  };
+
   const sendToLogin = () => {
     history.push("/login");
   };
@@ -178,8 +182,8 @@ function MainPage() {
             image={feedInfo.image}
             onClickCommentButton={userId ? handleCommentButtonClick : sendToLogin}
             onChangeText={handleCommentText}
-            onClickLikeIcon={userId ? handleLikeIconClick : sendToLogin}
-            isIconFilled={findUserLike}
+            onClickLikeIcon={userId ? handleCommentLikeIconClick : sendToLogin}
+            isIconFilled={findUserLike()}
             text={commentText}
             like={feedInfo.like.length}
           />
