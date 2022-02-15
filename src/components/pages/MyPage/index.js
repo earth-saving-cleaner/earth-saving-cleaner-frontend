@@ -1,103 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 
+import { getRankList } from "../../../api";
 import { Text } from "../../atoms";
 import { RankingList, UserInfo } from "../../organisms";
-import { MyPageGrid } from "../../templates";
-
-const user = {
-  nickname: "user1",
-  profileImage: "https://lh3.googleusercontent.com/a/AATXAJzdJ5gTfflTC1--vXDDRH1n-wX7NQ9mJRViLtgc=s96-c",
-  level: 10,
-  score: 5,
-};
-
-const rankingList = [
-  {
-    _id: {
-      $oid: "61fe405e1a04b2694da83265",
-    },
-    email: "user1@gmail.com",
-    nickname: "user1",
-    profileImage: "https://lh3.googleusercontent.com/a/AATXAJzdJ5gTfflTC1--vXDDRH1n-wX7NQ9mJRViLtgc=s96-c",
-    level: 10,
-    score: 5,
-  },
-  {
-    _id: {
-      $oid: "61fe405e1a04b2694da83266",
-    },
-    email: "user2@gmail.com",
-    nickname: "user2",
-    profileImage: "https://lh3.googleusercontent.com/a/AATXAJzdJ5gTfflTC1--vXDDRH1n-wX7NQ9mJRViLtgc=s96-c",
-    level: 15,
-    score: 50,
-  },
-  {
-    _id: {
-      $oid: "61fe3f53a5010f7ed7e75f4d",
-    },
-    eamil: "abc@gmail.com",
-    nickname: "abc",
-    profileImage: "https://lh3.googleusercontent.com/a/AATXAJzdJ5gTfflTC1--vXDDRH1n-wX7NQ9mJRViLtgc=s96-c",
-    level: 1,
-    score: 0,
-  },
-  {
-    _id: {
-      $oid: "61fe408ca5010f7ed7e75f4f",
-    },
-    eamil: "tdd@gmail.com",
-    nickname: "tdd",
-    profileImage: "https://lh3.googleusercontent.com/a/AATXAJzdJ5gTfflTC1--vXDDRH1n-wX7NQ9mJRViLtgc=s96-c",
-    level: 1,
-    score: 0,
-  },
-  {
-    _id: {
-      $oid: "61fe40b4a5010f7ed7e75f50",
-    },
-    eamil: "oop@gmail.com",
-    nickname: "oop",
-    profileImage: "https://lh3.googleusercontent.com/a/AATXAJzdJ5gTfflTC1--vXDDRH1n-wX7NQ9mJRViLtgc=s96-c",
-    level: 1,
-    score: 0,
-  },
-  {
-    _id: {
-      $oid: "61fe414952ae6d99d2794180",
-    },
-    email: "ramieta16@gmail.com",
-    nickname: "JK",
-    profileImage: "https://lh3.googleusercontent.com/a/AATXAJzdJ5gTfflTC1--vXDDRH1n-wX7NQ9mJRViLtgc=s96-c",
-    level: 10,
-    score: 5,
-  },
-  {
-    _id: {
-      $oid: "61fe414952ae6d99d2794181",
-    },
-    email: "yunjwtest01@gmail.com",
-    nickname: "Woo",
-    profileImage: "https://lh3.googleusercontent.com/a/AATXAJzdJ5gTfflTC1--vXDDRH1n-wX7NQ9mJRViLtgc=s96-c",
-    level: 10,
-    score: 5,
-  },
-];
+import { MyPageGrid, MainTemplate } from "../../templates";
 
 const StyledText = styled(Text)`
+  margin-top: 2rem;
   color: ${(props) => props.theme.colors.purple};
 `;
 
 function MyPage() {
-  const { profileImage, nickname, level, score } = user;
+  const [rankingList, setRankList] = useState([]);
+  const userInfo = useSelector((state) => state.user.data);
+  const { profileImage, nickname, level, score } = userInfo;
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await getRankList(userInfo);
+        setRankList(response.data.rankList);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   return (
-    <MyPageGrid
-      leftSide={<UserInfo profileImage={profileImage} nickname={nickname} level={level} score={score} />}
-      rightSide={<RankingList rank={rankingList} />}
-      rightSideTitle={<StyledText size="xxxl" text="Ranking" />}
-    />
+    <MainTemplate>
+      <MyPageGrid
+        leftSide={<UserInfo profileImage={profileImage} nickname={nickname} level={level} score={score} />}
+        rightSide={<RankingList rank={rankingList} />}
+        rightSideTitle={<StyledText size="xxxl" text="Ranking" />}
+      />
+    </MainTemplate>
   );
 }
 
