@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import GooglePlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
-import { add, noop } from "lodash";
+import { noop } from "lodash";
 
 import { getAddressFromLatLng, addNewFeed } from "../../../api";
 import { Icon, Textarea } from "../../atoms";
@@ -131,24 +131,22 @@ function NewFeed({ onClickModalClose }) {
   }, [inputAddress]);
 
   useEffect(() => {
-    if (location[1] === 0) {
-      if (!photoAddress && !inputAddress) {
-        setAddress("Please enter your address");
-      }
-    }
-
-    if (location[1] !== 0) {
-      if (photoAddress) {
-        setAddress(photoAddress);
-        return;
-      }
-
+    if (location[1] === 0 && !photoAddress && !inputAddress) {
       setAddress("Please enter your address");
+      return;
     }
 
     if (inputAddress) {
       setAddress(inputAddress.label);
+      return;
     }
+
+    if (location[1] !== 0 && photoAddress) {
+      setAddress(photoAddress);
+      return;
+    }
+
+    setAddress("Please enter your address");
   }, [address, photoAddress, inputAddress]);
 
   const handleNewFeedSave = async () => {
