@@ -49,6 +49,10 @@ function Header({ ...props }) {
   const [navStatus, setNavStatus] = useState({});
   const userInfo = useSelector((state) => state.user.data);
 
+  const handleLogoClick = () => {
+    history.push("/");
+  };
+
   const goMainPage = () => {
     history.push("/");
   };
@@ -112,7 +116,7 @@ function Header({ ...props }) {
   return (
     <StyledHeader>
       <Wrapper>
-        <Logo onClick={props.onClickLogo} />
+        <Logo onClick={handleLogoClick} />
       </Wrapper>
       <MiddleWrapper>
         <Navigation iconType="feed" isSelected={navStatus.main} onNavClick={goMainPage} />
@@ -120,7 +124,7 @@ function Header({ ...props }) {
         <Navigation iconType="location" isSelected={navStatus.plogging} onNavClick={goPloggingPage} />
       </MiddleWrapper>
       <Wrapper>
-        <Navigation iconType="createFeed" onNavClick={() => setIsCreateModalOpen()} onClickIcon={props.onClickCreate} />
+        <Navigation iconType="createFeed" onNavClick={props.onClickCreate} />
         <Navigation iconType="myPage" onNavClick={goMyPage} />
       </Wrapper>
     </StyledHeader>
@@ -128,7 +132,6 @@ function Header({ ...props }) {
 }
 
 Header.propTypes = {
-  onClickLogo: PropTypes.func.isRequired,
   onClickCreate: PropTypes.func,
 };
 

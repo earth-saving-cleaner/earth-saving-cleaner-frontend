@@ -22,7 +22,7 @@ const StyledNavigation = styled.div`
 function Navigation({ onNavClick, ...props }) {
   return (
     <StyledNavigation onClick={onNavClick} {...props}>
-      <Icon icon={props.iconType} onClickIcon={props.onClickIcon} {...props} />
+      <Icon icon={props.iconType} {...props} />
     </StyledNavigation>
   );
 }
@@ -33,7 +33,6 @@ Navigation.propTypes = {
   size: PropTypes.string,
   stroke: PropTypes.string,
   onNavClick: PropTypes.func,
-  onClickIcon: PropTypes.func.isRequired,
 };
 
 Navigation.defaultProps = {
