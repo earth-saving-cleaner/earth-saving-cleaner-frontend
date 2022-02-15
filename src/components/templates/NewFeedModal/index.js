@@ -45,9 +45,6 @@ function NewFeedModal({ children }) {
   return (
     <Portal>
       <ModalWrapper>
-        <Background>
-          <MainTemplate />
-        </Background>
         <ContentWrapper>
           <Content>{children}</Content>
         </ContentWrapper>
