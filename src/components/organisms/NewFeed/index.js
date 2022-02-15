@@ -64,6 +64,7 @@ const AddressWrapper = styled.div`
   width: 100%;
   margin-top: 2rem;
   text-align: right;
+  font-size: 1.2rem;
 `;
 
 function NewFeed({ onClickModalClose }) {
