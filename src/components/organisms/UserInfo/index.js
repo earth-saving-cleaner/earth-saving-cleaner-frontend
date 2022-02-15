@@ -1,30 +1,46 @@
 import React from "react";
 
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
+import { userSliceActions } from "../../../modules/slices/userSlice";
 import theme from "../../../theme/theme";
+import { Button, Text } from "../../atoms";
+import { UserHeader } from "../../molecules";
 
-import { Avatar, Button } from "../../atoms";
-import { UserLevel, UserPerformance } from "../../molecules";
+const { colors } = theme;
 
 const Wrapper = styled.div`
   display: flex;
-  width: 100vw;
-  height: 60vh;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
 `;
 
-function UserInfo({ profileImage, nickname, level, score }) {
-  const { colors } = theme;
+const HeaderWrapper = styled.div`
+  margin-top: 2rem;
+`;
+
+const ScoreWrapper = styled.div`
+  margin: 10rem 0 30rem 0;
+`;
+
+function UserInfo() {
+  const dispatch = useDispatch();
+  const userInfo = useSelector((state) => state.user.data);
+  const { profileImage, nickname, level, score } = userInfo;
+
+  const handleLoout = () => {
+    dispatch(userSliceActions.logout());
+  };
 
   return (
     <Wrapper>
-      <Avatar src={profileImage} size="lg" />
-      <UserLevel size="xl" margin="3rem" nickname={nickname} level={String(level)} />
-      <UserPerformance size="xl" margin="3rem" target="Total" count={String(score)} />
+      <HeaderWrapper>
+        <UserHeader nickname={nickname} url={profileImage} level={`Lv ${level}`} />
+      </HeaderWrapper>
+      <ScoreWrapper>
+        <Text text={`Total ${score}`} size="xxl" />
+      </ScoreWrapper>
       <Button
         title="Logout"
         background={colors.purple}
@@ -32,23 +48,10 @@ function UserInfo({ profileImage, nickname, level, score }) {
         height="2rem"
         radius="5rem"
         color={colors.white}
+        onClick={handleLoout}
       />
     </Wrapper>
   );
 }
-
-UserInfo.propTypes = {
-  profileImage: PropTypes.string,
-  nickname: PropTypes.string,
-  level: PropTypes.number,
-  score: PropTypes.number,
-};
-
-UserInfo.defaultProps = {
-  profileImage: "https://lh3.googleusercontent.com/a/AATXAJzdJ5gTfflTC1--vXDDRH1n-wX7NQ9mJRViLtgc=s96-c",
-  nickname: "anonymous",
-  level: 0,
-  score: 0,
-};
 
 export default UserInfo;

@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import { userSliceActions } from "../../../modules/slices/userSlice";
+import logo from "../../../assets/logo.png";
 import { Text } from "../../atoms";
 import { MainTemplate } from "../../templates";
 
@@ -12,6 +13,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  min-height: 82vh;
   margin: 4rem;
 `;
 
@@ -22,6 +25,15 @@ const StyledText = styled(Text)`
 
 const StyledGoogleLogin = styled.div`
   padding: 1.2rem;
+`;
+
+const Logo = styled.img.attrs({
+  src: `${logo}`,
+})`
+  width: 45px;
+  height: 45px;
+  transform: rotate(-10deg);
+  margin-bottom: 2rem;
 `;
 
 function LoginPage() {
@@ -39,6 +51,7 @@ function LoginPage() {
   return (
     <MainTemplate>
       <Container>
+        <Logo />
         <StyledText text="Sign in with your account" size="lg" weight="400" />
         <StyledGoogleLogin>
           <GoogleLogin

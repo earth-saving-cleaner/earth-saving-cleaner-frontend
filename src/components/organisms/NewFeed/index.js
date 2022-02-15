@@ -79,6 +79,7 @@ function NewFeed({ onClickModalClose }) {
 
   const getImage = (data) => {
     const { imageUrl, locationFromMeta } = data;
+
     setPictureUrl(imageUrl);
     setLocation(locationFromMeta);
   };
@@ -89,8 +90,14 @@ function NewFeed({ onClickModalClose }) {
 
   useEffect(() => {
     const getAddress = async () => {
+      if (inputAddress) {
+        setAddress(inputAddress.label);
+        return;
+      }
+
       try {
         const addressFromPhoto = await getAddressFromLatLng(location);
+
         setPhotoAddress(addressFromPhoto.slice(5));
       } catch (err) {
         console.error(err);
@@ -100,7 +107,7 @@ function NewFeed({ onClickModalClose }) {
     if (pictureUrl) {
       getAddress();
     }
-  }, [pictureUrl]);
+  }, [location]);
 
   useEffect(() => {
     const getCoordinates = async () => {
@@ -108,7 +115,7 @@ function NewFeed({ onClickModalClose }) {
         const response = await geocodeByAddress(String(inputAddress));
         const result = await getLatLng(response[0]);
 
-        setLocation(result);
+        setLocation([result.lat, result.lng]);
 
         return result;
       } catch (err) {
@@ -119,21 +126,27 @@ function NewFeed({ onClickModalClose }) {
 
     if (inputAddress) {
       getCoordinates();
+      setAddress(inputAddress.label);
     }
   }, [inputAddress]);
 
   useEffect(() => {
-    if (!photoAddress && !inputAddress) {
+    if (location[1] === 0 && !photoAddress && !inputAddress) {
       setAddress("Please enter your address");
+      return;
     }
 
-    if (photoAddress) {
+    if (inputAddress) {
+      setAddress(inputAddress.label);
+      return;
+    }
+
+    if (location[1] !== 0 && photoAddress) {
       setAddress(photoAddress);
+      return;
     }
 
-    if (!photoAddress && inputAddress) {
-      setAddress(inputAddress);
-    }
+    setAddress("Please enter your address");
   }, [address, photoAddress, inputAddress]);
 
   const handleNewFeedSave = async () => {
@@ -141,6 +154,7 @@ function NewFeed({ onClickModalClose }) {
       pictureUrl: [pictureUrl],
       content,
       location: [location[1], location[0]],
+      address,
       userInfo,
     };
 

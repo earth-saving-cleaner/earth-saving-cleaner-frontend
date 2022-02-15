@@ -120,13 +120,14 @@ function MainPage() {
 
   useEffect(() => {
     const fetchFeed = async () => {
-      const { author, comment, content, image, like, location } = await getFeed(id);
+      const { author, comment, content, image, like, address } = await getFeed(id);
 
       setFeedInfo({
         author,
         content,
         like,
         image: image[0],
+        address,
       });
       setCommentList(comment);
     };
@@ -147,7 +148,7 @@ function MainPage() {
           {isLoading && <Text>Loding...</Text>}
           {feeds &&
             feeds?.data.map((feed) => {
-              const { _id, author, content, comment, image, like, location } = feed;
+              const { _id, author, content, comment, image, like, address } = feed;
               return (
                 <FeedCard
                   key={_id}
@@ -158,7 +159,7 @@ function MainPage() {
                   comment={comment.length}
                   like={like.length}
                   content={content}
-                  location={location}
+                  location={address}
                   onClickLikeIcon={userId ? handleLikeIconClick : sendToLogin}
                   onClickCommentIcon={() => handleCommentIconClick(_id)}
                   isIconFilled={[...feed.like].includes(userId)}
