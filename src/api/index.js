@@ -169,3 +169,20 @@ export const addScore = async (payload) => {
     return err.message;
   }
 };
+
+export const getRankList = async (userInfo) => {
+  try {
+    const response = await axios({
+      method: "get",
+      url: `${process.env.REACT_APP_SERVER_URL}/user/rank`,
+      headers: {
+        authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+
+    return response;
+  } catch (err) {
+    console.error(err);
+    return err.message;
+  }
+};

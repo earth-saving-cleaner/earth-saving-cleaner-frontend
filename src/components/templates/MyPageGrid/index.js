@@ -1,26 +1,22 @@
 import React from "react";
-import styled from "styled-components";
 import PropTypes from "prop-types";
+
+import styled from "styled-components";
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  min-width: 100vw;
 `;
 
-const Right = styled.div`
-  width: 60%;
-  margin: 3rem;
-  text-align: center;
-`;
-
-const Left = styled.div`
+const RightWrapper = styled.div`
   display: flex;
-  width: 40%;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-end;
 `;
+const Right = styled.div``;
+
+const Left = styled.div``;
 
 const Title = styled.div``;
 
@@ -28,10 +24,10 @@ function MyPageGrid({ leftSide, rightSide, rightSideTitle }) {
   return (
     <Wrapper>
       <Left>{leftSide}</Left>
-      <Right>
+      <RightWrapper>
         <Title>{rightSideTitle}</Title>
-        {rightSide}
-      </Right>
+        <Right>{rightSide}</Right>
+      </RightWrapper>
     </Wrapper>
   );
 }

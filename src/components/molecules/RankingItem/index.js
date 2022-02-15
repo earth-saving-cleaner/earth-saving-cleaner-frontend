@@ -1,39 +1,45 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
 import { Avatar, Text } from "../../atoms";
 
 const Wrapper = styled.div`
   display: flex;
-  width: 100%;
+  justify-content: space-between;
+  width: 160%;
   margin: 2rem;
   background: white;
   border-radius: 1rem;
-  justify-content: space-between;
 `;
 
 const UserProfile = styled.div`
   display: flex;
-  min-width: 150px;
+  justify-content: space-between;
+  width: 30%;
   margin: 1rem;
   align-items: center;
-  justify-content: space-between;
 `;
 
 const StyledText = styled(Text)`
   padding: 0.5rem;
+  margin-right: 2rem;
 `;
 
 const Performance = styled.div`
-  text-align: center;
+  width: 90%;
+  margin-left: 2rem;
+`;
+
+const LevelWrapper = styled.div`
+  float: left;
 `;
 
 const Score = styled.div`
   display: flex;
-  margin-right: 2rem;
   align-items: center;
+  margin-right: 2rem;
 `;
 
 function RankingItem({ profileImage, nickname, level, score, index, ...props }) {
@@ -41,15 +47,17 @@ function RankingItem({ profileImage, nickname, level, score, index, ...props }) 
     <Wrapper {...props}>
       <UserProfile>
         <StyledText text={String(index)} size="lg" padding="1rem" />
-        <Avatar src={profileImage} />
+        <Avatar url={profileImage} />
         <Performance>
           <StyledText text={nickname} />
-          <StyledText text={`Lv.${level}`} />
+          <LevelWrapper>
+            <StyledText text={`Lv.${level}`} />
+          </LevelWrapper>
         </Performance>
       </UserProfile>
       <Score>
         <StyledText text="Total" />
-        <StyledText text={String(score)} />
+        <StyledText text={score} />
       </Score>
     </Wrapper>
   );
