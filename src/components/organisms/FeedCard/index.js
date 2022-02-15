@@ -41,11 +41,7 @@ function FeedCard({ ...props }) {
 
   return (
     <Container>
-      <FeedHeader
-        url={props.avatarUrl}
-        nickname={props.nickname}
-        address="Ardyaloon, Western Australia 6725, Australia"
-      />
+      <FeedHeader url={props.avatarUrl} nickname={props.nickname} address={props.location} />
       <Img src={props.imageUrl} alt="feed image" width="100%" />
       <StatusWrapper>
         <IconWrapper>
@@ -77,6 +73,7 @@ FeedCard.propTypes = {
   comment: PropTypes.number,
   like: PropTypes.number,
   content: PropTypes.string,
+  location: PropTypes.string,
   onClickLikeIcon: PropTypes.func,
   onClickCommentIcon: PropTypes.func,
   isIconFilled: PropTypes.bool,
@@ -89,6 +86,7 @@ FeedCard.defaultProps = {
   comment: "",
   like: 0,
   content: 0,
+  location: "Ardyaloon, Western Australia 6725, Australia",
   onClickLikeIcon: noop,
   onClickCommentIcon: noop,
   isIconFilled: false,
