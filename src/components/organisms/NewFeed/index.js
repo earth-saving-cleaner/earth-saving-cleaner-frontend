@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import GooglePlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
-import { noop } from "lodash";
+import { add, noop } from "lodash";
 
 import { getAddressFromLatLng, addNewFeed } from "../../../api";
 import { Icon, Textarea } from "../../atoms";
@@ -90,6 +90,11 @@ function NewFeed({ onClickModalClose }) {
 
   useEffect(() => {
     const getAddress = async () => {
+      if (inputAddress) {
+        setAddress(inputAddress.label);
+        return;
+      }
+
       try {
         const addressFromPhoto = await getAddressFromLatLng(location);
 
@@ -102,7 +107,7 @@ function NewFeed({ onClickModalClose }) {
     if (pictureUrl) {
       getAddress();
     }
-  }, [pictureUrl]);
+  }, [location]);
 
   useEffect(() => {
     const getCoordinates = async () => {
@@ -121,20 +126,28 @@ function NewFeed({ onClickModalClose }) {
 
     if (inputAddress) {
       getCoordinates();
+      setAddress(inputAddress.label);
     }
   }, [inputAddress]);
 
   useEffect(() => {
-    if (!photoAddress && !inputAddress) {
+    if (location[1] === 0) {
+      if (!photoAddress && !inputAddress) {
+        setAddress("Please enter your address");
+      }
+    }
+
+    if (location[1] !== 0) {
+      if (photoAddress) {
+        setAddress(photoAddress);
+        return;
+      }
+
       setAddress("Please enter your address");
     }
 
-    if (photoAddress) {
-      setAddress(photoAddress);
-    }
-
-    if (!photoAddress && inputAddress) {
-      setAddress(inputAddress);
+    if (inputAddress) {
+      setAddress(inputAddress.label);
     }
   }, [address, photoAddress, inputAddress]);
 

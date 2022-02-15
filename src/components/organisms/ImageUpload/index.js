@@ -77,6 +77,7 @@ function ImageUpload(props) {
       }
     });
   }, []);
+
   useEffect(() => {
     const { getImage } = props;
 

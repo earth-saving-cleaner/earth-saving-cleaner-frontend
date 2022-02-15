@@ -100,10 +100,16 @@ export const addPhotoToAWS = async (formData) => {
     // });
     // return response.data;
 
+    // const response = {
+    //   originalUrl:
+    //     "https://earth-saving-cleaner.s3.ap-northeast-2.amazonaws.com/original/1644598340028KakaoTalk_Photo_2022-02-01-20-20-16.jpeg",
+    //   url: "https://earth-saving-cleaner.s3.ap-northeast-2.amazonaws.com/thumb/1644598340028KakaoTalk_Photo_2022-02-01-20-20-16.jpeg",
+    // };
+
     const response = {
+      url: "https://earth-saving-cleaner.s3.ap-northeast-2.amazonaws.com/thumb/16440510063602180494_202118_264.jpeg",
       originalUrl:
-        "https://earth-saving-cleaner.s3.ap-northeast-2.amazonaws.com/original/1644598340028KakaoTalk_Photo_2022-02-01-20-20-16.jpeg",
-      url: "https://earth-saving-cleaner.s3.ap-northeast-2.amazonaws.com/thumb/1644598340028KakaoTalk_Photo_2022-02-01-20-20-16.jpeg",
+        "https://earth-saving-cleaner.s3.ap-northeast-2.amazonaws.com/original/16440510063602180494_202118_264.jpeg",
     };
     return response;
   } catch (err) {
@@ -113,7 +119,6 @@ export const addPhotoToAWS = async (formData) => {
 };
 
 Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
-Geocode.setLocationType("ROOFTOP");
 Geocode.enableDebug();
 
 // location: [37.488033333333334, 126.85566666666666]}
