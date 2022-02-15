@@ -59,6 +59,8 @@ const opacityColor = {
   gray: "rgba(230, 230, 233, 0.56)",
   purple: "rgba(139, 84, 255, 0.4)",
   yellow: "rgba(255, 238, 84, 0.4)",
+  green: "rgba(41, 203, 80, 0.49)",
+  red: "rgba(255, 84, 95,0.49)",
 };
 
 const gpsColor = {
