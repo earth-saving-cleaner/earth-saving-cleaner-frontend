@@ -29,16 +29,16 @@ const LevelWrapper = styled.div`
   float: right;
 `;
 
-function UserHeader({ ...props }) {
+function UserHeader({ url, nickname, level, ...props }) {
   return (
     <StyledContainer>
-      <Avatar url={props.url} size="lg" />
+      <Avatar url={url} size="lg" />
       <TextWrapper>
         <NicknameWrapper>
-          <Text text={props.nickname} size="xxxl" weight="700" />
+          <Text text={nickname} size="xl" weight="700" />
         </NicknameWrapper>
         <LevelWrapper>
-          <Text text={props.level} size="xxl" />
+          <Text text={level} size="md" color="red" />
         </LevelWrapper>
       </TextWrapper>
     </StyledContainer>
