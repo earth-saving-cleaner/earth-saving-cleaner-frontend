@@ -45,7 +45,6 @@ const Logo = styled.img.attrs({
 function Header({ ...props }) {
   const history = useHistory();
   const location = useLocation();
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(true);
   const [navStatus, setNavStatus] = useState({});
   const userInfo = useSelector((state) => state.user.data);
 
@@ -124,7 +123,7 @@ function Header({ ...props }) {
         <Navigation iconType="location" isSelected={navStatus.plogging} onNavClick={goPloggingPage} />
       </MiddleWrapper>
       <Wrapper>
-        <Navigation iconType="createFeed" onNavClick={props.onClickCreate} />
+        <Navigation iconType="createFeed" onClickIcon={props.onClickCreate} />
         <Navigation iconType="myPage" onNavClick={goMyPage} />
       </Wrapper>
     </StyledHeader>

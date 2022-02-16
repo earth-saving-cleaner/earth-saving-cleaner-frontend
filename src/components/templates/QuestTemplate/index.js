@@ -71,11 +71,7 @@ function QuestTemplate({ ...props }) {
 QuestTemplate.propTypes = {
   onCloseClick: PropTypes.func.isRequired,
   onClickCleanButton: PropTypes.func.isRequired,
-  image: PropTypes.string,
-};
-
-QuestTemplate.defaultProps = {
-  image: "https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-mediumSquareAt3X-v2.jpg",
+  image: PropTypes.string.isRequired,
 };
 
 export default QuestTemplate;
