@@ -36,7 +36,6 @@ export const getFeeds = async (payload) => {
 
 export const addLikeUser = async (payload) => {
   const { feedId, userId } = payload;
-
   const url = `${process.env.REACT_APP_SERVER_URL}/feed/${feedId}/like`;
   const result = await axios.put(url, {
     userId,
@@ -53,7 +52,6 @@ export const getFeedInfo = async (boundary) => {
 
     return response.data.feedInfo;
   } catch (err) {
-    console.error(err);
     return err.message;
   }
 };
@@ -64,7 +62,6 @@ export const getFeed = async (id) => {
 
     return response.data.data;
   } catch (err) {
-    console.error(err);
     return err.message;
   }
 };
@@ -85,7 +82,6 @@ export const addComment = async ({ id, userId, commentText, token }) => {
 
     return response.data.data;
   } catch (err) {
-    console.error(err);
     return err.message;
   }
 };
@@ -93,12 +89,12 @@ export const addComment = async ({ id, userId, commentText, token }) => {
 export const addPhotoToAWS = async (formData) => {
   try {
     // S3 실 통신 가능 여부 확인 완료. 테스트 진행 시, 아래 mock data로 처리!
-    // const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/feed/img`, formData, {
-    //   header: {
-    //     "content-type": "multipart/form-data",
-    //   },
-    // });
-    // return response.data;
+    const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/feed/img`, formData, {
+      header: {
+        "content-type": "multipart/form-data",
+      },
+    });
+    return response.data;
 
     // const response = {
     //   originalUrl:
@@ -106,14 +102,13 @@ export const addPhotoToAWS = async (formData) => {
     //   url: "https://earth-saving-cleaner.s3.ap-northeast-2.amazonaws.com/thumb/1644598340028KakaoTalk_Photo_2022-02-01-20-20-16.jpeg",
     // };
 
-    const response = {
-      url: "https://earth-saving-cleaner.s3.ap-northeast-2.amazonaws.com/thumb/16440510063602180494_202118_264.jpeg",
-      originalUrl:
-        "https://earth-saving-cleaner.s3.ap-northeast-2.amazonaws.com/original/16440510063602180494_202118_264.jpeg",
-    };
-    return response;
+    // const response = {
+    //   url: "https://earth-saving-cleaner.s3.ap-northeast-2.amazonaws.com/thumb/16440510063602180494_202118_264.jpeg",
+    //   originalUrl:
+    //     "https://earth-saving-cleaner.s3.ap-northeast-2.amazonaws.com/original/16440510063602180494_202118_264.jpeg",
+    // };
+    // return response;
   } catch (err) {
-    console.error(err);
     return err.message;
   }
 };
@@ -128,7 +123,6 @@ export const getAddressFromLatLng = async (location) => {
     const address = response.results[0].formatted_address;
     return address;
   } catch (err) {
-    console.error(err);
     return err.message;
   }
 };
@@ -148,7 +142,6 @@ export const addNewFeed = async (feedDetail) => {
 
     return response;
   } catch (err) {
-    console.error(err);
     return err.message;
   }
 };
@@ -165,7 +158,6 @@ export const addScore = async (payload) => {
 
     return response;
   } catch (err) {
-    console.error(err);
     return err.message;
   }
 };
@@ -182,7 +174,6 @@ export const getRankList = async (userInfo) => {
 
     return response;
   } catch (err) {
-    console.error(err);
     return err.message;
   }
 };
