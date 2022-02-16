@@ -6,8 +6,8 @@ import styled from "styled-components";
 
 const Wrapper = styled.span`
   display: inline-block;
-  width: ${(props) => Number(props.size) * 3}rem;
-  height: ${(props) => Number(props.size) * 3}rem;
+  width: ${(props) => props.size * 3}rem;
+  height: ${(props) => props.size * 3}rem;
   cursor: pointer;
 
   & > svg {
@@ -26,12 +26,12 @@ function ClusterCircle({ ...props }) {
 }
 
 ClusterCircle.propTypes = {
-  size: PropTypes.string,
+  size: PropTypes.number,
   color: PropTypes.string,
 };
 
 ClusterCircle.defaultProps = {
-  size: "5",
+  size: 5,
   color: "green_1",
 };
 
