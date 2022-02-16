@@ -1,6 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -33,9 +33,9 @@ function MyPageGrid({ leftSide, rightSide, rightSideTitle }) {
 }
 
 MyPageGrid.propTypes = {
-  leftSide: PropTypes.elementType.isRequired,
-  rightSide: PropTypes.elementType.isRequired,
-  rightSideTitle: PropTypes.elementType.isRequired,
+  leftSide: PropTypes.element.isRequired,
+  rightSide: PropTypes.element.isRequired,
+  rightSideTitle: PropTypes.element.isRequired,
 };
 
 export default MyPageGrid;

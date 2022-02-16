@@ -1,7 +1,7 @@
 import React from "react";
 
-import styled from "styled-components";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
 import { Button } from "../../atoms";
 
@@ -54,7 +54,7 @@ function QuestResultTemplate({ ...props }) {
 }
 
 QuestResultTemplate.propTypes = {
-  children: PropTypes.oneOfType(PropTypes.node).isRequired,
+  children: PropTypes.element.isRequired,
   onCloseClick: PropTypes.func.isRequired,
 };
 
