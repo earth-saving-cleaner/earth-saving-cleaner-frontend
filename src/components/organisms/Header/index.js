@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import { noop } from "lodash";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import logo from "../../../assets/logo.png";
+import { uploadImage, getImageMetadata } from "../../../utils";
 import { Navigation } from "../../molecules";
 
 const StyledHeader = styled.div`
@@ -42,12 +42,11 @@ const Logo = styled.img.attrs({
   cursor: pointer;
 `;
 
-function Header({ ...props }) {
+function Header({ onImageFileChange, ...props }) {
   const history = useHistory();
   const location = useLocation();
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(true);
+
   const [navStatus, setNavStatus] = useState({});
-  const userInfo = useSelector((state) => state.user.data);
 
   const handleLogoClick = () => {
     history.push("/");
@@ -113,6 +112,16 @@ function Header({ ...props }) {
     }
   }, [location.pathname]);
 
+  const handleImageChange = async (e) => {
+    const urls = await uploadImage(e.target);
+    const metaLocations = await getImageMetadata(e.target);
+
+    onImageFileChange({
+      urls,
+      metaLocations,
+    });
+  };
+
   return (
     <StyledHeader>
       <Wrapper>
@@ -124,19 +133,19 @@ function Header({ ...props }) {
         <Navigation iconType="location" isSelected={navStatus.plogging} onNavClick={goPloggingPage} />
       </MiddleWrapper>
       <Wrapper>
-        <Navigation iconType="createFeed" onNavClick={props.onClickCreate} />
+        <label htmlFor="imgUpload">
+          <Navigation iconType="createFeed" />
+        </label>
         <Navigation iconType="myPage" onNavClick={goMyPage} />
       </Wrapper>
+
+      <input name="imgUpload" id="imgUpload" type="file" accept="image/*" onChange={handleImageChange} hidden />
     </StyledHeader>
   );
 }
 
 Header.propTypes = {
-  onClickCreate: PropTypes.func,
-};
-
-Header.defaultProps = {
-  onClickCreate: noop,
+  onImageFileChange: PropTypes.func.isRequired,
 };
 
 export default Header;
