@@ -84,8 +84,6 @@ const Wrapper = styled.span`
   }
 `;
 
-// stroke: 도형 선의 색상을 지정하는 속성입니다.
-
 function Icon({ icon, size, onClickIcon, ...props }) {
   let svg;
 
@@ -180,10 +178,3 @@ Icon.defaultProps = {
 };
 
 export default Icon;
-
-// Use Ex:
-// const StyledIcon = styled(Icon)`
-//   margin: 15px;
-// `;
-
-// <StyledIcon icon="likeFill" size="sm" fill="red" />

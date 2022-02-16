@@ -6,9 +6,10 @@ import themes from "../../../theme/theme";
 const StyledText = styled.div`
   font-size: ${({ theme, size }) => theme.fontSizes[size]};
   font-weight: ${(props) => props.weight};
+  color: ${({ theme, color }) => theme.colors[color]};
 `;
 
-function Text({ text, size, ...props }) {
+function Text({ text, size, color, ...props }) {
   return (
     <StyledText size={size} {...props}>
       {text}
@@ -20,18 +21,13 @@ Text.propTypes = {
   text: PropTypes.string.isRequired,
   size: PropTypes.string,
   weight: PropTypes.string,
+  color: PropTypes.string,
 };
 
 Text.defaultProps = {
   size: themes.fontSizes.base,
   weight: "normal",
+  color: "black",
 };
 
 export default Text;
-
-// Use Ex:
-// const StyledText = styled(Text)`
-//   margin: 15px;
-// `;
-
-// <StyledText text="textTest" size="titleSize" weight="200" />

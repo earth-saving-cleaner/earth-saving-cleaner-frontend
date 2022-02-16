@@ -53,14 +53,3 @@ Avatar.defaultProps = {
 };
 
 export default Avatar;
-
-// Use Ex:
-// const StyledAvatar = styled(Avatar)`
-//   margin: 15px;
-// `;
-
-// <StyledAvatar
-//   alt="userImage"
-//   size="sm"
-//   url="https://lh3.googleusercontent.com/a/AATXAJzdJ5gTfflTC1--vXDDRH1n-wX7NQ9mJRViLtgc=s96-c"
-// />;
