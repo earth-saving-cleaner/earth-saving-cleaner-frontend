@@ -9,10 +9,9 @@ import GooglePlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-goo
 import { noop } from "lodash";
 
 import { getAddressFromLatLng, addNewFeed } from "../../../api";
-import { Icon, Textarea } from "../../atoms";
+import { Icon, Textarea, Img } from "../../atoms";
 import { NewFeedHeader } from "../../molecules";
 import themes from "../../../theme/theme";
-import ImageUpload from "../ImageUpload";
 import { isTokenExpired } from "../../../utils";
 import { userSliceActions } from "../../../modules/slices/userSlice";
 import { feedSliceActions } from "../../../modules/slices/feedSlice";
@@ -32,7 +31,7 @@ const ImageWrapper = styled.div`
   justify-content: center;
   width: 50rem;
   height: 100%;
-  background: ${({ theme }) => theme.opacityColor.gray};
+  background: ${({ theme }) => theme.opacityColor.gray_1};
 `;
 
 const ContentsWrapper = styled.div`
@@ -67,128 +66,68 @@ const AddressWrapper = styled.div`
   font-size: 1.2rem;
 `;
 
-function NewFeed({ onClickModalClose }) {
-  const [pictureUrl, setPictureUrl] = useState("");
-  const [content, setContent] = useState("");
-  const [location, setLocation] = useState([]);
-  const [inputAddress, setInputAddress] = useState("");
-  const [photoAddress, setPhotoAddress] = useState("");
-  const [address, setAddress] = useState("Please enter your address");
-  const dispatch = useDispatch();
+function NewFeed({ onModalCloseClick, imageInfo }) {
   const history = useHistory();
+  const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.data);
 
-  const getImage = (data) => {
-    const { imageUrl, locationFromMeta } = data;
-
-    setPictureUrl(imageUrl);
-    setLocation(locationFromMeta);
-  };
-
-  const handleTextChange = (e) => {
-    setContent(e.target.value);
-  };
+  const { urls, metaLocations } = imageInfo;
+  const [content, setContent] = useState("");
+  const [address, setAddress] = useState("Please enter your address");
 
   useEffect(() => {
     const getAddress = async () => {
-      if (inputAddress) {
-        setAddress(inputAddress.label);
-        return;
-      }
-
-      try {
-        const addressFromPhoto = await getAddressFromLatLng(location);
-
-        setPhotoAddress(addressFromPhoto.slice(5));
-      } catch (err) {
-        console.error(err);
+      if (metaLocations[0] !== null) {
+        const imageAddress = await getAddressFromLatLng([metaLocations[1], metaLocations[0]]);
+        setAddress(imageAddress.slice(5));
       }
     };
 
-    if (pictureUrl) {
-      getAddress();
-    }
-  }, [location]);
+    getAddress();
+  }, [metaLocations]);
 
-  useEffect(() => {
-    const getCoordinates = async () => {
-      try {
-        const response = await geocodeByAddress(String(inputAddress));
-        const result = await getLatLng(response[0]);
-
-        setLocation([result.lat, result.lng]);
-
-        return result;
-      } catch (err) {
-        console.error(err);
-        return err.message;
-      }
-    };
-
-    if (inputAddress) {
-      getCoordinates();
-      setAddress(inputAddress.label);
-    }
-  }, [inputAddress]);
-
-  useEffect(() => {
-    if (location[1] === 0 && !photoAddress && !inputAddress) {
-      setAddress("Please enter your address");
-      return;
-    }
-
-    if (inputAddress) {
-      setAddress(inputAddress.label);
-      return;
-    }
-
-    if (location[1] !== 0 && photoAddress) {
-      setAddress(photoAddress);
-      return;
-    }
-
-    setAddress("Please enter your address");
-  }, [address, photoAddress, inputAddress]);
-
-  const handleNewFeedSave = async () => {
-    const feedDetail = {
-      pictureUrl: [pictureUrl],
-      content,
-      location: [location[1], location[0]],
-      address,
-      userInfo,
-    };
-
-    if (!feedDetail) return;
-
+  const handleSaveClick = async () => {
     try {
-      const response = await addNewFeed(feedDetail);
-      const isvalid = await isTokenExpired(response);
+      const response = await geocodeByAddress(String(address));
+      const result = await getLatLng(response[0]);
+      const coordinates = [result.lng, result.lat];
 
-      if (isvalid) {
+      const feed = await addNewFeed({
+        pictureUrl: [urls?.url ? urls.url : urls.originalUrl],
+        content,
+        location: coordinates,
+        address,
+        token: userInfo.token,
+      });
+
+      // response 데이터 확인 필요 (토큰 있을 때와 없을 떄 구조가 다름)
+      const authentication = await isTokenExpired(feed);
+
+      if (authentication) {
         history.push("/login");
         dispatch(userSliceActions.logout());
       } else {
-        onClickModalClose();
         dispatch(feedSliceActions.getFeeds({ limit: 3 }));
+        onModalCloseClick(false);
       }
     } catch (err) {
       console.error(err);
+      return err.message;
     }
   };
 
   return (
     <Container>
       <ImageWrapper>
-        <ImageUpload getImage={getImage} />
+        <Img alt="feed image" src={imageInfo.urls?.url ? imageInfo.urls.url : imageInfo.urls.originalUrl} />
       </ImageWrapper>
       <ContentsWrapper>
         <CloseWrapper>
-          <Icon icon="close" size="md" onClickIcon={onClickModalClose} />
+          <Icon icon="close" size="md" onClickIcon={() => onModalCloseClick(false)} />
         </CloseWrapper>
         <HeaderWrapper>
           <NewFeedHeader nickname={userInfo.nickname} url={userInfo.profileImage} />
-          <Icon icon="save" size="sm" onClickIcon={handleNewFeedSave} />
+          <Icon icon="save" size="sm" onClickIcon={handleSaveClick} />
         </HeaderWrapper>
         <Textarea
           background="gray_4"
@@ -197,25 +136,25 @@ function NewFeed({ onClickModalClose }) {
           width="90%"
           height="18rem"
           value={content}
-          onChange={handleTextChange}
+          onChange={(e) => setContent(e.target.value)}
         />
         <AddressWrapper>
           <Icon icon="location" size="md" fill={colors.gray_3} />
           <GooglePlacesAutocomplete
+            id="addressInput"
             apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}
             selectProps={{
-              inputAddress,
-              onChange: setInputAddress,
+              address,
+              onChange: setAddress,
               placeholder: address,
               styles: {
                 input: (base) => ({
                   ...base,
-                  width: "270px",
+                  width: "27rem",
                 }),
                 placeholder: (base) => ({
                   ...base,
                   fontStyle: "italic",
-                  fontSize: "12px",
                 }),
               },
             }}
@@ -227,11 +166,20 @@ function NewFeed({ onClickModalClose }) {
 }
 
 NewFeed.propTypes = {
-  onClickModalClose: PropTypes.func,
+  onModalCloseClick: PropTypes.func,
+  imageInfo: PropTypes.shape({
+    urls: PropTypes.shape({
+      result: PropTypes.string,
+      originalUrl: PropTypes.string,
+      url: PropTypes.string,
+    }),
+    metaLocations: PropTypes.arrayOf(PropTypes.number),
+  }),
 };
 
 NewFeed.defaultProps = {
-  onClickModalClose: noop,
+  onModalCloseClick: noop,
+  imageInfo: { urls: null, metaLocations: [null, null] },
 };
 
 export default NewFeed;
