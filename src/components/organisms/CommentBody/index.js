@@ -46,7 +46,11 @@ function CommentBody({ ...props }) {
 }
 
 CommentBody.propTypes = {
-  commentList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  commentList: PropTypes.arrayOf(PropTypes.object),
+};
+
+CommentBody.defaultProps = {
+  commentList: [],
 };
 
 export default CommentBody;

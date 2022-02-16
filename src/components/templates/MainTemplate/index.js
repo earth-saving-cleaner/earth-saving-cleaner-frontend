@@ -1,7 +1,6 @@
 import React from "react";
 
 import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import { noop } from "lodash";
@@ -21,18 +20,9 @@ const ContentWrapper = styled.div`
 `;
 
 function MainTemplate({ children, ...props }) {
-  const history = useHistory();
-
-  const handleLogoClick = () => {
-    history.push("/");
-  };
   return (
     <StyledContainer>
-      <Header
-        onClickLogo={handleLogoClick}
-        onClickCreate={props.onClickCreate}
-        onClickModalClose={props.onClickModalClose}
-      />
+      <Header onClickCreate={props.onClickCreate} onClickModalClose={props.onClickModalClose} />
       <ContentWrapper>{children}</ContentWrapper>
     </StyledContainer>
   );
