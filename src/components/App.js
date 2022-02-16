@@ -35,7 +35,7 @@ function App() {
           <SignupPage />
         </Route>
         <Route path="/*" exact>
-          <div>Not found</div>
+          <Redirect to="/" />
         </Route>
       </Switch>
     </Container>
