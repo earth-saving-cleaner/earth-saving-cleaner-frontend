@@ -4,15 +4,18 @@ import PropTypes from "prop-types";
 
 import { Avatar, Text } from "../../atoms";
 
-const StyledWrapper = styled.div`
-  display: inline-flex;
-  padding: 0.8rem;
+const CommentdContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  height: 29rem;
+  padding: 0.8rem;
+  overflow-y: auto;
 `;
 
 const ScrollWrapper = styled.div`
-  height: 23rem;
-  overflow-y: scroll;
+  display: flex;
+  margin-bottom: 1rem;
 `;
 
 const TextWrapper = styled.div`
@@ -23,7 +26,7 @@ function CommentBody({ ...props }) {
   const { commentList } = props;
 
   return (
-    <ScrollWrapper>
+    <CommentdContainer>
       {commentList &&
         commentList.map((comment) => {
           const {
@@ -32,16 +35,16 @@ function CommentBody({ ...props }) {
           } = comment;
 
           return (
-            <StyledWrapper key={nickname + content}>
-              <Avatar url={profileImage} size="sm" />
+            <ScrollWrapper key={nickname + content}>
+              <Avatar url={profileImage} size="xs" />
               <TextWrapper>
-                <Text text={nickname} size="lg" weight="700" />
-                <Text text={content} size="base" weight="400" />
+                <Text text={nickname} size="small" weight="700" />
+                <Text text={content} size="small" />
               </TextWrapper>
-            </StyledWrapper>
+            </ScrollWrapper>
           );
         })}
-    </ScrollWrapper>
+    </CommentdContainer>
   );
 }
 

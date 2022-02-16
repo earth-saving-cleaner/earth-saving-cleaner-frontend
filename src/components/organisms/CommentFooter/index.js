@@ -10,7 +10,7 @@ const Wrapper = styled.div``;
 
 const StyledText = styled(Text)`
   padding-left: 1rem;
-  font-size: 2rem;
+  font-size: 1.2rem;
 `;
 
 const StatusWrapper = styled.div`
@@ -24,29 +24,32 @@ const CommentWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: 1rem;
 `;
 
 const StyledInput = styled(Textarea)`
   width: 90%;
+  margin-right: 1rem;
   border-width: 0.1rem;
   border-radius: 1rem;
+  border-color: ${({ theme }) => theme.colors.gray_3};
+  font-size: ${({ theme }) => theme.fontSizes.small};
 `;
 
-function CommentFooter({ ...props }) {
-  const { isIconFilled, like } = props;
+function CommentFooter({ isIconFilled, like, onClickLikeIcon, onChangeText, onSubmit, text, ...props }) {
   return (
     <Wrapper>
       <StatusWrapper>
         <Icon
-          size="md"
+          size="xs"
           icon={isIconFilled ? "likeFill" : "likeLine"}
-          onClickIcon={isIconFilled ? noop : props.onClickLikeIcon}
+          onClickIcon={isIconFilled ? noop : onClickLikeIcon}
         />
         <StyledText text={`${like} likes`} />
       </StatusWrapper>
       <CommentWrapper>
-        <StyledInput placeholder="comments" onChange={props.onChangeText} value={props.text} />
-        <Icon icon="send" size="sm" onClickIcon={props.onSubmit} />
+        <StyledInput placeholder="comments" onChange={onChangeText} value={text} />
+        <Icon icon="send" size="xs" onClickIcon={onSubmit} />
       </CommentWrapper>
     </Wrapper>
   );
