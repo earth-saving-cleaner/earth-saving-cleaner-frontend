@@ -123,7 +123,7 @@ function Header({ ...props }) {
         <Navigation iconType="location" isSelected={navStatus.plogging} onNavClick={goPloggingPage} />
       </MiddleWrapper>
       <Wrapper>
-        <Navigation iconType="createFeed" onClickIcon={props.onClickCreate} />
+        <Navigation iconType="createFeed" onNavClick={props.onClickCreate} />
         <Navigation iconType="myPage" onNavClick={goMyPage} />
       </Wrapper>
     </StyledHeader>
