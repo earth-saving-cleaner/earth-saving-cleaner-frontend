@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
 import GoogleMapReact from "google-map-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,8 +6,8 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import { getFeedInfo } from "../../../api";
-import { userSliceActions } from "../../../modules/slices/userSlice";
 import useSocket from "../../../hooks/useSocket";
+import { userSliceActions } from "../../../modules/slices/userSlice";
 import theme from "../../../theme/theme";
 import { Icon, GpsIcon, Loading } from "../../atoms";
 import { Result } from "../../organisms";
@@ -21,7 +21,7 @@ const StyledIcon = styled(Icon)`
 function MapPage() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { isLoading, data, error } = useSelector((state) => state.user);
+  const { data } = useSelector((state) => state.user);
 
   const [socket, disconnect] = useSocket("map");
 
@@ -45,7 +45,7 @@ function MapPage() {
 
     setIsModalOpen(true);
     setModalInfo({
-      image,
+      image: image[0],
       coordinates,
       feedId,
     });
@@ -108,7 +108,7 @@ function MapPage() {
     maximumAge: Infinity,
   };
 
-  function calCuateDistance({ coords }) {
+  function calCulateDistance({ coords }) {
     const { latitude, longitude } = coords;
     const targetLatitude = modalInfo.coordinates[1];
     const targetLongitude = modalInfo.coordinates[0];
@@ -133,16 +133,11 @@ function MapPage() {
 
   function handleCleanButtonClick() {
     const option = {
-      enableHighAccuracy: true,
+      enableHighAccuracy: false,
+      maximumAge: 30000,
     };
 
-    navigator.geolocation.getCurrentPosition(
-      calCuateDistance,
-      () => {
-        alert("please accept your location.");
-      },
-      option,
-    );
+    navigator.geolocation.getCurrentPosition(calCulateDistance, () => {}, option);
   }
 
   function handleApiLoaded(map, maps) {
@@ -178,7 +173,6 @@ function MapPage() {
           },
           zoom: 14,
         });
-        alert("please accept your location.");
       },
       options,
     );
@@ -202,9 +196,7 @@ function MapPage() {
   }, [zoomLevel, boundary, ploggingResult]);
 
   useEffect(() => {
-    socket.on("connect", () => {
-      console.log(socket.id);
-    });
+    socket.on("connect", () => {});
 
     socket.on("locations", (locations) => {
       setGpsLocations(locations);
@@ -232,7 +224,7 @@ function MapPage() {
             // bootstrapURLKeys={{ key: process.env.REACT_APP_MAP_API }}
             yesIWantToUseGoogleMapApiInternals
             onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
-            onChange={({ zoom, bounds, ...props }) => {
+            onChange={({ zoom, bounds }) => {
               setZoomLevel(zoom);
               setBoundary({
                 NWlatitude: bounds.nw.lat,

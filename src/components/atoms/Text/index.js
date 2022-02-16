@@ -17,7 +17,7 @@ function Text({ text, size, ...props }) {
 }
 
 Text.propTypes = {
-  text: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  text: PropTypes.string.isRequired,
   size: PropTypes.string,
   weight: PropTypes.string,
 };
