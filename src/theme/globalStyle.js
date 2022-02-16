@@ -30,16 +30,7 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     background: #eee;
-    -webkit-font-smoothing: antialiased;
-    @media (max-width: 575.98px) {
-      font-size: 1.2rem;
-    }
-    @media (min-width: 576px) and (max-width: 1199.98px) {
-      font-size: 1.4px;
-    }
-    @media (min-width: 1200px){
-      font-size: 1.6rem;
-    }
+    font-size: 1.6rem;
     height: 100%;
   }
 
