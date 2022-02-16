@@ -17,12 +17,13 @@ const StyledContainer = styled.div`
 
 const ContentWrapper = styled.div`
   margin-top: 5rem;
+  width: 100%;
 `;
 
-function MainTemplate({ children, ...props }) {
+function MainTemplate({ children, onImageFileChange, ...props }) {
   return (
     <StyledContainer>
-      <Header onClickCreate={props.onClickCreate} onClickModalClose={props.onClickModalClose} />
+      <Header onImageFileChange={onImageFileChange} />
       <ContentWrapper>{children}</ContentWrapper>
     </StyledContainer>
   );
@@ -32,6 +33,7 @@ MainTemplate.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
   onClickCreate: PropTypes.func,
   onClickModalClose: PropTypes.func,
+  onImageFileChange: PropTypes.func.isRequired,
 };
 
 MainTemplate.defaultProps = {

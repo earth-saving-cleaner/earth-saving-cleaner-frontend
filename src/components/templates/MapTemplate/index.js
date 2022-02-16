@@ -8,6 +8,8 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  height: 100vh;
 `;
 
 const MapWrapper = styled.div`
@@ -18,7 +20,6 @@ const MapWrapper = styled.div`
 function MapTemplate({ children }) {
   return (
     <StyledContainer>
-      <Header />
       <MapWrapper>{children}</MapWrapper>
     </StyledContainer>
   );
