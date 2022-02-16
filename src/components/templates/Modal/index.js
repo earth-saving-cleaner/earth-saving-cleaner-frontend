@@ -18,21 +18,13 @@ const ModalWrapper = styled.div`
   height: 100%;
 `;
 
-const Background = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: ${theme.colors.black};
-  opacity: 0.5;
-`;
-
 const ContentWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10;
-  width: 85%;
-  height: 80%;
+  width: 90rem;
+  height: 60rem;
   background: ${theme.colors.white};
 `;
 
@@ -59,11 +51,9 @@ function Modal({ children, handleClose }) {
   return (
     <Portal wrapperId="modal-container">
       <ModalWrapper>
-        <Background>
-          <ButtonWrapper>
-            <StyledButton onClick={handleClose} title="X" />
-          </ButtonWrapper>
-        </Background>
+        <ButtonWrapper>
+          <StyledButton onClick={handleClose} title="X" />
+        </ButtonWrapper>
         <ContentWrapper>
           <Content>{children}</Content>
         </ContentWrapper>
