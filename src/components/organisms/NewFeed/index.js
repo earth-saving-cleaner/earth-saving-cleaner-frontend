@@ -87,7 +87,8 @@ function NewFeed({ onModalCloseClick, imageInfo }) {
 
   const handleSaveClick = async () => {
     try {
-      const response = await geocodeByAddress(String(address));
+      const addressString = address.label;
+      const response = await geocodeByAddress(addressString);
       const result = await getLatLng(response[0]);
       const coordinates = [result.lng, result.lat];
 
@@ -95,11 +96,10 @@ function NewFeed({ onModalCloseClick, imageInfo }) {
         pictureUrl: [urls?.url ? urls.url : urls.originalUrl],
         content,
         location: coordinates,
-        address,
+        address: addressString,
         token: userInfo.token,
       });
 
-      // response 데이터 확인 필요 (토큰 있을 때와 없을 떄 구조가 다름)
       const authentication = await isTokenExpired(feed);
 
       if (authentication) {
