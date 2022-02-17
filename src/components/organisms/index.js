@@ -5,5 +5,6 @@ import UserInfo from "./UserInfo";
 import NewFeedModal from "./NewFeedModal";
 import Result from "./Result";
 import NewFeed from "./NewFeed";
+import UserCard from "./UserCard";
 
-export { FeedCard, Header, RankingList, UserInfo, NewFeedModal, NewFeed, Result };
+export { FeedCard, Header, RankingList, UserInfo, NewFeedModal, NewFeed, Result, UserCard };
