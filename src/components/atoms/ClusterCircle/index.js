@@ -1,6 +1,7 @@
 import React from "react";
 
 import PropTypes from "prop-types";
+
 import { IoEllipse } from "react-icons/io5";
 import styled from "styled-components";
 

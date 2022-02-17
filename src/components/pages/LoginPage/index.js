@@ -4,10 +4,9 @@ import { GoogleLogin } from "react-google-login";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
-import { userSliceActions } from "../../../modules/slices/userSlice";
 import logo from "../../../assets/logo.png";
+import { userSliceActions } from "../../../modules/slices/userSlice";
 import { Text } from "../../atoms";
-import { MainTemplate } from "../../templates";
 
 const Container = styled.div`
   display: flex;
@@ -38,6 +37,7 @@ const Logo = styled.img.attrs({
 
 function LoginPage() {
   const dispatch = useDispatch();
+
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = (googleResponse) => {

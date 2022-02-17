@@ -4,14 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
+import { getFeed, addComment } from "../../../api";
 import useInfiniteScroll from "../../../hooks/useInfinitescroll";
 import { feedSliceActions } from "../../../modules/slices/feedSlice";
-import { getFeed, addComment } from "../../../api";
 import { isTokenExpired } from "../../../utils";
-
-import { CommentTemplate, NewFeedModalTemplate } from "../../templates";
-import { FeedCard } from "../../organisms";
 import { Text } from "../../atoms";
+import { FeedCard } from "../../organisms";
+import { CommentTemplate, NewFeedModalTemplate } from "../../templates";
 
 const StyledContainer = styled.div`
   display: flex;
@@ -101,12 +100,6 @@ function MainPage() {
 
   const handleCommentText = (e) => {
     setCommentText(e.target.value);
-  };
-
-  const handleCloseButton = () => {
-    setFeedInfo(null);
-    setCommentList(null);
-    setModal(false);
   };
 
   useEffect(() => {

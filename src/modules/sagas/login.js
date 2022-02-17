@@ -1,4 +1,4 @@
-import { put, call, takeEvery, takeLatest } from "redux-saga/effects";
+import { put, call, takeLatest } from "redux-saga/effects";
 
 import { login as loginAPI, signup as signupAPI } from "../../api";
 import history from "../../utils/history";

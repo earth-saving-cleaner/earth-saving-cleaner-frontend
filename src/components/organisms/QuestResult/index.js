@@ -1,7 +1,7 @@
 import React from "react";
 
-import styled from "styled-components";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
 import { Img, Text } from "../../atoms";
 
@@ -13,7 +13,7 @@ const StyledText = styled(Text)`
   padding-top: 3rem;
 `;
 
-function Result({ ...props }) {
+function QuestResult({ ...props }) {
   const { result, level } = props;
   const image = result === "success" ? "image/success.jpg" : "image/failure.jpg";
   const resultMessage = result === "success" ? "You got a good job!" : "Please try again in correct position";
@@ -28,9 +28,9 @@ function Result({ ...props }) {
   );
 }
 
-Result.propTypes = {
+QuestResult.propTypes = {
   result: PropTypes.string.isRequired,
   level: PropTypes.number.isRequired,
 };
 
-export default Result;
+export default QuestResult;

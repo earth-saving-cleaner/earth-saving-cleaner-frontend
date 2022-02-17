@@ -1,6 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
 
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
 import { Avatar, Text } from "../../atoms";
@@ -29,7 +29,7 @@ const LevelWrapper = styled.div`
   float: right;
 `;
 
-function UserHeader({ url, nickname, level, ...props }) {
+function UserHeader({ url, nickname, level }) {
   return (
     <StyledContainer>
       <Avatar url={url} size="lg" />

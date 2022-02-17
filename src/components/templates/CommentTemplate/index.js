@@ -1,11 +1,12 @@
 import React from "react";
-import styled from "styled-components";
+
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
 import { Img, Icon } from "../../atoms";
-import CommentHeader from "../../organisms/CommentHeader";
 import CommentBody from "../../organisms/CommentBody";
 import CommentFooter from "../../organisms/CommentFooter";
+import CommentHeader from "../../organisms/CommentHeader";
 
 const Container = styled.div`
   display: flex;
@@ -13,16 +14,6 @@ const Container = styled.div`
   flex-direction: row;
   align-items: center;
   height: 100%;
-`;
-
-const Right = styled.div`
-  width: 100%;
-  height: 80%;
-`;
-
-const Left = styled.div`
-  width: 80%;
-  height: 80%;
 `;
 
 const ImageWrapper = styled.div`
@@ -92,8 +83,6 @@ function CommentTemplate({ ...props }) {
           />
         </CommentFooterWrapper>
       </ContentsWrapper>
-
-      {/* </Right> */}
     </Container>
   );
 }
