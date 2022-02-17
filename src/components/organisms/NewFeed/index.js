@@ -118,7 +118,7 @@ function NewFeed({ onModalCloseClick, imageInfo }) {
   return (
     <Container>
       <ImageWrapper>
-        <Img alt="feed image" src={imageInfo.urls?.url ? imageInfo.urls.url : imageInfo.urls.originalUrl} />
+        <Img alt="feed image" src={imageInfo.urls.originalUrl} />
       </ImageWrapper>
       <ContentsWrapper>
         <CloseWrapper>
