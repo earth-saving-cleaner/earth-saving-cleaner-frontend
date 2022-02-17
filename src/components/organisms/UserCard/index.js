@@ -1,9 +1,10 @@
 import React from "react";
+
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-import { Button, Img, Avatar, Text } from "../../atoms";
 import themes from "../../../theme/theme";
+import { Button, Img, Avatar, Text } from "../../atoms";
 
 const StyledImage = styled(Img)`
   padding: 1rem;
