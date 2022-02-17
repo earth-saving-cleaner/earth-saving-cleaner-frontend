@@ -49,10 +49,8 @@ function MapClusteringPage() {
       let numberCount = 1;
 
       for (let j = i + 1; j < marker.length; j += 1) {
-        let distance;
-
         if (!marker[j].cluster && marker[i].cleaned === marker[j].cleaned) {
-          distance = getDistance(marker[i].lat, marker[i].lng, marker[j].lat, marker[j].lng);
+          const distance = getDistance(marker[i].lat, marker[i].lng, marker[j].lat, marker[j].lng);
 
           if (distance < calcDistance(zoomLevel)) {
             marker[j].cluster = true;
@@ -139,7 +137,6 @@ function MapClusteringPage() {
           },
           zoom: 14,
         });
-        alert("please accept your location.");
       },
     );
   }, []);
@@ -148,12 +145,13 @@ function MapClusteringPage() {
     async function getFeedLocation() {
       const result = await getFeedInfo(boundary);
       const convertResult = convertToClusterFormat(result);
-      console.log("convertResult======>", convertResult);
 
       let calculation;
 
       if (zoomLevel < 17) {
-        calculation = paintCluster(calCluster(convertResult));
+        const calculateResult = calCluster(convertResult);
+
+        calculation = paintCluster(calculateResult);
       } else {
         calculation = paintFeedsInfo(convertResult);
       }
@@ -176,7 +174,7 @@ function MapClusteringPage() {
           // bootstrapURLKeys={{ key: process.env.REACT_APP_MAP_API }}
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
-          onChange={({ zoom, bounds, ...props }) => {
+          onChange={({ zoom, bounds }) => {
             setZoomLevel(zoom);
             setBoundary({
               NWlatitude: bounds.nw.lat,

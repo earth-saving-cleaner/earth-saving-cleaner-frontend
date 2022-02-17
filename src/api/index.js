@@ -36,7 +36,6 @@ export const getFeeds = async (payload) => {
 
 export const addLikeUser = async (payload) => {
   const { feedId, userId } = payload;
-
   const url = `${process.env.REACT_APP_SERVER_URL}/feed/${feedId}/like`;
   const result = await axios.put(url, {
     userId,
@@ -53,7 +52,6 @@ export const getFeedInfo = async (boundary) => {
 
     return response.data.feedInfo;
   } catch (err) {
-    console.error(err);
     return err.message;
   }
 };
@@ -64,7 +62,6 @@ export const getFeed = async (id) => {
 
     return response.data.data;
   } catch (err) {
-    console.error(err);
     return err.message;
   }
 };
@@ -85,7 +82,6 @@ export const addComment = async ({ id, userId, commentText, token }) => {
 
     return response.data.data;
   } catch (err) {
-    console.error(err);
     return err.message;
   }
 };
@@ -100,7 +96,6 @@ export const addPhotoToAWS = async (formData) => {
 
     return response.data;
   } catch (err) {
-    console.error(err);
     return err.message;
   }
 };
@@ -114,7 +109,6 @@ export const getAddressFromLatLng = async (location) => {
     const address = response.results[0].formatted_address;
     return address;
   } catch (err) {
-    console.error(err);
     return err.message;
   }
 };
@@ -134,7 +128,6 @@ export const addNewFeed = async (feedDetail) => {
 
     return response;
   } catch (err) {
-    console.error(err);
     return err.message;
   }
 };
@@ -151,7 +144,6 @@ export const addScore = async (payload) => {
 
     return response;
   } catch (err) {
-    console.error(err);
     return err.message;
   }
 };
@@ -168,7 +160,6 @@ export const getRankList = async (userInfo) => {
 
     return response;
   } catch (err) {
-    console.error(err);
     return err.message;
   }
 };
