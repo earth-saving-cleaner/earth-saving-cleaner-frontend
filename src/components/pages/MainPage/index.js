@@ -29,6 +29,7 @@ function MainPage() {
   const [commentText, setCommentText] = useState("");
   const [commentList, setCommentList] = useState([]);
   const [id, setId] = useState(null);
+
   const userId = data?.id;
   const token = data?.token;
 
@@ -45,13 +46,13 @@ function MainPage() {
   const [isFetching, setIsFetching] = useInfiniteScroll(fetchDataOnScroll);
 
   const findUserLike = () => {
-    for (let i = 0; i < feeds.length; i += 1) {
-      if (feeds[i]._id === id) {
-        return feeds[i].like.includes(userId);
-      }
-    }
+    const currentFeed = feeds.data.find((feed) => feed._id === id);
+    return currentFeed.like.includes(userId);
+  };
 
-    return false;
+  const findFeedLike = () => {
+    const currentFeed = feeds.data.find((feed) => feed._id === id);
+    return currentFeed.like.length;
   };
 
   const handleLikeIconClick = (feedId) => {
@@ -104,12 +105,11 @@ function MainPage() {
 
   useEffect(() => {
     const fetchFeed = async () => {
-      const { author, comment, content, image, like, address } = await getFeed(id);
+      const { author, comment, content, image, address } = await getFeed(id);
 
       setFeedInfo({
         author,
         content,
-        like,
         image: image[0],
         address,
       });
@@ -165,7 +165,7 @@ function MainPage() {
             onClickLikeIcon={userId ? handleCommentLikeIconClick : sendToLogin}
             isIconFilled={findUserLike()}
             text={commentText}
-            like={feedInfo.like.length}
+            like={findFeedLike()}
           />
         </NewFeedModalTemplate>
       )}
