@@ -10,7 +10,7 @@ import useSocket from "../../../hooks/useSocket";
 import { userSliceActions } from "../../../modules/slices/userSlice";
 import theme from "../../../theme/theme";
 import { Icon, GpsIcon, Loading } from "../../atoms";
-import { QuestResult } from "../../organisms";
+import { QuestResult, UserCard } from "../../organisms";
 import { MapTemplate, QuestTemplate, QuestResultTemplate } from "../../templates";
 import Portal from "../../templates/Portal";
 
@@ -38,7 +38,7 @@ function MapPage() {
   const [ploggingResult, setPloggingResult] = useState("");
   const [loading, setLoading] = useState(true);
 
-  function handleFloggingButtonClick({ image, coordinates, feedId }) {
+  function handleFloggingButtonClick({ image, coordinates, feedId, author }) {
     if (!data?.token) {
       history.push("/login");
     }
@@ -48,12 +48,15 @@ function MapPage() {
       image: image[0],
       coordinates,
       feedId,
+      avatarImage: author.profileImage,
+      nickname: author.nickname,
+      level: author.level,
     });
   }
 
   function spreadFeeds() {
     return feedLocation.map((feed) => {
-      const { _id, image, cleaned, coordinates } = feed;
+      const { _id, image, cleaned, coordinates, author } = feed;
       const [longitude, latitude] = coordinates;
       const iconType = cleaned ? "leaf" : "trashCanFill";
       const color = cleaned ? theme.colors.green_1 : theme.colors.red;
@@ -61,6 +64,7 @@ function MapPage() {
         image,
         coordinates,
         feedId: _id,
+        author: author[0],
       };
 
       return (
@@ -187,6 +191,7 @@ function MapPage() {
   useEffect(() => {
     async function getFeedLocation() {
       const result = await getFeedInfo(boundary);
+
       setFeedLocation(result);
     }
 
@@ -241,11 +246,15 @@ function MapPage() {
       </MapTemplate>
       {isModalOpen && modalInfo && (
         <Portal wrapperId="modal-container">
-          <QuestTemplate
-            onCloseClick={() => setIsModalOpen(false)}
-            onClickCleanButton={() => handleCleanButtonClick()}
-            image={modalInfo.image}
-          />
+          <QuestTemplate onCloseClick={() => setIsModalOpen(false)}>
+            <UserCard
+              onClickCleanButton={() => handleCleanButtonClick()}
+              image={modalInfo.image}
+              avatarImage={modalInfo.authorImage}
+              level={modalInfo.level}
+              nickname={modalInfo.nickname}
+            />
+          </QuestTemplate>
         </Portal>
       )}
       {ploggingResult && (

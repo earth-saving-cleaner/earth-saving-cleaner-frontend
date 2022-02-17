@@ -82,9 +82,9 @@ function MainPage() {
     };
 
     const result = await addComment(commentInfo);
-    const tokenVerifedResult = await isTokenExpired(result);
+    const tokenVerifiedResult = await isTokenExpired(result);
 
-    if (tokenVerifedResult) {
+    if (tokenVerifiedResult) {
       sendToLogin();
       return;
     }
