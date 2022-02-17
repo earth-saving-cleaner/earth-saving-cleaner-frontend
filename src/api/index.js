@@ -35,10 +35,17 @@ export const getFeeds = async (payload) => {
 };
 
 export const addLikeUser = async (payload) => {
-  const { feedId, userId } = payload;
-  const url = `${process.env.REACT_APP_SERVER_URL}/feed/${feedId}/like`;
-  const result = await axios.put(url, {
-    userId,
+  const { feedId, userId, token } = payload;
+
+  const result = await axios({
+    method: "put",
+    url: `${process.env.REACT_APP_SERVER_URL}/feed/${feedId}/like`,
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+    data: {
+      userId,
+    },
   });
 
   return result.data;

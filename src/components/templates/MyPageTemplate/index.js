@@ -34,9 +34,9 @@ function MyPageTemplate({ leftSide, rightSide, rightSideTitle }) {
 }
 
 MyPageTemplate.propTypes = {
-  leftSide: PropTypes.elementType.isRequired,
-  rightSide: PropTypes.elementType.isRequired,
-  rightSideTitle: PropTypes.elementType.isRequired,
+  leftSide: PropTypes.oneOfType([PropTypes.elementType, PropTypes.object]).isRequired,
+  rightSide: PropTypes.oneOfType([PropTypes.elementType, PropTypes.object]).isRequired,
+  rightSideTitle: PropTypes.oneOfType([PropTypes.elementType, PropTypes.object]).isRequired,
 };
 
 export default MyPageTemplate;
