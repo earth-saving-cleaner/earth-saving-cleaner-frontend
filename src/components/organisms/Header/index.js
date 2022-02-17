@@ -29,7 +29,8 @@ const Wrapper = styled.div`
 const MiddleWrapper = styled.div`
   display: inline-flex;
   justify-content: space-between;
-  min-width: 15rem;
+  width: 15%;
+  min-width: 12rem;
 `;
 
 const Logo = styled.img.attrs({
@@ -123,9 +124,7 @@ function Header({ onImageFileChange }) {
 
   return (
     <StyledHeader>
-      <Wrapper>
-        <Logo onClick={handleLogoClick} />
-      </Wrapper>
+      <Logo onClick={handleLogoClick} />
       <MiddleWrapper>
         <Navigation iconType="feed" isSelected={navStatus.main} onNavClick={goMainPage} />
         <Navigation iconType="map" isSelected={navStatus.map} onNavClick={goMapPage} />
