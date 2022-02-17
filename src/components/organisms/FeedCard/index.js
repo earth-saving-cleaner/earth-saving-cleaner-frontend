@@ -9,6 +9,7 @@ import { FeedHeader } from "../../molecules";
 
 const Container = styled.div`
   max-width: 60rem;
+  width: 40%;
   border: 0.1rem solid ${({ theme }) => theme.colors.gray_2};
   background: ${({ theme }) => theme.colors.white};
 `;
@@ -16,6 +17,11 @@ const Container = styled.div`
 const StatusWrapper = styled.div`
   display: flex;
   min-height: 4rem;
+`;
+
+const ImageWrapper = styled.div`
+  width: 100%;
+  height: 50rem;
 `;
 
 const IconWrapper = styled.div`
@@ -42,7 +48,9 @@ function FeedCard({ ...props }) {
   return (
     <Container>
       <FeedHeader url={props.avatarUrl} nickname={props.nickname} address={props.location} />
-      <Img src={props.imageUrl} alt="feed image" width="100%" />
+      <ImageWrapper>
+        <Img src={props.imageUrl} alt="feed image" width="100%" />
+      </ImageWrapper>
       <StatusWrapper>
         <IconWrapper>
           <Icon
