@@ -9,8 +9,8 @@ import { feedSliceActions } from "../../../modules/slices/feedSlice";
 import { getFeed, addComment } from "../../../api";
 import { isTokenExpired } from "../../../utils";
 
-import { MainTemplate, Modal, CommentTemplate, NewFeedModal } from "../../templates";
-import { FeedCard, NewFeed } from "../../organisms";
+import { CommentTemplate, NewFeedModalTemplate } from "../../templates";
+import { FeedCard } from "../../organisms";
 import { Text } from "../../atoms";
 
 const StyledContainer = styled.div`
@@ -20,16 +20,16 @@ const StyledContainer = styled.div`
 `;
 
 function MainPage() {
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { isLoading, feeds, error } = useSelector((state) => state.feed);
+  const { data } = useSelector((state) => state.user);
+
   const [modal, setModal] = useState(false);
   const [feedInfo, setFeedInfo] = useState(null);
   const [commentText, setCommentText] = useState("");
   const [commentList, setCommentList] = useState([]);
   const [id, setId] = useState(null);
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const { isLoading, feeds, error } = useSelector((state) => state.feed);
-  const { data } = useSelector((state) => state.user);
   const userId = data?.id;
   const token = data?.token;
 
@@ -109,19 +109,6 @@ function MainPage() {
     setModal(false);
   };
 
-  const handleModalOpen = () => {
-    if (token) {
-      setIsCreateModalOpen(true);
-      return;
-    }
-
-    history.push("/login");
-  };
-
-  const handleModalClose = () => {
-    setIsCreateModalOpen(false);
-  };
-
   useEffect(() => {
     const fetchFeed = async () => {
       const { author, comment, content, image, like, address } = await getFeed(id);
@@ -147,40 +134,39 @@ function MainPage() {
 
   return (
     <>
-      <MainTemplate onClickCreate={handleModalOpen} onClickModalClose={handleModalClose}>
-        <StyledContainer>
-          {isLoading && <Text text="Loding..." />}
-          {feeds &&
-            feeds?.data.map((feed) => {
-              const { _id, author, content, comment, image, like, address } = feed;
+      <StyledContainer>
+        {isLoading && <Text text="Loding..." />}
+        {feeds &&
+          feeds?.data.map((feed) => {
+            const { _id, author, content, comment, image, like, address } = feed;
 
-              return (
-                <FeedCard
-                  key={_id}
-                  feedId={_id}
-                  nickname={author?.nickname}
-                  avatarUrl={author?.profileImage}
-                  imageUrl={image[0]}
-                  comment={comment.length}
-                  like={like.length}
-                  content={content}
-                  location={address}
-                  onClickLikeIcon={userId ? handleLikeIconClick : sendToLogin}
-                  onClickCommentIcon={() => handleCommentIconClick(_id)}
-                  isIconFilled={[...feed.like].includes(userId)}
-                />
-              );
-            })}
-          {error && <Text>Failed to load feed. Please contact the administrator.</Text>}
-        </StyledContainer>
-      </MainTemplate>
+            return (
+              <FeedCard
+                key={_id}
+                feedId={_id}
+                nickname={author?.nickname}
+                avatarUrl={author?.profileImage}
+                imageUrl={image[0]}
+                comment={comment.length}
+                like={like.length}
+                content={content}
+                location={address}
+                onClickLikeIcon={userId ? handleLikeIconClick : sendToLogin}
+                onClickCommentIcon={() => handleCommentIconClick(_id)}
+                isIconFilled={[...feed.like].includes(userId)}
+              />
+            );
+          })}
+        {error && <Text>Failed to load feed. Please contact the administrator.</Text>}
+      </StyledContainer>
       {modal && feedInfo && (
-        <Modal handleClose={handleCloseButton}>
+        <NewFeedModalTemplate>
           <CommentTemplate
             comments={commentList}
             author={feedInfo.author}
             content={feedInfo.content}
             image={feedInfo.image}
+            onCloseClick={setModal}
             onClickCommentButton={userId ? handleCommentButtonClick : sendToLogin}
             onChangeText={handleCommentText}
             onClickLikeIcon={userId ? handleCommentLikeIconClick : sendToLogin}
@@ -188,12 +174,7 @@ function MainPage() {
             text={commentText}
             like={feedInfo.like.length}
           />
-        </Modal>
-      )}
-      {isCreateModalOpen && token && (
-        <NewFeedModal>
-          <NewFeed onClickModalOpen={handleModalOpen} onClickModalClose={handleModalClose} />
-        </NewFeedModal>
+        </NewFeedModalTemplate>
       )}
     </>
   );
