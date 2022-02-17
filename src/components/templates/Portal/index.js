@@ -1,4 +1,4 @@
-import ReactDOM, { createPortal } from "react-dom";
+import ReactDOM from "react-dom";
 
 function Portal({ children }) {
   const $target = document.querySelector("#modal-root");

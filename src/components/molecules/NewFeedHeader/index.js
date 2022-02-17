@@ -15,12 +15,12 @@ const TextWrapper = styled.div`
   margin: 1rem 0 0 1rem;
 `;
 
-function NewFeedHeader({ ...props }) {
+function NewFeedHeader({ url, nickname, ...props }) {
   return (
     <StyledContainer>
-      <Avatar url={props.url} size="sm" />
+      <Avatar url={url} size="sm" />
       <TextWrapper>
-        <Text text={props.nickname} size="lg" weight="700" />
+        <Text text={nickname} size="base" weight="500" color="gray_3" />
       </TextWrapper>
     </StyledContainer>
   );

@@ -30,11 +30,11 @@ function CommentHeader({ ...props }) {
       <StyledWrapper>
         <Avatar url={image} size="sm" />
         <TextWrapper>
-          <Text text={nickname} size="lg" weight="700" />
+          <Text text={nickname} size="small" weight="700" />
         </TextWrapper>
       </StyledWrapper>
       <DeacriptionWrapper>
-        <Text text={content} size="lg" weight="500" />
+        <Text text={content} size="base" />
       </DeacriptionWrapper>
     </HeaderContainer>
   );

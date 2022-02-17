@@ -49,21 +49,19 @@ function LoginPage() {
   };
 
   return (
-    <MainTemplate>
-      <Container>
-        <Logo />
-        <StyledText text="Sign in with your account" size="lg" weight="400" />
-        <StyledGoogleLogin>
-          <GoogleLogin
-            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-            buttonText="Sign in with Google"
-            onSuccess={handleLogin}
-            onFailure={handleLoginError}
-          />
-        </StyledGoogleLogin>
-        {errorMessage && <StyledText text={errorMessage} size="lg" weight="400" />}
-      </Container>
-    </MainTemplate>
+    <Container>
+      <Logo />
+      <StyledText text="Sign in with your account" size="lg" weight="400" />
+      <StyledGoogleLogin>
+        <GoogleLogin
+          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+          buttonText="Sign in with Google"
+          onSuccess={handleLogin}
+          onFailure={handleLoginError}
+        />
+      </StyledGoogleLogin>
+      {errorMessage && <StyledText text={errorMessage} size="lg" weight="400" />}
+    </Container>
   );
 }
 

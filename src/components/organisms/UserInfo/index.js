@@ -10,18 +10,14 @@ import { UserHeader } from "../../molecules";
 
 const { colors } = theme;
 
-const Wrapper = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-const HeaderWrapper = styled.div`
-  margin-top: 2rem;
-`;
-
 const ScoreWrapper = styled.div`
-  margin: 10rem 0 30rem 0;
+  margin-bottom: 2rem;
 `;
 
 function UserInfo() {
@@ -34,12 +30,10 @@ function UserInfo() {
   };
 
   return (
-    <Wrapper>
-      <HeaderWrapper>
-        <UserHeader nickname={nickname} url={profileImage} level={`Lv ${level}`} />
-      </HeaderWrapper>
+    <Container>
+      <UserHeader nickname={nickname} url={profileImage} level={`Lv ${level}`} />
       <ScoreWrapper>
-        <Text text={`Total ${score}`} size="xxl" />
+        <Text text={`Total ${score}`} size="md" />
       </ScoreWrapper>
       <Button
         title="Logout"
@@ -50,7 +44,7 @@ function UserInfo() {
         color={colors.white}
         onClick={handleLoout}
       />
-    </Wrapper>
+    </Container>
   );
 }
 

@@ -6,6 +6,7 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-evenly;
+  align-items: center;
   min-width: 100vw;
 `;
 
@@ -20,7 +21,7 @@ const Left = styled.div``;
 
 const Title = styled.div``;
 
-function MyPageGrid({ leftSide, rightSide, rightSideTitle }) {
+function MyPageTemplate({ leftSide, rightSide, rightSideTitle }) {
   return (
     <Wrapper>
       <Left>{leftSide}</Left>
@@ -32,10 +33,10 @@ function MyPageGrid({ leftSide, rightSide, rightSideTitle }) {
   );
 }
 
-MyPageGrid.propTypes = {
-  leftSide: PropTypes.element.isRequired,
-  rightSide: PropTypes.element.isRequired,
-  rightSideTitle: PropTypes.element.isRequired,
+MyPageTemplate.propTypes = {
+  leftSide: PropTypes.elementType.isRequired,
+  rightSide: PropTypes.elementType.isRequired,
+  rightSideTitle: PropTypes.elementType.isRequired,
 };
 
-export default MyPageGrid;
+export default MyPageTemplate;
