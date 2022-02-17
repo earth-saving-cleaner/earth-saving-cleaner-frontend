@@ -5,7 +5,6 @@ import styled from "styled-components";
 
 import theme from "../../../theme/theme";
 import Portal from "../Portal";
-import MainTemplate from "../MainTemplate";
 
 const ModalWrapper = styled.div`
   display: flex;

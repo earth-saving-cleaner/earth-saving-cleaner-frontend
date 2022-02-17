@@ -1,10 +1,11 @@
 import React from "react";
-import styled from "styled-components";
+import { noop } from "lodash";
 import PropTypes from "prop-types";
 
-import Icon from "../../atoms/Icon";
+import styled from "styled-components";
+
 import themes from "../../../theme/theme";
-import { noop } from "lodash";
+import Icon from "../../atoms/Icon";
 
 const StyledNavigation = styled.div`
   width: 5rem;

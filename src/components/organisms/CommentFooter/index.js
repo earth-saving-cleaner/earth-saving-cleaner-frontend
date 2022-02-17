@@ -1,8 +1,8 @@
 import React from "react";
-
-import PropTypes from "prop-types";
-import styled from "styled-components";
 import { noop } from "lodash";
+import PropTypes from "prop-types";
+
+import styled from "styled-components";
 
 import { Textarea, Icon, Text } from "../../atoms";
 
@@ -36,7 +36,7 @@ const StyledInput = styled(Textarea)`
   font-size: ${({ theme }) => theme.fontSizes.small};
 `;
 
-function CommentFooter({ isIconFilled, like, onClickLikeIcon, onChangeText, onSubmit, text, ...props }) {
+function CommentFooter({ isIconFilled, like, onClickLikeIcon, onChangeText, onSubmit, text }) {
   return (
     <Wrapper>
       <StatusWrapper>

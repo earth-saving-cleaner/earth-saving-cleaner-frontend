@@ -23,6 +23,7 @@ const ScoreWrapper = styled.div`
 function UserInfo() {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user.data);
+
   const { profileImage, nickname, level, score } = userInfo;
 
   const handleLoout = () => {

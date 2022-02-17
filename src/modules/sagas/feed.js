@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { feedSliceActions } from "../slices/feedSlice";
 import { getFeeds, addLikeUser } from "../../api";
+import { feedSliceActions } from "../slices/feedSlice";
 
 function* getFeedSaga(action) {
   const { getFeedsSuccess, getFeedsFailure } = feedSliceActions;

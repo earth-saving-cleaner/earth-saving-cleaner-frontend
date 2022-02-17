@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import { RankingItem } from "../../molecules";
 
 function RankingList({ rank }) {

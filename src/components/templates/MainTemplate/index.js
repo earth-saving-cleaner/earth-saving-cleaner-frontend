@@ -1,9 +1,7 @@
 import React from "react";
-
 import PropTypes from "prop-types";
-import styled from "styled-components";
 
-import { noop } from "lodash";
+import styled from "styled-components";
 
 import { Header } from "../../organisms";
 
@@ -20,7 +18,7 @@ const ContentWrapper = styled.div`
   width: 100%;
 `;
 
-function MainTemplate({ children, onImageFileChange, ...props }) {
+function MainTemplate({ children, onImageFileChange }) {
   return (
     <StyledContainer>
       <Header onImageFileChange={onImageFileChange} />
@@ -31,14 +29,7 @@ function MainTemplate({ children, onImageFileChange, ...props }) {
 
 MainTemplate.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-  onClickCreate: PropTypes.func,
-  onClickModalClose: PropTypes.func,
   onImageFileChange: PropTypes.func.isRequired,
-};
-
-MainTemplate.defaultProps = {
-  onClickCreate: noop,
-  onClickModalClose: noop,
 };
 
 export default MainTemplate;

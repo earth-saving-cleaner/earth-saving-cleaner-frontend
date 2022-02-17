@@ -3,7 +3,7 @@ import Header from "./Header";
 import RankingList from "./RankingList";
 import UserInfo from "./UserInfo";
 import NewFeedModal from "./NewFeedModal";
-import Result from "./Result";
+import QuestResult from "./QuestResult";
 import NewFeed from "./NewFeed";
 
-export { FeedCard, Header, RankingList, UserInfo, NewFeedModal, NewFeed, Result };
+export { FeedCard, Header, RankingList, UserInfo, NewFeedModal, NewFeed, QuestResult };

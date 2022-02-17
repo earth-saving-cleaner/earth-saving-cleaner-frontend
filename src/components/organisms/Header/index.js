@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-
-import { noop } from "lodash";
 import PropTypes from "prop-types";
+
 import { useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
@@ -42,7 +41,7 @@ const Logo = styled.img.attrs({
   cursor: pointer;
 `;
 
-function Header({ onImageFileChange, ...props }) {
+function Header({ onImageFileChange }) {
   const history = useHistory();
   const location = useLocation();
 

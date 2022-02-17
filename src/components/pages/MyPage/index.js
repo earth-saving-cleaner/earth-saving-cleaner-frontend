@@ -15,8 +15,9 @@ const StyledText = styled(Text)`
 `;
 
 function MyPage() {
-  const [rankingList, setRankList] = useState([]);
   const userInfo = useSelector((state) => state.user.data);
+
+  const [rankingList, setRankList] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -25,6 +26,7 @@ function MyPage() {
         setRankList(response.data.rankList);
       } catch (err) {
         console.error(err);
+        return err.message;
       }
     }
 

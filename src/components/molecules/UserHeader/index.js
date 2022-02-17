@@ -29,7 +29,7 @@ const LevelWrapper = styled.div`
   float: right;
 `;
 
-function UserHeader({ url, nickname, level, ...props }) {
+function UserHeader({ url, nickname, level }) {
   return (
     <StyledContainer>
       <Avatar url={url} size="lg" />

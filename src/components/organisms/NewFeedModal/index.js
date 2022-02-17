@@ -1,11 +1,10 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import styled from "styled-components";
 
+import themes from "../../../theme/theme";
 import { Img, Icon, Textarea, Input } from "../../atoms";
 import { FeedHeader } from "../../molecules";
-import themes from "../../../theme/theme";
 
 const { colors } = themes;
 
