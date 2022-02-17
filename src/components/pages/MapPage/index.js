@@ -10,7 +10,7 @@ import useSocket from "../../../hooks/useSocket";
 import { userSliceActions } from "../../../modules/slices/userSlice";
 import theme from "../../../theme/theme";
 import { Icon, GpsIcon, Loading } from "../../atoms";
-import { Result, UserCard } from "../../organisms";
+import { QuestResult, UserCard } from "../../organisms";
 import { MapTemplate, QuestTemplate, QuestResultTemplate } from "../../templates";
 import Portal from "../../templates/Portal";
 
@@ -260,7 +260,7 @@ function MapPage() {
       {ploggingResult && (
         <Portal wrapperId="modal-container">
           <QuestResultTemplate onCloseClick={() => setPloggingResult(null)}>
-            <Result result={ploggingResult} level={data?.level} />
+            <QuestResult result={ploggingResult} level={data?.level} />
           </QuestResultTemplate>
         </Portal>
       )}

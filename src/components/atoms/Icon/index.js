@@ -1,48 +1,26 @@
 import React from "react";
-import styled from "styled-components";
+
+import { noop } from "lodash";
 import PropTypes from "prop-types";
+
 import {
   IoHomeOutline,
-  IoHome,
-  IoHomeSharp,
   IoMapOutline,
-  IoMap,
-  IoMapSharp,
   IoDuplicateOutline,
-  IoDuplicate,
-  IoDuplicateSharp,
   IoPersonOutline,
-  IoPerson,
-  IoPersonSharp,
-  IoCloudUploadOutline,
-  IoCloudUpload,
-  IoCloudUploadSharp,
   IoHeartOutline,
   IoHeart,
-  IoHeartSharp,
   IoChatbubbleOutline,
-  IoChatbubble,
-  IoChatbubbleSharp,
-  IoClose,
   IoCloseOutline,
-  IoCloseSharp,
   IoPaperPlaneOutline,
-  IoPaperPlane,
-  IoPaperPlaneSharp,
   IoLocationOutline,
-  IoLocation,
-  IoLocationSharp,
   IoTrashOutline,
   IoTrash,
-  IoTrashSharp,
   IoWalkOutline,
-  IoWalk,
-  IoWalkSharp,
   IoLeafSharp,
 } from "react-icons/io5";
 import { MdSaveAlt } from "react-icons/md";
-
-import { noop } from "lodash";
+import styled from "styled-components";
 
 function getSize(size) {
   if (typeof size === "number") {
@@ -89,40 +67,40 @@ function Icon({ icon, size, onClickIcon, ...props }) {
 
   switch (icon) {
     case "feed":
-      svg = <IoHomeOutline />; // <IoHome />; or <IoHomeSharp />;
+      svg = <IoHomeOutline />;
       break;
     case "map":
-      svg = <IoMapOutline />; // <IoMap />; or <IoMapSharp />;
+      svg = <IoMapOutline />;
       break;
     case "createFeed":
-      svg = <IoDuplicateOutline />; // <IoDuplicate />; or <IoDuplicateSharp />;
+      svg = <IoDuplicateOutline />;
       break;
     case "myPage":
-      svg = <IoPersonOutline />; // <IoPerson />; or <IoPersonSharp />;
+      svg = <IoPersonOutline />;
       break;
     case "save":
-      svg = <MdSaveAlt />; // <IoCloudUpload />; or <IoCloudUploadSharp />;
+      svg = <MdSaveAlt />;
       break;
     case "likeLine":
       svg = <IoHeartOutline />;
       break;
     case "likeFill":
-      svg = <IoHeart />; // <IoHeartSharp />;
+      svg = <IoHeart />;
       break;
     case "comment":
-      svg = <IoChatbubbleOutline />; // <IoChatbubble />; or <IoChatbubbleSharp />;
+      svg = <IoChatbubbleOutline />;
       break;
     case "send":
-      svg = <IoPaperPlaneOutline />; // <IoPaperPlane />; or <IoPaperPlaneSharp />;
+      svg = <IoPaperPlaneOutline />;
       break;
     case "location":
-      svg = <IoLocationOutline />; // <IoLocation />; or <IoLocationSharp />;
+      svg = <IoLocationOutline />;
       break;
     case "trashCanLine":
       svg = <IoTrashOutline />;
       break;
     case "trashCanFill":
-      svg = <IoTrash />; // <IoTrashSharp />;
+      svg = <IoTrash />;
       break;
     case "movingPerson":
       svg = <IoWalkOutline />;
@@ -134,8 +112,7 @@ function Icon({ icon, size, onClickIcon, ...props }) {
       svg = <IoCloseOutline />;
       break;
     default:
-      console.log("Check icon type!!!");
-      svg = <IoHomeOutline />; // <IoHome />; or <IoHomeSharp />;
+      svg = <IoHomeOutline />;
   }
 
   const onClickHandler = () => {

@@ -1,8 +1,7 @@
 import React from "react";
-import styled from "styled-components";
-import PropTypes from "prop-types";
 
-import { Header } from "../../organisms";
+import PropTypes from "prop-types";
+import styled from "styled-components";
 
 const StyledContainer = styled.div`
   display: flex;

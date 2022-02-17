@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import { Route, Switch, Redirect } from "react-router-dom";
 import styled from "styled-components";
 
+import { NewFeed } from "./organisms";
 import { MainPage, MapPage, MyPage, LoginPage, SignupPage, MapClusteringPage } from "./pages";
 import { MainTemplate, NewFeedModalTemplate } from "./templates";
-import { NewFeed } from "./organisms";
 
 const Container = styled.div`
   width: 100%;

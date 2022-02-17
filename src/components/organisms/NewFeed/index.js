@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 
+import { noop } from "lodash";
+import PropTypes from "prop-types";
+import GooglePlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
-import GooglePlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
-import { noop } from "lodash";
-
 import { getAddressFromLatLng, addNewFeed } from "../../../api";
-import { Icon, Textarea, Img } from "../../atoms";
-import { NewFeedHeader } from "../../molecules";
+import { feedSliceActions } from "../../../modules/slices/feedSlice";
+import { userSliceActions } from "../../../modules/slices/userSlice";
 import themes from "../../../theme/theme";
 import { isTokenExpired } from "../../../utils";
-import { userSliceActions } from "../../../modules/slices/userSlice";
-import { feedSliceActions } from "../../../modules/slices/feedSlice";
+import { Icon, Textarea, Img } from "../../atoms";
+import { NewFeedHeader } from "../../molecules";
 
 const { colors } = themes;
 

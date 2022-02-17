@@ -1,6 +1,7 @@
 import React from "react";
-import styled from "styled-components";
+
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
 import { Avatar, Text } from "../../atoms";
 
@@ -15,7 +16,7 @@ const TextWrapper = styled.div`
   margin: 1rem 0 0 1rem;
 `;
 
-function NewFeedHeader({ url, nickname, ...props }) {
+function NewFeedHeader({ url, nickname }) {
   return (
     <StyledContainer>
       <Avatar url={url} size="sm" />

@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { getRankList } from "../../../api";
 import { Text } from "../../atoms";
 import { RankingList, UserInfo } from "../../organisms";
-import { MyPageTemplate, MainTemplate } from "../../templates";
+import { MyPageTemplate } from "../../templates";
 
 const StyledText = styled(Text)`
   margin-top: 2rem;
@@ -15,9 +15,9 @@ const StyledText = styled(Text)`
 `;
 
 function MyPage() {
-  const [rankingList, setRankList] = useState([]);
   const userInfo = useSelector((state) => state.user.data);
-  const { profileImage, nickname, level, score } = userInfo;
+
+  const [rankingList, setRankList] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -26,6 +26,7 @@ function MyPage() {
         setRankList(response.data.rankList);
       } catch (err) {
         console.error(err);
+        return err.message;
       }
     }
 
@@ -34,7 +35,7 @@ function MyPage() {
 
   return (
     <MyPageTemplate
-      leftSide={<UserInfo profileImage={profileImage} nickname={nickname} level={level} score={score} />}
+      leftSide={<UserInfo />}
       rightSide={<RankingList rank={rankingList} />}
       rightSideTitle={<StyledText size="xxxl" text="Ranking" />}
     />
