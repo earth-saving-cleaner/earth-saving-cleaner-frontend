@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import { getFeed, addComment } from "../../../api";
+import { PAGING_LIMIT } from "../../../constants";
 import useInfiniteScroll from "../../../hooks/useInfinitescroll";
 import { feedSliceActions } from "../../../modules/slices/feedSlice";
 import { isTokenExpired } from "../../../utils";
@@ -34,7 +35,9 @@ function MainPage() {
 
   const fetchDataOnScroll = useCallback(async () => {
     try {
-      dispatch(feedSliceActions.addFeeds({ limit: 3, id: feeds?.lastId }));
+      if (feeds.total > feeds.data.length) {
+        dispatch(feedSliceActions.addFeeds({ limit: PAGING_LIMIT, id: feeds?.lastId }));
+      }
     } catch (err) {
       console.log(err.message);
     } finally {
@@ -122,7 +125,7 @@ function MainPage() {
   }, [modal, id]);
 
   useEffect(() => {
-    dispatch(feedSliceActions.getFeeds({ limit: 3 }));
+    dispatch(feedSliceActions.getFeeds({ limit: PAGING_LIMIT }));
   }, []);
 
   return (

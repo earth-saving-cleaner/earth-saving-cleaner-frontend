@@ -6,10 +6,10 @@ function* getFeedSaga(action) {
   const { getFeedsSuccess, getFeedsFailure } = feedSliceActions;
 
   try {
-    const { data, result, lastId } = yield call(getFeeds, action.payload);
+    const { data, result, lastId, total } = yield call(getFeeds, action.payload);
 
     if (result === "ok") {
-      yield put(getFeedsSuccess({ data, lastId }));
+      yield put(getFeedsSuccess({ data, lastId, total }));
     } else {
       throw new Error();
     }
