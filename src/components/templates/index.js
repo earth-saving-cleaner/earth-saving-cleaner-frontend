@@ -1,12 +1,12 @@
-import MainTemplate from "./MainTemplate";
-import MyPageTemplate from "./MyPageTemplate";
-import MapTemplate from "./MapTemplate";
-import NewFeedModal from "./NewFeedModal";
 import CommentTemplate from "./CommentTemplate";
-import QuestTemplate from "./QuestTemplate";
-import QuestResultTemplate from "./QuestResultTemplate";
-import Portal from "./Portal";
+import MainTemplate from "./MainTemplate";
+import MapTemplate from "./MapTemplate";
+import MyPageTemplate from "./MyPageTemplate";
+import NewFeedModal from "./NewFeedModal";
 import NewFeedModalTemplate from "./NewFeedModalTemplate";
+import Portal from "./Portal";
+import QuestResultTemplate from "./QuestResultTemplate";
+import QuestTemplate from "./QuestTemplate";
 
 export {
   MainTemplate,

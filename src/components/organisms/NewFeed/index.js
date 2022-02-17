@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
+
 import { noop } from "lodash";
 import PropTypes from "prop-types";
-
 import GooglePlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-google-places-autocomplete";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
