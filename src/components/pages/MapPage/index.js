@@ -42,7 +42,7 @@ function MapPage() {
     if (!data?.token) {
       history.push("/login");
     }
-    console.log(author.profileImage, author.nickname, author.level);
+
     setIsModalOpen(true);
     setModalInfo({
       image: image[0],
@@ -56,7 +56,6 @@ function MapPage() {
 
   function spreadFeeds() {
     return feedLocation.map((feed) => {
-      console.log(feed);
       const { _id, image, cleaned, coordinates, author } = feed;
       const [longitude, latitude] = coordinates;
       const iconType = cleaned ? "leaf" : "trashCanFill";

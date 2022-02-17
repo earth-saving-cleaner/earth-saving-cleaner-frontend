@@ -1,11 +1,11 @@
 import React from "react";
 
-import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
 
 import { userSliceActions } from "../../../modules/slices/userSlice";
-import theme from "../../../theme/theme";
 import { Button, Text } from "../../atoms";
+import theme from "../../../theme/theme";
 import { UserHeader } from "../../molecules";
 
 const { colors } = theme;
