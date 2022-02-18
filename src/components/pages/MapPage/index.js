@@ -122,16 +122,20 @@ function MapPage() {
     const distance = Math.sqrt(x ** 2 + y ** 2) * 1000;
 
     setIsModalOpen(false);
+    const resultInfo = {};
 
     if (distance < 30) {
-      setPloggingResult("success");
+      resultInfo.message = "success";
+      setPloggingResult(resultInfo);
 
       const id = modalInfo.feedId;
       const userId = data?.id;
 
       dispatch(userSliceActions.addScore({ id, userId }));
     } else {
-      setPloggingResult("failure");
+      resultInfo.message = "failure";
+      resultInfo.distance = Math.floor(distance);
+      setPloggingResult(resultInfo);
     }
   }
 
