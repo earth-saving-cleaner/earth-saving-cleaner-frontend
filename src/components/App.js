@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { Route, Switch, Redirect } from "react-router-dom";
 import styled from "styled-components";
 
+import { userSliceActions } from "../modules/slices/userSlice";
 import { NewFeed } from "./organisms";
 import { MainPage, MapPage, MyPage, LoginPage, SignupPage, MapClusteringPage } from "./pages";
 import { MainTemplate, NewFeedModalTemplate } from "./templates";
@@ -14,6 +15,7 @@ const Container = styled.div`
 `;
 
 function App() {
+  const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state) => state.user.data);
 
@@ -29,6 +31,18 @@ function App() {
 
     history.push("/login");
   };
+
+  useEffect(() => {
+    const removeExpiredToken = () => {
+      dispatch(userSliceActions.logout());
+    };
+
+    const logoutTimer = setTimeout(removeExpiredToken, 300000);
+
+    return () => {
+      clearTimeout(logoutTimer);
+    };
+  }, [user]);
 
   useEffect(() => {
     if (imageInfo?.urls?.originalUrl) {
