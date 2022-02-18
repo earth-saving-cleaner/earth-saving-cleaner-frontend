@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import { getRankList } from "../../../api";
@@ -15,6 +16,7 @@ const StyledText = styled(Text)`
 `;
 
 function MyPage() {
+  const history = useHistory();
   const userInfo = useSelector((state) => state.user.data);
 
   const [rankingList, setRankList] = useState([]);
@@ -23,6 +25,12 @@ function MyPage() {
     async function fetchData() {
       try {
         const response = await getRankList(userInfo);
+
+        if (response === "Request failed with status code 401") {
+          history.push("/login");
+          return;
+        }
+
         setRankList(response.data.rankList);
       } catch (err) {
         console.error(err);
