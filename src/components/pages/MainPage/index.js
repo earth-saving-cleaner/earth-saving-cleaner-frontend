@@ -88,7 +88,7 @@ function MainPage() {
     const result = await addComment(commentInfo);
     const tokenVerifiedResult = await isTokenExpired(result);
 
-    if (tokenVerifiedResult) {
+    if (tokenVerifiedResult || result === "Request failed with status code 401") {
       sendToLogin();
       return;
     }

@@ -1,5 +1,6 @@
 import React from "react";
 
+import { noop } from "lodash";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
@@ -36,8 +37,8 @@ const StyledButton = styled(Button)`
 `;
 
 const ButtonWrapper = styled.div`
-  width: 100%;
   float: right;
+  width: 100%;
   background: ${({ theme }) => theme.colors.purple};
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
@@ -49,7 +50,7 @@ const PloggingWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   z-index: 10;
-  width: 20rem;
+  width: 30rem;
   height: 45vh;
   background: ${({ theme }) => theme.colors.white};
   border-radius: 1rem;
@@ -72,8 +73,12 @@ function QuestTemplate({ ...props }) {
 
 QuestTemplate.propTypes = {
   onCloseClick: PropTypes.func.isRequired,
-  onClickCleanButton: PropTypes.func.isRequired,
+  onClickCleanButton: PropTypes.func,
   children: PropTypes.element.isRequired,
+};
+
+QuestTemplate.defaultProps = {
+  onClickCleanButton: noop,
 };
 
 export default QuestTemplate;

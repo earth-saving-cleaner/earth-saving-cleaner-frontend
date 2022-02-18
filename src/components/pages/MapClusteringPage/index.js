@@ -21,13 +21,13 @@ function MapClusteringPage() {
   function calcDistance(zoom) {
     switch (zoom) {
       case 16:
-        return 300;
+        return 100;
       case 15:
-        return 500;
+        return 300;
       case 14:
-        return 800;
+        return 500;
       case 13:
-        return 1000;
+        return 700;
       default:
         return 0;
     }
