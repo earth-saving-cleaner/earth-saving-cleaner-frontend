@@ -1,27 +1,25 @@
 import React from "react";
 
-import styled from "styled-components";
+import { noop } from "lodash";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
 import themes from "../../../theme/theme";
 import { Button, Img, Avatar, Text } from "../../atoms";
 
 const StyledImage = styled(Img)`
-  padding: 1rem;
+  width: 80%;
   height: 19rem;
 `;
 
 const StyledText = styled(Text)`
-  padding: 1rem;
+  padding-right: 1rem;
 `;
 
 const Header = styled.div`
-  position: relative;
-  right: 1.5rem;
   display: flex;
   flex-direction: row;
   align-items: center;
-  float: left;
   padding-top: 0.3rem;
   font-style: oblique;
 `;
@@ -34,7 +32,8 @@ function UserCard({ avatarImage, image, nickname, level, ...props }) {
         <StyledText text={nickname} />
         <StyledText text={`Lv.${level}`} />
       </Header>
-      <StyledImage src={image} />
+
+      <StyledImage src={image} alt="cardImage" />
       <Button
         background={themes.colors.purple}
         color="white"
@@ -47,12 +46,18 @@ function UserCard({ avatarImage, image, nickname, level, ...props }) {
 }
 
 UserCard.propTypes = {
-  onClickCleanButton: PropTypes.func.isRequired,
+  onClickCleanButton: PropTypes.func,
   image: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
+  url: PropTypes.string,
   level: PropTypes.number.isRequired,
   nickname: PropTypes.string.isRequired,
-  avatarImage: PropTypes.string.isRequired,
+  avatarImage: PropTypes.string,
+};
+
+UserCard.defaultProps = {
+  url: "https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-mediumSquareAt3X-v2.jpg",
+  avatarImage: "https://lh3.googleusercontent.com/a/AATXAJzdJ5gTfflTC1--vXDDRH1n-wX7NQ9mJRViLtgc=s96-c",
+  onClickCleanButton: noop,
 };
 
 export default UserCard;
