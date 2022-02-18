@@ -16,6 +16,7 @@ const StyledContainer = styled.div`
 const ContentWrapper = styled.div`
   margin-top: 5rem;
   width: 100%;
+  height: calc(100vh - 5rem);
 `;
 
 function MainTemplate({ children, onImageFileChange }) {

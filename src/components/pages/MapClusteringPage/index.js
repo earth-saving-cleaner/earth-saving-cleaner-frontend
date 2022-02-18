@@ -6,7 +6,6 @@ import styled from "styled-components";
 import { getFeedInfo } from "../../../api";
 import theme from "../../../theme/theme";
 import { Icon, Loading, ClusterCircle } from "../../atoms";
-import { MapTemplate } from "../../templates";
 
 const StyledIcon = styled(Icon)`
   color: ${(props) => props.color};
@@ -165,7 +164,7 @@ function MapClusteringPage() {
   }, [zoomLevel, boundary]);
 
   return (
-    <MapTemplate>
+    <>
       {loading ? <Loading /> : null}
       {defaultProps && (
         <GoogleMapReact
@@ -187,7 +186,7 @@ function MapClusteringPage() {
           {spreadFeed}
         </GoogleMapReact>
       )}
-    </MapTemplate>
+    </>
   );
 }
 

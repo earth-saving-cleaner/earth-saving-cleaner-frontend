@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
     font-size:10px;
     font-family: 'Apple SD Gothic Neo', Roboto, 'Noto Sans KR', NanumGothic, 'Malgun Gothic', sans-serif;
     color: #555;
+    height: 100%;
   }
 
   html, body, div, span, applet, object, iframe,
@@ -29,7 +30,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background: #eee;
     font-size: 1.6rem;
     height: 100%;
   }
