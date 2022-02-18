@@ -194,6 +194,11 @@ function MapPage() {
 
   useEffect(() => {
     async function getFeedLocation() {
+      if (zoomLevel < 14) {
+        setFeedLocation([]);
+        return;
+      }
+
       const result = await getFeedInfo(boundary);
 
       setFeedLocation(result);

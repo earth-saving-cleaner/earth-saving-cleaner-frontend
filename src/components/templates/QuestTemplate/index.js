@@ -51,7 +51,7 @@ const PloggingWrapper = styled.div`
   justify-content: space-between;
   z-index: 10;
   width: 30rem;
-  height: 45vh;
+  height: 60vh;
   background: ${({ theme }) => theme.colors.white};
   border-radius: 1rem;
   padding-bottom: 1rem;
