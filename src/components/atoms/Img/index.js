@@ -1,11 +1,15 @@
 import React from "react";
 
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
-function Img({ ...props }) {
-  const { alt, src, width, height } = props;
+const Image = styled.img`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+`;
 
-  return <img alt={alt} src={src} width={width} height={height} {...props} />;
+function Img({ alt, src, ...props }) {
+  return <Image alt={alt} src={src} {...props} />;
 }
 
 Img.propTypes = {

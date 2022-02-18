@@ -11,7 +11,7 @@ import { userSliceActions } from "../../../modules/slices/userSlice";
 import theme from "../../../theme/theme";
 import { Icon, GpsIcon, Loading } from "../../atoms";
 import { QuestResult, UserCard } from "../../organisms";
-import { MapTemplate, QuestTemplate, QuestResultTemplate } from "../../templates";
+import { QuestTemplate, QuestResultTemplate } from "../../templates";
 import Portal from "../../templates/Portal";
 
 const StyledIcon = styled(Icon)`
@@ -224,30 +224,28 @@ function MapPage() {
 
   return (
     <>
-      <MapTemplate>
-        {loading ? <Loading /> : null}
-        {defaultProps && (
-          <GoogleMapReact
-            defaultCenter={defaultProps.center}
-            defaultZoom={defaultProps.zoom}
-            // bootstrapURLKeys={{ key: process.env.REACT_APP_MAP_API }}
-            yesIWantToUseGoogleMapApiInternals
-            onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
-            onChange={({ zoom, bounds }) => {
-              setZoomLevel(zoom);
-              setBoundary({
-                NWlatitude: bounds.nw.lat,
-                NWlongitude: bounds.nw.lng,
-                SElatitude: bounds.se.lat,
-                SElongitude: bounds.se.lng,
-              });
-            }}
-          >
-            {spreadFeeds()}
-            {paintGpsLocations()}
-          </GoogleMapReact>
-        )}
-      </MapTemplate>
+      {loading ? <Loading /> : null}
+      {defaultProps && (
+        <GoogleMapReact
+          defaultCenter={defaultProps.center}
+          defaultZoom={defaultProps.zoom}
+          // bootstrapURLKeys={{ key: process.env.REACT_APP_MAP_API }}
+          yesIWantToUseGoogleMapApiInternals
+          onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
+          onChange={({ zoom, bounds }) => {
+            setZoomLevel(zoom);
+            setBoundary({
+              NWlatitude: bounds.nw.lat,
+              NWlongitude: bounds.nw.lng,
+              SElatitude: bounds.se.lat,
+              SElongitude: bounds.se.lng,
+            });
+          }}
+        >
+          {spreadFeeds()}
+          {paintGpsLocations()}
+        </GoogleMapReact>
+      )}
       {isModalOpen && modalInfo && (
         <Portal wrapperId="modal-container">
           <QuestTemplate onCloseClick={() => setIsModalOpen(false)}>
