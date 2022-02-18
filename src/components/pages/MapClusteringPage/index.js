@@ -21,15 +21,15 @@ function MapClusteringPage() {
   function calcDistance(zoom) {
     switch (zoom) {
       case 16:
-        return 100;
+        return 50;
       case 15:
-        return 300;
+        return 70;
       case 14:
-        return 500;
+        return 90;
       case 13:
-        return 700;
+        return 100;
       default:
-        return 0;
+        return 100;
     }
   }
 
