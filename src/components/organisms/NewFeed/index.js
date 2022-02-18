@@ -108,6 +108,7 @@ function NewFeed({ onModalCloseClick, imageInfo }) {
       } else {
         dispatch(feedSliceActions.getFeeds({ limit: 3 }));
         onModalCloseClick(false);
+        history.push("/");
       }
     } catch (err) {
       console.error(err);
