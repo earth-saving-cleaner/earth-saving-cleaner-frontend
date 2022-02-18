@@ -11,7 +11,7 @@ export default function useInfiniteScroll(callback, seconds = 200) {
       const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
       const { clientHeight } = document.documentElement;
 
-      if (scrollTop + clientHeight >= scrollHeight) {
+      if (scrollTop + clientHeight >= scrollHeight - 1000) {
         setIsFetching(true);
         callback();
       }
