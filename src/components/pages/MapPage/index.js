@@ -124,7 +124,7 @@ function MapPage() {
     setIsModalOpen(false);
     const resultInfo = {};
 
-    if (distance < 30) {
+    if (distance < 300) {
       resultInfo.message = "success";
       setPloggingResult(resultInfo);
 
