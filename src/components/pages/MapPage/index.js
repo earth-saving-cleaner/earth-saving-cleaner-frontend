@@ -48,9 +48,9 @@ function MapPage() {
       image: image[0],
       coordinates,
       feedId,
-      avatarImage: author.profileImage,
-      nickname: author.nickname,
-      level: author.level,
+      avatarImage: author?.profileImage,
+      nickname: author?.nickname,
+      level: author?.level,
     });
   }
 
