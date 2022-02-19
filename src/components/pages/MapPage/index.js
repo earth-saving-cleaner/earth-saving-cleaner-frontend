@@ -234,7 +234,7 @@ function MapPage() {
         <GoogleMapReact
           defaultCenter={defaultProps.center}
           defaultZoom={defaultProps.zoom}
-          // bootstrapURLKeys={{ key: process.env.REACT_APP_MAP_API }}
+          // bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_API_KEY }}
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
           onChange={({ zoom, bounds }) => {

@@ -17,9 +17,6 @@ const StyledButton = styled.button`
   margin: ${(props) => props.margin};
   padding: ${(props) => props.padding};
   border-radius: ${(props) => props.radius};
-  &:active {
-    background: ${({ theme }) => theme.opacityColor.purple};
-  }
 `;
 
 function Button({ title, ...props }) {
