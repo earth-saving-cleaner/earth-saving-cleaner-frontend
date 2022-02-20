@@ -56,7 +56,7 @@ UserCard.propTypes = {
 
 UserCard.defaultProps = {
   url: "https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-mediumSquareAt3X-v2.jpg",
-  avatarImage: "https://lh3.googleusercontent.com/a/AATXAJzdJ5gTfflTC1--vXDDRH1n-wX7NQ9mJRViLtgc=s96-c",
+  avatarImage: "https://lh3.googleusercontent.com/ogw/ADea4I4JcqTQgVPY1LqlhGSA1AE5xeNzqAMXv1NbP2S6=s200-c-mo",
   onClickCleanButton: noop,
 };
 

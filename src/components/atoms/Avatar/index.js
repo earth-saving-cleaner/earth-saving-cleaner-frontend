@@ -47,7 +47,7 @@ Avatar.propTypes = {
 };
 
 Avatar.defaultProps = {
-  url: "https://lh3.googleusercontent.com/a/AATXAJzdJ5gTfflTC1--vXDDRH1n-wX7NQ9mJRViLtgc=s96-c",
+  url: "https://lh3.googleusercontent.com/ogw/ADea4I4JcqTQgVPY1LqlhGSA1AE5xeNzqAMXv1NbP2S6=s200-c-mo",
   size: "5rem",
   width: "5rem",
   height: "5rem",

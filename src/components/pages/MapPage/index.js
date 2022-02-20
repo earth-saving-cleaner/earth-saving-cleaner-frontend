@@ -48,9 +48,9 @@ function MapPage() {
       image: image[0],
       coordinates,
       feedId,
-      avatarImage: author.profileImage,
-      nickname: author.nickname,
-      level: author.level,
+      avatarImage: author?.profileImage,
+      nickname: author?.nickname,
+      level: author?.level,
     });
   }
 
@@ -124,7 +124,7 @@ function MapPage() {
     setIsModalOpen(false);
     const resultInfo = {};
 
-    if (distance < 30) {
+    if (distance < 300) {
       resultInfo.message = "success";
       setPloggingResult(resultInfo);
 
@@ -234,7 +234,7 @@ function MapPage() {
         <GoogleMapReact
           defaultCenter={defaultProps.center}
           defaultZoom={defaultProps.zoom}
-          // bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_API_KEY }}
+          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_API_KEY }}
           yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={({ map, maps }) => handleApiLoaded(map, maps)}
           onChange={({ zoom, bounds }) => {

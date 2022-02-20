@@ -6,7 +6,6 @@ import styled from "styled-components";
 import { userSliceActions } from "../../../modules/slices/userSlice";
 import theme from "../../../theme/theme";
 import { Text, Input, Button } from "../../atoms";
-import { MainTemplate } from "../../templates";
 
 const Container = styled.div`
   display: flex;
@@ -58,14 +57,12 @@ function SignupPage() {
   };
 
   return (
-    <MainTemplate>
-      <Container>
-        <StyledText text={email} size="lg" weight="500" />
-        {error && error === "duplicatedNickname" && <StyledText text="사용중인 닉네임입니다." size="lg" weight="800" />}
-        <StyledInput placeholder="Nickname" value={nickname} onChange={handleNicknameChange} />
-        <StyledButton title="Next" onClick={handleSingupSubmit} />
-      </Container>
-    </MainTemplate>
+    <Container>
+      <StyledText text={email} size="lg" weight="500" />
+      {error && error === "duplicatedNickname" && <StyledText text="사용중인 닉네임입니다." size="lg" weight="800" />}
+      <StyledInput placeholder="Nickname" value={nickname} onChange={handleNicknameChange} />
+      <StyledButton title="Next" onClick={handleSingupSubmit} />
+    </Container>
   );
 }
 
