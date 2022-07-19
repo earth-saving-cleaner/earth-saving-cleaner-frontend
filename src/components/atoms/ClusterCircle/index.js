@@ -1,9 +1,9 @@
 import React from "react";
 
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
 import { IoEllipse } from "react-icons/io5";
-import styled from "styled-components";
 
 const Wrapper = styled.span`
   display: inline-block;

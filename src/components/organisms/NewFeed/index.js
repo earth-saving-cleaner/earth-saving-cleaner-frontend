@@ -87,7 +87,7 @@ function NewFeed({ onModalCloseClick, imageInfo }) {
 
   const handleSaveClick = async () => {
     try {
-      const addressString = address.label;
+      const addressString = metaLocations[0] !== null ? address : address.label;
       const response = await geocodeByAddress(addressString);
       const result = await getLatLng(response[0]);
       const coordinates = [result.lng, result.lat];
