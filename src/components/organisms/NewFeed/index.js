@@ -93,7 +93,7 @@ function NewFeed({ onModalCloseClick, imageInfo }) {
       const coordinates = [result.lng, result.lat];
 
       const feed = await addNewFeed({
-        pictureUrl: [urls?.url ? urls.url : urls.originalUrl],
+        pictureUrl: [urls.originalUrl],
         content,
         location: coordinates,
         address: addressString,
